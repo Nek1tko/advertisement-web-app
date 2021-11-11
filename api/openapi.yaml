@@ -1,0 +1,568 @@
+openapi: 3.0.3
+info:
+  title: Ad website
+  description: API for Ad website
+  version: 1.0.0
+tags:
+  - name: Ad
+    description: Everything about ads
+  - name: Category
+    description: Everything about categories
+  - name: Metro
+    description: Everything about metro stations
+  - name: Image
+    description: Operations with images
+  - name: Favourites
+    description: Operations with user favourites
+  - name: User
+    description: Everything about users
+paths:
+  /ad:
+    post:
+      tags:
+        - Ad
+      summary: Add a new ad
+      operationId: addAd
+      requestBody:
+        description: Ad object that needs to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/201.Created.Ad'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+
+  /ad/{adId}:
+    get:
+      tags:
+        - Ad
+      summary: Get ad by ID
+      operationId: getAdById
+      parameters:
+        - name: adId
+          in: path
+          description: ID of ad to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.Single.Ad'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+    put:
+      tags:
+        - Ad
+      summary: Update ad by ID
+      operationId: updateAdById
+      parameters:
+        - name: adId
+          in: path
+          description: ID of ad to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Ad form to update ad with adId
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ad'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.Single.Ad'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  /ad/{userId}:
+    get:
+      tags:
+        - Ad
+        - User
+      summary: Get ads by user ID
+      operationId: getAdsByUserId
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to return ads
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.List.Ad'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  '/ad/favourites/{userId}':
+    get:
+      tags:
+        - Ad
+        - User
+        - Favourites
+      summary: Get favourites ads by user ID
+      operationId: getFavouritesAdsByUserId
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to return favourites ads
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.List.Ad'
+        204:
+          $ref: '#/components/responses/204.NoContent'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  '/ad/favourites/{userId}/{adId}/{isFavourite}':
+    put:
+      tags:
+        - Ad
+        - User
+        - Favourites
+      summary: Add the ad to favourites by user ID
+      operationId: addAdToFavouritesByUserId
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to add favourite ad
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: adId
+          in: path
+          description: ID of ad to add to favourites
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: isFavourite
+          in: path
+          description: is ad in favourites of user
+          required: true
+          schema:
+            type: boolean
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.Single.Ad'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  /image:
+    post:
+      tags:
+        - Image
+      summary: Upload image
+      operationId: uploadImage
+      requestBody:
+        description: Image file that needs to be upload
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Image'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/201.Created.Image'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+
+  '/image/{adId}':
+    get:
+      tags:
+        - Ad
+        - Image
+      summary: Get images by adId
+      operationId: getImagesByAdId
+      parameters:
+        - name: adId
+          in: path
+          description: ID of ad to return images
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.List.Image'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  '/image/{imageId}':
+    delete:
+      tags:
+        - Image
+      summary: Delete the image
+      operationId: deleteImage
+      parameters:
+        - name: imageId
+          in: path
+          description: ID of image to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        204:
+          $ref: '#/components/responses/204.NoContent'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  /metro:
+    get:
+      tags:
+        - Metro
+      summary: Get metro stations
+      operationId: getMetroStations
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.List.Metro'
+
+  /category:
+    get:
+      tags:
+        - Category
+      summary: Get categories
+      operationId: getCategories
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.List.Category'
+
+  '/category/{categoryId}':
+    get:
+      tags:
+        - Category
+        - SubCategory
+      summary: Get subCategories by categoryId
+      operationId: getSubCategoriesByCategoryId
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of category to return subCategories
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.List.SubCategory'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+  /auth/signUp:
+    post:
+      tags:
+        - User
+      summary: Sign up
+      operationId: signUp
+      requestBody:
+        description: Object of user to sign up
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        201:
+          $ref: '#/components/responses/201.Created.User'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+  /auth/signIn:
+    post:
+      tags:
+        - User
+      summary: Sign in
+      operationId: signIn
+      requestBody:
+        description: Object of user to sign in
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.Single.User'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+
+  /user/{userId}:
+    get:
+      tags:
+        - User
+      summary: Get user by ID
+      operationId: getUserById
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.Single.User'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+    put:
+      tags:
+        - User
+      summary: Update user by ID
+      operationId: updateUserById
+      parameters:
+        - name: userId
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          $ref: '#/components/responses/200.OK.Single.User'
+        400:
+          $ref: '#/components/responses/400.BadRequest'
+        404:
+          $ref: '#/components/responses/404.NotFound'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        surname:
+          type: string
+        password:
+          type: string
+          format: password
+        phone_number:
+          type: string
+    Ad:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+          format: float
+        creation_date:
+          type: string
+          format: date
+        saler:
+          $ref: '#/components/schemas/User'
+        metro:
+          $ref: '#/components/schemas/Metro'
+        subcategory:
+          $ref: '#/components/schemas/SubCategory'
+        is_active:
+          type: boolean
+        complete:
+          type: boolean
+          default: false
+    Metro:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+    SubCategory:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        parent_category:
+          $ref: '#/components/schemas/Category'
+    Image:
+      type: object
+      properties:
+        file:
+          type: object
+          format: binary
+        file_name:
+          type: string
+        ad_id:
+          type: integer
+          format: int64
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+
+    Problem:
+      title: Problem Details Object
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          default: 'about:blank'
+          example: '/problem/invalid-param'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string
+          format: uri
+      required:
+        - title
+        - type
+
+  responses:
+    200.OK.Single.Ad:
+      description: Request was successfull. As a result one affected or selected item is returned.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ad'
+
+
+    200.OK.List.Ad:
+      description: Request was successfull. As a result a list of affected or selected items is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Ad'
+
+    200.OK.List.Category:
+      description: Request was successfull. As a result a list of affected or selected items is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Category'
+
+    200.OK.List.SubCategory:
+      description: Request was successfull. As a result a list of affected or selected items is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/SubCategory'
+
+    200.OK.List.Metro:
+      description: Request was successfull. As a result a list of affected or selected items is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Metro'
+
+    200.OK.List.Image:
+      description: Request was successfull. As a result a list of affected or selected items is returned.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Image'
+
+    200.OK.Single.User:
+      description: Request was successfull. As a result one affected or selected item is returned.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+
+    201.Created.Ad:
+      description: The request has been fulfilled, resulting in the creation of a new resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Ad'
+
+    201.Created.Image:
+      description: The request has been fulfilled, resulting in the creation of a new resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Image'
+
+    201.Created.User:
+      description: The request has been fulfilled, resulting in the creation of a new resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+
+    204.NoContent:
+      description: No Content. The service has successfully fulfilled the request and that there is no additional content to send in the response payload body.
+      content:
+        { }
+
+    400.BadRequest:
+      description: Bad Request. The service cannot and will not process the request due to an apparent client error, e.g. malformed request syntax, size too large, invalid request message. The client SHOULD not repeat this request without modification.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+    404.NotFound:
+      description: Not Found. The client SHOULD not repeat this request without modification. The resource requested by its identifier or URI does not exist (it may have existed).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+    405.MethodNotAllowed:
+      description: Method Not Allowed. A request method is not supported for the requested resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Problem'
