@@ -1,4 +1,4 @@
-# Addvertisement Web App
+# Advertisement Web App
 
 ## How to run UI
 ```
