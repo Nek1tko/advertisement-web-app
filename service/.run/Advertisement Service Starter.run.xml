@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Advertisement Service Starter" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.spbstu.edu.advertisement.AdvertisementWebApplication" />
+    <module name="service" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
