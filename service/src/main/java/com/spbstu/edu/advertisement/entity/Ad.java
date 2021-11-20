@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class Ad {
     private Date creationDate;
     
     @Column(name = "is_active", columnDefinition = "boolean")
-    private String isActive;
+    private boolean isActive;
     
     @ManyToMany(mappedBy = "favouriteAds")
     @ToString.Exclude
