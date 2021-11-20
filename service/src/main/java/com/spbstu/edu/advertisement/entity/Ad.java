@@ -1,5 +1,10 @@
 package com.spbstu.edu.advertisement.entity;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,16 +14,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Ad {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @SequenceGenerator(
+            name = "ad_sequence",
+            sequenceName = "ad_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ad_sequence")
     private Long id;
     
     @Column(columnDefinition = "varchar(100)")
@@ -50,8 +64,10 @@ public class Ad {
     private String isActive;
     
     @ManyToMany(mappedBy = "favouriteAds")
+    @ToString.Exclude
     private List<User> users;
     
     @OneToMany(mappedBy = "ad")
+    @ToString.Exclude
     private List<Image> images;
 }

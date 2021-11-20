@@ -1,5 +1,10 @@
 package com.spbstu.edu.advertisement.entity;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,13 +13,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class SubCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @SequenceGenerator(
+            name = "sub_category_sequence",
+            sequenceName = "sub_category_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sub_category_sequence")
     private Long id;
     
     @Column(columnDefinition = "varchar(100)")
@@ -25,5 +39,6 @@ public class SubCategory {
     private Category category;
     
     @OneToMany(mappedBy = "subCategory")
+    @ToString.Exclude
     private List<Ad> ads;
 }

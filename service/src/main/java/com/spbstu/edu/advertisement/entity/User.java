@@ -1,5 +1,10 @@
 package com.spbstu.edu.advertisement.entity;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,15 +15,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "\"user\"")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
     
     @Column(columnDefinition = "varchar(100)")
@@ -37,8 +51,10 @@ public class User {
     @JoinTable(name = "favourites", joinColumns = {
             @JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "ad_id")})
+    @ToString.Exclude
     private List<Ad> favouriteAds;
     
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private List<Ad> userAds;
 }
