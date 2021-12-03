@@ -48,7 +48,7 @@ export default function AdRecordsTable() {
             <DataGrid
                 rowHeight={100}
                 autoHeight
-                pageSize={2}
+                pageSize={10}
                 columns={columns}
                 rows={rows}
                 pagination
