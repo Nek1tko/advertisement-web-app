@@ -24,29 +24,38 @@ const columns = [
         renderCell: (params) => <img
             src={params.value}
             style={{ height: '100%', width: '100%', objectFit: 'contain' }}
-        />
+        />,
+        sortable: false
     },
-    { field: 'name', headerName: 'Название', minWidth: 400, sortable: false },
+    { field: 'name', headerName: 'Название', minWidth: 400, sortable: false, flex: 1 },
     { field: 'location', headerName: 'Метро', minWidth: 200, sortable: false },
-    { field: 'price', headerName: 'Цена', width: 100, sortable: false },
+    {
+        field: 'price',
+        headerName: 'Цена',
+        width: 100,
+        renderCell: (params) => (
+            <Box>
+                {params.value} ₽
+            </Box>
+        ),
+        sortable: false
+    },
 ];
 
 export default function AdRecordsTable() {
-    const [page, setPage] = React.useState(0);
-
     return (
-        <Box>
+        <Box sx={{ mt: 2 }}>
             <DataGrid
                 rowHeight={100}
                 autoHeight
-                page={page}
-                onPageChange={(newPage) => setPage(newPage)}
-                pageSize={10}
+                pageSize={2}
                 columns={columns}
                 rows={rows}
                 pagination
                 {...rows}
                 disableColumnMenu
+                disableSelectionOnClick
+                disable
             />
         </ Box>
     );
