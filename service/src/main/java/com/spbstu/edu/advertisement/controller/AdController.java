@@ -29,7 +29,7 @@ public class AdController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/{userId}")
-    public List<AdDto> getAdByUserId(@PathVariable Long userId) {
+    public List<AdDto> getAdsByUserId(@PathVariable Long userId) {
         return null;
     }
 
