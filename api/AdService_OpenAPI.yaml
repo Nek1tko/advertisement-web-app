@@ -84,7 +84,7 @@ paths:
         404:
           $ref: '#/components/responses/404.NotFound'
 
-  /ad/{userId}:
+  /ad/user/{userId}:
     get:
       tags:
         - Ad
