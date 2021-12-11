@@ -4,7 +4,7 @@ import com.spbstu.edu.advertisement.dto.CategoryDto;
 import com.spbstu.edu.advertisement.entity.Category;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CategoryMapper {
     Category toCategory(CategoryDto categoryDto);
     

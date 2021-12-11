@@ -4,7 +4,7 @@ import com.spbstu.edu.advertisement.dto.ImageDto;
 import com.spbstu.edu.advertisement.entity.Image;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ImageMapper {
     Image toImage(ImageDto imageDto);
     
