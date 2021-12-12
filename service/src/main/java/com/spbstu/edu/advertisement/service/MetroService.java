@@ -5,5 +5,5 @@ import com.spbstu.edu.advertisement.entity.Metro;
 import java.util.List;
 
 public interface MetroService {
-    List<Metro> listMetros();
+    List<Metro> getMetros();
 }

@@ -3,24 +3,20 @@ package com.spbstu.edu.advertisement.service;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.entity.Image;
 import com.spbstu.edu.advertisement.repository.AdRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdServiceImpl implements AdService {
+    
     private final AdRepository adRepository;
     
-    @Autowired
-    public AdServiceImpl(AdRepository adRepository) {
-        this.adRepository = adRepository;
-    }
-    
-    
     @Override
-    public List<Ad> listAds() {
+    public List<Ad> getAds() {
         return adRepository.findAll();
     }
     

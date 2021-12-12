@@ -6,9 +6,9 @@ import com.spbstu.edu.advertisement.entity.User;
 import java.util.List;
 
 public interface UserService {
-    List<Ad> listAds(long userId);
+    List<Ad> getAds(long userId);
     
-    List<Ad> listFavouriteAds(long userId);
+    List<Ad> getFavouriteAds(long userId);
     
     User getUser(long userId);
     

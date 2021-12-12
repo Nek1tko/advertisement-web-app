@@ -6,7 +6,7 @@ import com.spbstu.edu.advertisement.entity.Image;
 import java.util.List;
 
 public interface AdService {
-    List<Ad> listAds();
+    List<Ad> getAds();
     
     Ad getAd(long id);
     

@@ -2,20 +2,16 @@ package com.spbstu.edu.advertisement.service;
 
 import com.spbstu.edu.advertisement.entity.Image;
 import com.spbstu.edu.advertisement.repository.ImageRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class ImageServiceImpl implements ImageService {
     
     private final ImageRepository imageRepository;
-    
-    @Autowired
-    public ImageServiceImpl(ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
-    }
     
     @Override
     public Image getImage(long id) {

@@ -6,9 +6,9 @@ import com.spbstu.edu.advertisement.entity.SubCategory;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> listCategories();
+    List<Category> getCategories();
     
-    List<SubCategory> listSubCategories(long id);
+    List<SubCategory> getSubCategories(long id);
     
     Category getCategory(long id);
 }

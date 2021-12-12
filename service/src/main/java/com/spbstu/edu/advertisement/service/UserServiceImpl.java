@@ -3,29 +3,25 @@ package com.spbstu.edu.advertisement.service;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
     
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    
     @Override
-    public List<Ad> listAds(long userId) {
+    public List<Ad> getAds(long userId) {
         return getUser(userId).getUserAds();
     }
     
     @Override
-    public List<Ad> listFavouriteAds(long userId) {
+    public List<Ad> getFavouriteAds(long userId) {
         return getUser(userId).getFavouriteAds();
     }
     
