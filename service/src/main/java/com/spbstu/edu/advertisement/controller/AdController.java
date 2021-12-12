@@ -4,13 +4,7 @@ import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.service.AdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,13 +17,13 @@ public class AdController {
     
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public AdDto addAd(AdDto ad) {
+    public AdDto addAd(@RequestBody AdDto ad) {
         return adService.addAd(ad);
     }
     
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public AdDto updateAd(AdDto ad) {
+    public AdDto updateAd(@RequestBody AdDto ad) {
         return adService.updateAd(ad);
     }
     
