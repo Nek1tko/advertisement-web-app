@@ -1,11 +1,11 @@
 package com.spbstu.edu.advertisement.service;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
-import com.spbstu.edu.advertisement.dto.ImageDto;
 import com.spbstu.edu.advertisement.entity.Ad;
+import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.mapper.AdMapper;
-import com.spbstu.edu.advertisement.mapper.ImageMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
+import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class AdServiceImpl implements AdService {
     
     private final AdMapper adMapper;
     
-    private final ImageMapper imageMapper;
+    private final UserRepository userRepository;
     
     @Override
     public List<AdDto> getAds() {
@@ -57,9 +57,16 @@ public class AdServiceImpl implements AdService {
     }
     
     @Override
-    public List<ImageDto> getImages(long adId) {
-        return getAdEntity(adId).getImages().stream()
-                .map(imageMapper::toImageDto)
+    public List<AdDto> getAds(long userId) {
+        return getUserEntity(userId).getUserAds().stream()
+                .map(adMapper::toAdDto)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<AdDto> getFavouriteAds(long userId) {
+        return getUserEntity(userId).getFavouriteAds().stream()
+                .map(adMapper::toAdDto)
                 .collect(Collectors.toList());
     }
     
@@ -68,4 +75,8 @@ public class AdServiceImpl implements AdService {
                 .orElseThrow(() -> new RuntimeException("Ad not found"));
     }
     
+    private User getUserEntity(long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }

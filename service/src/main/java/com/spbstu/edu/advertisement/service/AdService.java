@@ -1,7 +1,6 @@
 package com.spbstu.edu.advertisement.service;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
-import com.spbstu.edu.advertisement.dto.ImageDto;
 
 import java.util.List;
 
@@ -16,5 +15,7 @@ public interface AdService {
     
     AdDto updateAd(AdDto adDto);
     
-    List<ImageDto> getImages(long adId);
+    List<AdDto> getAds(long userId);
+    
+    List<AdDto> getFavouriteAds(long userId);
 }

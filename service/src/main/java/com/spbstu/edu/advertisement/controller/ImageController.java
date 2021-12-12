@@ -1,8 +1,6 @@
 package com.spbstu.edu.advertisement.controller;
 
-import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.dto.ImageDto;
-import com.spbstu.edu.advertisement.service.AdService;
 import com.spbstu.edu.advertisement.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,8 +21,6 @@ public class ImageController {
     
     private final ImageService imageService;
     
-    private final AdService adService;
-    
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping()
     public ImageDto addImage(ImageDto image) {
@@ -34,12 +30,12 @@ public class ImageController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{adId}")
     public List<ImageDto> getImagesByAdId(@PathVariable Long adId) {
-        return adService.getImages(adId);
+        return imageService.getImages(adId);
     }
     
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{imageId}")
-    public AdDto deleteImage(@PathVariable Long imageId) {
-        return imageService.deleteImage(imageId);
+    public void deleteImage(@PathVariable Long imageId) {
+        imageService.deleteImage(imageId);
     }
 }

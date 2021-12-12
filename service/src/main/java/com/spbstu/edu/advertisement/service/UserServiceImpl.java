@@ -1,17 +1,13 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.mapper.AdMapper;
 import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,22 +16,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     
     private final UserMapper userMapper;
-    
-    private final AdMapper adMapper;
-    
-    @Override
-    public List<AdDto> getAds(long userId) {
-        return getUserEntity(userId).getUserAds().stream()
-                .map(adMapper::toAdDto)
-                .collect(Collectors.toList());
-    }
-    
-    @Override
-    public List<AdDto> getFavouriteAds(long userId) {
-        return getUserEntity(userId).getFavouriteAds().stream()
-                .map(adMapper::toAdDto)
-                .collect(Collectors.toList());
-    }
     
     @Override
     public UserDto getUser(long userId) {

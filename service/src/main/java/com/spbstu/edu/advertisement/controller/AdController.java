@@ -2,7 +2,6 @@ package com.spbstu.edu.advertisement.controller;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.service.AdService;
-import com.spbstu.edu.advertisement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +20,6 @@ import java.util.List;
 public class AdController {
     
     private final AdService adService;
-    
-    private final UserService userService;
     
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
@@ -45,12 +42,12 @@ public class AdController {
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/{userId}")
     public List<AdDto> getAdsByUserId(@PathVariable Long userId) {
-        return userService.getAds(userId);
+        return adService.getAds(userId);
     }
     
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/favourites/{userId}")
     public List<AdDto> getFavoriteAdsByUserId(@PathVariable Long userId) {
-        return userService.getFavouriteAds(userId);
+        return adService.getFavouriteAds(userId);
     }
 }

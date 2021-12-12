@@ -1,7 +1,8 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.dto.ImageDto;
+
+import java.util.List;
 
 public interface ImageService {
     
@@ -9,5 +10,7 @@ public interface ImageService {
     
     ImageDto addImage(ImageDto imageDto);
     
-    AdDto deleteImage(long imageId);
+    void deleteImage(long imageId);
+    
+    List<ImageDto> getImages(long adId);
 }
