@@ -1,13 +1,13 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.entity.Ad;
+import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,30 +15,23 @@ public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
     
+    private final UserMapper userMapper;
+    
     @Override
-    public List<Ad> getAds(long userId) {
-        return getUser(userId).getUserAds();
+    public UserDto getUser(long userId) {
+        return userMapper.toUserDto(getUserEntity(userId));
     }
     
     @Override
-    public List<Ad> getFavouriteAds(long userId) {
-        return getUser(userId).getFavouriteAds();
+    public UserDto addUser(UserDto userDto) {
+        User user = userRepository.save(userMapper.toUser(userDto));
+        return userMapper.toUserDto(user);
     }
     
     @Override
-    public User getUser(long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-    
-    @Override
-    public User addUser(User user) {
-        return userRepository.save(user);
-    }
-    
-    @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserDto updateUser(UserDto userDto) {
+        User user = userRepository.save(userMapper.toUser(userDto));
+        return userMapper.toUserDto(user);
     }
     
     @Override
@@ -48,5 +41,10 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException exception) {
             throw new RuntimeException("There is no user with this ID");
         }
+    }
+    
+    private User getUserEntity(long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

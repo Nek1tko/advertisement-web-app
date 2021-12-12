@@ -1,20 +1,14 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.entity.Ad;
-import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.dto.UserDto;
 
-import java.util.List;
 
 public interface UserService {
-    List<Ad> getAds(long userId);
+    UserDto getUser(long userId);
     
-    List<Ad> getFavouriteAds(long userId);
+    UserDto addUser(UserDto userDto);
     
-    User getUser(long userId);
-    
-    User addUser(User user);
-    
-    User updateUser(User user);
+    UserDto updateUser(UserDto userDto);
     
     void deleteUser(long userId);
 }

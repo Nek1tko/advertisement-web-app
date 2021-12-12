@@ -1,9 +1,9 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.entity.SubCategory;
+import com.spbstu.edu.advertisement.dto.SubCategoryDto;
+import com.spbstu.edu.advertisement.mapper.SubCategoryMapper;
 import com.spbstu.edu.advertisement.repository.SubCategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,9 +12,12 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     
     private final SubCategoryRepository subCategoryRepository;
     
+    private final SubCategoryMapper subCategoryMapper;
+    
     @Override
-    public SubCategory getSubCategory(long id) {
-        return subCategoryRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("SubCategory not found"));
+    public SubCategoryDto getSubCategory(long subCategoryId) {
+        return subCategoryMapper.toSubCategoryDto(
+                subCategoryRepository.findById(subCategoryId)
+                        .orElseThrow(() -> new RuntimeException("SubCategory not found")));
     }
 }

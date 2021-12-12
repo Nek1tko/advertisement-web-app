@@ -1,13 +1,17 @@
 package com.spbstu.edu.advertisement.service;
 
+import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.entity.Ad;
-import com.spbstu.edu.advertisement.entity.Image;
+import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.mapper.AdMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
+import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,38 +19,64 @@ public class AdServiceImpl implements AdService {
     
     private final AdRepository adRepository;
     
+    private final AdMapper adMapper;
+    
+    private final UserRepository userRepository;
+    
     @Override
-    public List<Ad> getAds() {
-        return adRepository.findAll();
+    public List<AdDto> getAds() {
+        return adRepository.findAll().stream()
+                .map(adMapper::toAdDto)
+                .collect(Collectors.toList());
     }
     
     @Override
-    public Ad getAd(long id) {
-        return adRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ad not found"));
+    public AdDto getAd(long adId) {
+        return adMapper.toAdDto(getAdEntity(adId));
     }
     
     @Override
-    public Ad addAd(Ad ad) {
-        return adRepository.save(ad);
+    public AdDto addAd(AdDto adDto) {
+        Ad ad = adRepository.save(adMapper.toAd(adDto));
+        return adMapper.toAdDto(ad);
     }
     
     @Override
-    public void deleteAd(long id) {
+    public void deleteAd(long adId) {
         try {
-            adRepository.deleteById(id);
+            adRepository.deleteById(adId);
         } catch (EmptyResultDataAccessException exception) {
             throw new RuntimeException("There is no ad with this ID");
         }
     }
     
     @Override
-    public Ad updateAd(Ad ad) {
-        return adRepository.save(ad);
+    public AdDto updateAd(AdDto adDto) {
+        Ad ad = adRepository.save(adMapper.toAd(adDto));
+        return adMapper.toAdDto(ad);
     }
     
     @Override
-    public List<Image> getImages(long adId) {
-        return getAd(adId).getImages();
+    public List<AdDto> getAds(long userId) {
+        return getUserEntity(userId).getUserAds().stream()
+                .map(adMapper::toAdDto)
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<AdDto> getFavouriteAds(long userId) {
+        return getUserEntity(userId).getFavouriteAds().stream()
+                .map(adMapper::toAdDto)
+                .collect(Collectors.toList());
+    }
+    
+    private Ad getAdEntity(long adId) {
+        return adRepository.findById(adId)
+                .orElseThrow(() -> new RuntimeException("Ad not found"));
+    }
+    
+    private User getUserEntity(long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }
