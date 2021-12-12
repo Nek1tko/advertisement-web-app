@@ -18,7 +18,7 @@ const Login = props => {
         console.log(phone, password);
         if (phone.length !== 18) {
             setErrorOpen(true);
-            setErrorMessage('Номер телефона введен не до конца');
+            setErrorMessage('Номер телефона введен неверно');
             return;
         }
         if (password.length === 0) {
@@ -93,7 +93,7 @@ const Login = props => {
                 fullWidth
                 style={{ textTransform: 'none' }}
             >
-                Новый пользователь
+                Регистрация
             </Button>
 
         </Box >
