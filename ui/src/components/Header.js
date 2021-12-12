@@ -60,8 +60,9 @@ const Header = props => {
                         return (
                             <Box sx={{ px: 2 }}>
                                 <Button
-                                    style={{ color: '#FFFFFF' }}
-                                    onClick={() => handleButtonClick(pageURL)} >
+                                    style={{ color: '#FFFFFF', textTransform: 'none', fontSize: '18px' }}
+                                    onClick={() => handleButtonClick(pageURL)}
+                                >
                                     {menuTitle}
                                 </Button>
                             </Box>
