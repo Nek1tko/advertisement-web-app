@@ -42,7 +42,6 @@ const Header = props => {
         }
     ];
 
-    const settings = ['Профиль', 'Выйти'];
     const settingsItems = [
         {
             settingsTitle: "Профиль",
