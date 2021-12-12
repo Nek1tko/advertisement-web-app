@@ -1,12 +1,13 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.entity.Image;
+import com.spbstu.edu.advertisement.dto.AdDto;
+import com.spbstu.edu.advertisement.dto.ImageDto;
 
 public interface ImageService {
     
-    Image getImage(long id);
+    ImageDto getImage(long imageId);
     
-    void addImage(Image image);
+    ImageDto addImage(ImageDto imageDto);
     
-    void deleteImage(long id);
+    AdDto deleteImage(long imageId);
 }

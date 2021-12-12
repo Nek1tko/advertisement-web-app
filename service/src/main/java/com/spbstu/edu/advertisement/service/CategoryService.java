@@ -1,14 +1,16 @@
 package com.spbstu.edu.advertisement.service;
 
+import com.spbstu.edu.advertisement.dto.CategoryDto;
+import com.spbstu.edu.advertisement.dto.SubCategoryDto;
 import com.spbstu.edu.advertisement.entity.Category;
 import com.spbstu.edu.advertisement.entity.SubCategory;
 
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getCategories();
+    List<CategoryDto> getCategories();
     
-    List<SubCategory> getSubCategories(long id);
+    List<SubCategoryDto> getSubCategories(long categoryId);
     
-    Category getCategory(long id);
+    CategoryDto getCategory(long categoryId);
 }

@@ -1,20 +1,20 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.entity.Ad;
-import com.spbstu.edu.advertisement.entity.Image;
+import com.spbstu.edu.advertisement.dto.AdDto;
+import com.spbstu.edu.advertisement.dto.ImageDto;
 
 import java.util.List;
 
 public interface AdService {
-    List<Ad> getAds();
+    List<AdDto> getAds();
     
-    Ad getAd(long id);
+    AdDto getAd(long adId);
     
-    Ad addAd(Ad ad);
+    AdDto addAd(AdDto adDto);
     
-    void deleteAd(long id);
+    void deleteAd(long adId);
     
-    Ad updateAd(Ad ad);
+    AdDto updateAd(AdDto adDto);
     
-    List<Image> getImages(long adId);
+    List<ImageDto> getImages(long adId);
 }

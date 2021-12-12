@@ -1,8 +1,8 @@
 package com.spbstu.edu.advertisement.service;
 
 
-import com.spbstu.edu.advertisement.entity.SubCategory;
+import com.spbstu.edu.advertisement.dto.SubCategoryDto;
 
 public interface SubCategoryService {
-    SubCategory getSubCategory(long id);
+    SubCategoryDto getSubCategory(long subCategoryId);
 }

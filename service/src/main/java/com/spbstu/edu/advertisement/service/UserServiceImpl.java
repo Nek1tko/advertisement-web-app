@@ -1,13 +1,17 @@
 package com.spbstu.edu.advertisement.service;
 
-import com.spbstu.edu.advertisement.entity.Ad;
+import com.spbstu.edu.advertisement.dto.AdDto;
+import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.mapper.AdMapper;
+import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,30 +19,39 @@ public class UserServiceImpl implements UserService {
     
     private final UserRepository userRepository;
     
+    private final UserMapper userMapper;
+    
+    private final AdMapper adMapper;
+    
     @Override
-    public List<Ad> getAds(long userId) {
-        return getUser(userId).getUserAds();
+    public List<AdDto> getAds(long userId) {
+        return getUserEntity(userId).getUserAds().stream()
+                .map(adMapper::toAdDto)
+                .collect(Collectors.toList());
     }
     
     @Override
-    public List<Ad> getFavouriteAds(long userId) {
-        return getUser(userId).getFavouriteAds();
+    public List<AdDto> getFavouriteAds(long userId) {
+        return getUserEntity(userId).getFavouriteAds().stream()
+                .map(adMapper::toAdDto)
+                .collect(Collectors.toList());
     }
     
     @Override
-    public User getUser(long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public UserDto getUser(long userId) {
+        return userMapper.toUserDto(getUserEntity(userId));
     }
     
     @Override
-    public User addUser(User user) {
-        return userRepository.save(user);
+    public UserDto addUser(UserDto userDto) {
+        User user = userRepository.save(userMapper.toUser(userDto));
+        return userMapper.toUserDto(user);
     }
     
     @Override
-    public User updateUser(User user) {
-        return userRepository.save(user);
+    public UserDto updateUser(UserDto userDto) {
+        User user = userRepository.save(userMapper.toUser(userDto));
+        return userMapper.toUserDto(user);
     }
     
     @Override
@@ -48,5 +61,10 @@ public class UserServiceImpl implements UserService {
         } catch (EmptyResultDataAccessException exception) {
             throw new RuntimeException("There is no user with this ID");
         }
+    }
+    
+    private User getUserEntity(long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 }

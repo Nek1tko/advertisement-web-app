@@ -1,12 +1,16 @@
 package com.spbstu.edu.advertisement.service;
 
+import com.spbstu.edu.advertisement.dto.CategoryDto;
+import com.spbstu.edu.advertisement.dto.SubCategoryDto;
 import com.spbstu.edu.advertisement.entity.Category;
-import com.spbstu.edu.advertisement.entity.SubCategory;
+import com.spbstu.edu.advertisement.mapper.CategoryMapper;
+import com.spbstu.edu.advertisement.mapper.SubCategoryMapper;
 import com.spbstu.edu.advertisement.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -14,19 +18,31 @@ public class CategoryServiceImpl implements CategoryService {
     
     private final CategoryRepository categoryRepository;
     
+    private final CategoryMapper categoryMapper;
+    
+    private final SubCategoryMapper subCategoryMapper;
+    
     @Override
-    public List<Category> getCategories() {
-        return categoryRepository.findAll();
+    public List<CategoryDto> getCategories() {
+        return categoryRepository.findAll().stream()
+                .map(categoryMapper::toCategoryDto)
+                .collect(Collectors.toList());
     }
     
     @Override
-    public List<SubCategory> getSubCategories(long id) {
-        return getCategory(id).getSubCategories();
+    public List<SubCategoryDto> getSubCategories(long categoryId) {
+        return getCategoryEntity(categoryId).getSubCategories().stream()
+                .map(subCategoryMapper::toSubCategoryDto)
+                .collect(Collectors.toList());
     }
     
     @Override
-    public Category getCategory(long id) {
-        return categoryRepository.findById(id)
+    public CategoryDto getCategory(long categoryId) {
+        return categoryMapper.toCategoryDto(getCategoryEntity(categoryId));
+    }
+    
+    private Category getCategoryEntity(long categoryId) {
+        return categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
     }
 }
