@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @Column(columnDefinition = "varchar(100)")
     private String surname;
     
-    @Column(columnDefinition = "varchar(64)")
+    @Column(columnDefinition = "varchar(256)")
     private String password;
     
     @Column(columnDefinition = "varchar(18)", name = "phone_number")

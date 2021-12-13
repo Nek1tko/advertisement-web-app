@@ -6,6 +6,7 @@ import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -16,6 +17,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     
     private final UserMapper userMapper;
+
+    private final PasswordEncoder passwordEncoder;
     
     @Override
     public UserDto getUser(long userId) {
@@ -24,12 +27,14 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UserDto addUser(UserDto userDto) {
+        setEncodedPassword(userDto);
         User user = userRepository.save(userMapper.toUser(userDto));
         return userMapper.toUserDto(user);
     }
     
     @Override
     public UserDto updateUser(UserDto userDto) {
+        setEncodedPassword(userDto);
         User user = userRepository.save(userMapper.toUser(userDto));
         return userMapper.toUserDto(user);
     }
@@ -46,5 +51,10 @@ public class UserServiceImpl implements UserService {
     private User getUserEntity(long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    private void setEncodedPassword(UserDto userDto) {
+        String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+        userDto.setPassword(encodedPassword);
     }
 }
