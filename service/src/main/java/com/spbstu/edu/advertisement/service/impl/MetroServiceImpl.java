@@ -1,8 +1,9 @@
-package com.spbstu.edu.advertisement.service;
+package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.MetroDto;
 import com.spbstu.edu.advertisement.mapper.MetroMapper;
 import com.spbstu.edu.advertisement.repository.MetroRepository;
+import com.spbstu.edu.advertisement.service.MetroService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

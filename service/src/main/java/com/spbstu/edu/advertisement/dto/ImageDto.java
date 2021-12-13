@@ -10,7 +10,10 @@ import lombok.*;
 @Setter
 public class ImageDto {
     private Long id;
+
     private ByteArray file;
+
     private String fileName;
+
     private Long adId;
 }

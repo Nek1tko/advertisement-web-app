@@ -11,9 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 public class SubjectData {
-    @JsonProperty("clientType")
-    private String clientType;
-
     @JsonProperty("userId")
     private Long userId;
 

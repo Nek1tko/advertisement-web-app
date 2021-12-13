@@ -1,4 +1,4 @@
-package com.spbstu.edu.advertisement.service;
+package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.entity.Ad;
@@ -6,9 +6,9 @@ import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.mapper.AdMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
 import com.spbstu.edu.advertisement.repository.UserRepository;
+import com.spbstu.edu.advertisement.service.AdService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

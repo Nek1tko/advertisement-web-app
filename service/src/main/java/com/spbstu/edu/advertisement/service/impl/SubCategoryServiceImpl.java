@@ -1,8 +1,9 @@
-package com.spbstu.edu.advertisement.service;
+package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.SubCategoryDto;
 import com.spbstu.edu.advertisement.mapper.SubCategoryMapper;
 import com.spbstu.edu.advertisement.repository.SubCategoryRepository;
+import com.spbstu.edu.advertisement.service.SubCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

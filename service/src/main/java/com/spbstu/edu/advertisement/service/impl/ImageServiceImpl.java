@@ -1,4 +1,4 @@
-package com.spbstu.edu.advertisement.service;
+package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.ImageDto;
 import com.spbstu.edu.advertisement.entity.Ad;
@@ -6,6 +6,7 @@ import com.spbstu.edu.advertisement.entity.Image;
 import com.spbstu.edu.advertisement.mapper.ImageMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
 import com.spbstu.edu.advertisement.repository.ImageRepository;
+import com.spbstu.edu.advertisement.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
