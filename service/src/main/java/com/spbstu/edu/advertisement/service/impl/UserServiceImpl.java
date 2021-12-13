@@ -1,9 +1,10 @@
-package com.spbstu.edu.advertisement.service;
+package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.repository.UserRepository;
+import com.spbstu.edu.advertisement.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,10 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UserDto addUser(UserDto userDto) {
+        if (userRepository.findByPhoneNumber(userDto.getPhoneNumber()) != null) {
+            throw new RuntimeException("Duplicate phone number");
+        }
+
         setEncodedPassword(userDto);
         User user = userRepository.save(userMapper.toUser(userDto));
         return userMapper.toUserDto(user);

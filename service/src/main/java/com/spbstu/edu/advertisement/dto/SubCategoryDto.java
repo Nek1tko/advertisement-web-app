@@ -9,6 +9,8 @@ import lombok.*;
 @Setter
 public class SubCategoryDto {
     private Long id;
+
     private String name;
+
     private CategoryDto category;
 }

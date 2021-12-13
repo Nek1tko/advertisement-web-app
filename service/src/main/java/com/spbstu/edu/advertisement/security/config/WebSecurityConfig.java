@@ -1,6 +1,6 @@
-package com.spbstu.edu.advertisement.config;
+package com.spbstu.edu.advertisement.security.config;
 
-import com.spbstu.edu.advertisement.filter.JwtTokenFilter;
+import com.spbstu.edu.advertisement.security.filter.JwtTokenFilter;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

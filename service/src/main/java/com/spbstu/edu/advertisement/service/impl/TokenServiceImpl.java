@@ -2,11 +2,10 @@ package com.spbstu.edu.advertisement.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.spbstu.edu.advertisement.repository.UserRepository;
-import com.spbstu.edu.advertisement.vo.SubjectData;
 import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.repository.UserRepository;
 import com.spbstu.edu.advertisement.service.TokenService;
-import com.spbstu.edu.advertisement.service.UserService;
+import com.spbstu.edu.advertisement.vo.SubjectData;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,6 +21,10 @@ import java.util.Date;
 @Service
 @Slf4j
 public class TokenServiceImpl implements TokenService {
+    private static final Long TOKEN_LIFETIME = 7200000L; // 2 hours
+    private static final Logger LOGGER = LoggerFactory.getLogger(TokenServiceImpl.class);
+    private static final String KEY = "1231312";
+
     private final UserRepository userRepository;
 
     @Override
@@ -50,35 +53,29 @@ public class TokenServiceImpl implements TokenService {
                 return token;
             } catch (JsonProcessingException e) {
                 LOGGER.error("Conversion error");
-                return null;
             }
         } else {
             LOGGER.debug("Token has not created");
-            return null;
         }
+
+        return null;
     }
 
     @Override
     public SubjectData getSubject(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(KEY)
-                .parseClaimsJws(token)
-                .getBody();
+        Claims claims = getClaims(token);
 
         try {
             return new ObjectMapper().readValue(claims.getSubject(), SubjectData.class);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            LOGGER.error("Conversion error");
             return null;
         }
     }
 
     @Override
     public Date getExpirationDate(String token) {
-        Claims claims = Jwts.parser()
-                .setSigningKey(KEY)
-                .parseClaimsJws(token)
-                .getBody();
+        Claims claims = getClaims(token);
 
         return claims.getExpiration();
     }
@@ -94,8 +91,10 @@ public class TokenServiceImpl implements TokenService {
         return false;
     }
 
-
-    private static final Long TOKEN_LIFETIME = 7200000L; // 2 hours
-    private static final Logger LOGGER = LoggerFactory.getLogger(TokenServiceImpl.class);
-    private static final String KEY = "1231312";
+    private Claims getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(KEY)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }
