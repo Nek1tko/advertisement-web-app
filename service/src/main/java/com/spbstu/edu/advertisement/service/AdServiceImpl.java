@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 public class AdServiceImpl implements AdService {
     
     private final AdRepository adRepository;
-
-    private final PasswordEncoder passwordEncoder;
     
     private final AdMapper adMapper;
     
