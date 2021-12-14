@@ -3,9 +3,7 @@ import {Collapse, makeStyles} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@mui/material/Box';
-import IconButton from "@material-ui/core/IconButton";
 import {Alert} from "@mui/material";
-import CloseIcon from '@mui/icons-material/Close';
 import ReactPhoneInput from "react-phone-input-mui";
 
 const useStyles = makeStyles(theme => ({
@@ -35,14 +33,21 @@ const Registration = props => {
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [alertOpen, setAlertOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = e => {
         e.preventDefault();
         console.log(firstName, lastName, phone, password);
         if (password !== passwordConfirmation) {
+            setErrorMessage("Пароли не совпадают!");
             setAlertOpen(true);
+            return;
         }
-        //handleClose();
+        if (password.length < 4 || password.length > 16) {
+            setErrorMessage("Пароль должен содержать от 4 до 16 символов!");
+            setAlertOpen(true);
+            return;
+        }
     };
 
     const handlePasswordTyping = (e) => {
@@ -70,20 +75,9 @@ const Registration = props => {
             <Collapse in={alertOpen}>
                 <Alert
                     severity="error"
-                    action={
-                        <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setAlertOpen(false);
-                            }}
-                        >
-                            <CloseIcon fontSize="inherit"/>
-                        </IconButton>
-                    }
+                    sx={{ mb: 2 }}
                 >
-                    Пароли не совпадают!
+                    {errorMessage}
                 </Alert>
             </Collapse>
             <TextField
