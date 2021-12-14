@@ -39,6 +39,7 @@ public class AuthController {
 
         User user = (User) authentication.getPrincipal();
         Map<Object, Object> model = new HashMap<>();
+        model.put("id", user.getId());
         model.put("phoneNumber", user.getPhoneNumber());
         model.put("token", tokenService.createToken(user.getPhoneNumber(), user.getPassword()));
         return ResponseEntity.ok()
