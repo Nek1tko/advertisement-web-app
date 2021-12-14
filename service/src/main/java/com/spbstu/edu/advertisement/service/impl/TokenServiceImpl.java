@@ -3,6 +3,8 @@ package com.spbstu.edu.advertisement.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.exception.InvalidPasswordException;
+import com.spbstu.edu.advertisement.exception.UserNotFoundException;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import com.spbstu.edu.advertisement.service.TokenService;
 import com.spbstu.edu.advertisement.vo.SubjectData;
@@ -11,8 +13,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,14 +22,16 @@ import java.util.Date;
 @Slf4j
 public class TokenServiceImpl implements TokenService {
     private static final Long TOKEN_LIFETIME = 7200000L; // 2 hours
-    private static final Logger LOGGER = LoggerFactory.getLogger(TokenServiceImpl.class);
     private static final String KEY = "1231312";
-
+    
     private final UserRepository userRepository;
-
+    
     @Override
-    public String createToken(String phoneNumber, String password) {
+    public String createToken(String phoneNumber, String password) throws JsonProcessingException {
         User user = userRepository.findByPhoneNumber(phoneNumber);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
         if (user.getPassword().equals(password)) {
             SubjectData subjectData = SubjectData
                     .builder()
@@ -37,60 +39,43 @@ public class TokenServiceImpl implements TokenService {
                     .phoneNumber(phoneNumber)
                     .creationDateTime(new Date())
                     .build();
-
-            try {
-                String convertedSubject = new ObjectMapper().writeValueAsString(subjectData);
-
-                String token = Jwts
-                        .builder()
-                        .setSubject(convertedSubject)
-                        .setIssuedAt(new Date())
-                        .setExpiration(new Date(System.currentTimeMillis() + TOKEN_LIFETIME))
-                        .signWith(SignatureAlgorithm.HS512, KEY)
-                        .compact();
-
-                LOGGER.debug("Token was successfully created");
-                return token;
-            } catch (JsonProcessingException e) {
-                LOGGER.error("Conversion error");
-            }
+            
+            String convertedSubject = new ObjectMapper().writeValueAsString(subjectData);
+            
+            return Jwts
+                    .builder()
+                    .setSubject(convertedSubject)
+                    .setIssuedAt(new Date())
+                    .setExpiration(new Date(System.currentTimeMillis() + TOKEN_LIFETIME))
+                    .signWith(SignatureAlgorithm.HS512, KEY)
+                    .compact();
         } else {
-            LOGGER.debug("Token has not created");
+            throw new InvalidPasswordException();
         }
-
-        return null;
     }
-
+    
     @Override
-    public SubjectData getSubject(String token) {
+    public SubjectData getSubject(String token) throws JsonProcessingException {
         Claims claims = getClaims(token);
-
-        try {
-            return new ObjectMapper().readValue(claims.getSubject(), SubjectData.class);
-        } catch (JsonProcessingException e) {
-            LOGGER.error("Conversion error");
-            return null;
-        }
+        return new ObjectMapper().readValue(claims.getSubject(), SubjectData.class);
     }
-
+    
     @Override
     public Date getExpirationDate(String token) {
         Claims claims = getClaims(token);
-
         return claims.getExpiration();
     }
-
+    
     @Override
     public boolean validate(String token) {
         try {
-            Jwts.parser().setSigningKey(KEY).parseClaimsJws(token);
+            getClaims(token);
             return true;
         } catch (Exception e) {
-            LOGGER.error("Invalid JWT token");
+            return false;
         }
-        return false;
     }
-
+    
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(KEY)

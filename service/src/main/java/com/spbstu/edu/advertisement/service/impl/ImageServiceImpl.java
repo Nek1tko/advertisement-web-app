@@ -3,6 +3,8 @@ package com.spbstu.edu.advertisement.service.impl;
 import com.spbstu.edu.advertisement.dto.ImageDto;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.entity.Image;
+import com.spbstu.edu.advertisement.exception.AdNotFoundException;
+import com.spbstu.edu.advertisement.exception.ImageNotFoundException;
 import com.spbstu.edu.advertisement.mapper.ImageMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
 import com.spbstu.edu.advertisement.repository.ImageRepository;
@@ -41,7 +43,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             imageRepository.deleteById(imageId);
         } catch (EmptyResultDataAccessException exception) {
-            throw new RuntimeException("There is no image with this ID");
+            throw new ImageNotFoundException();
         }
     }
     
@@ -54,11 +56,11 @@ public class ImageServiceImpl implements ImageService {
     
     private Image getImageEntity(long imageId) {
         return imageRepository.findById(imageId)
-                .orElseThrow(() -> new RuntimeException("Image not found"));
+                .orElseThrow(ImageNotFoundException::new);
     }
     
     private Ad getAdEntity(long adId) {
         return adRepository.findById(adId)
-                .orElseThrow(() -> new RuntimeException("Ad not found"));
+                .orElseThrow(AdNotFoundException::new);
     }
 }
