@@ -37,7 +37,16 @@ const Registration = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(firstName, lastName, phone, password);
+        if (firstName.length < 3 || firstName.length > 50 || lastName.length < 3 || lastName.length > 50) {
+            setErrorMessage("Имя и фамилия должны быть длиной от 3 до 50 символов!");
+            setAlertOpen(true);
+            return;
+        }
+        if (phone.length !== 18 || phone.charAt(0) !== '+' || phone.charAt(1) !== '7') {
+            setErrorMessage("Введен неверный номер телефона!");
+            setAlertOpen(true);
+            return;
+        }
         if (password !== passwordConfirmation) {
             setErrorMessage("Пароли не совпадают!");
             setAlertOpen(true);
@@ -48,6 +57,13 @@ const Registration = props => {
             setAlertOpen(true);
             return;
         }
+        const regexp = new RegExp("^(?=.*[0-9])(?=.*[!#%{}\\[\\]])[a-zA-Z0-9!#%{}\\[\\]]{4,16}$");
+        if (!regexp.test(password)) {
+            setErrorMessage("Пароль должен содержать хотя бы одну цифру или спец символ!");
+            setAlertOpen(true);
+            return;
+        }
+        setAlertOpen(false);
     };
 
     const handlePasswordTyping = (e) => {
@@ -75,7 +91,7 @@ const Registration = props => {
             <Collapse in={alertOpen}>
                 <Alert
                     severity="error"
-                    sx={{ mb: 2 }}
+                    sx={{mb: 2}}
                 >
                     {errorMessage}
                 </Alert>
