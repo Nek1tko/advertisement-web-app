@@ -1,8 +1,11 @@
 package com.spbstu.edu.advertisement.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Builder
 @NoArgsConstructor
@@ -11,13 +14,13 @@ import lombok.*;
 @Setter
 public class UserDto {
     private Long id;
-
+    
     private String name;
-
+    
     private String surname;
-
+    
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
+    
     private String phoneNumber;
 }

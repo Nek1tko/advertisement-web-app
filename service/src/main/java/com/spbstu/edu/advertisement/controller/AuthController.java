@@ -1,5 +1,6 @@
 package com.spbstu.edu.advertisement.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.mapper.UserMapper;
@@ -29,7 +30,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signIn")
-    public ResponseEntity<Map<Object, Object>> signIn(@RequestBody UserDto userDto) {
+    public ResponseEntity<Map<Object, Object>> signIn(@RequestBody UserDto userDto) throws JsonProcessingException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userDto.getPhoneNumber(),
