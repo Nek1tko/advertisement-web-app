@@ -5,6 +5,7 @@ import CreateAd from "./routes/CreateAd";
 import UserAds from "./routes/UserAds";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
+import Registration from "./routes/Registration";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
             <Switch>
                 <Route exact from="/" render={props => <Home {...props} />} />
                 <Route exact from="/login" render={props => <Login {...props} />} />
+                <Route exact from="/sign-up" render={props => <Registration {...props} />} />
                 <Route exact path="/my-ads" render={props => <UserAds {...props} />} />
                 <Route exact path="/create-ad" render={props => <CreateAd {...props} />} />
             </Switch>
