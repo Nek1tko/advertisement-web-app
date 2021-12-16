@@ -3,6 +3,8 @@ package com.spbstu.edu.advertisement.service.impl;
 import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.exception.AdNotFoundException;
+import com.spbstu.edu.advertisement.exception.UserNotFoundException;
 import com.spbstu.edu.advertisement.mapper.AdMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
 import com.spbstu.edu.advertisement.repository.UserRepository;
@@ -47,7 +49,7 @@ public class AdServiceImpl implements AdService {
         try {
             adRepository.deleteById(adId);
         } catch (EmptyResultDataAccessException exception) {
-            throw new RuntimeException("There is no ad with this ID");
+            throw new AdNotFoundException();
         }
     }
     
@@ -73,11 +75,11 @@ public class AdServiceImpl implements AdService {
     
     private Ad getAdEntity(long adId) {
         return adRepository.findById(adId)
-                .orElseThrow(() -> new RuntimeException("Ad not found"));
+                .orElseThrow(AdNotFoundException::new);
     }
     
     private User getUserEntity(long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(UserNotFoundException::new);
     }
 }

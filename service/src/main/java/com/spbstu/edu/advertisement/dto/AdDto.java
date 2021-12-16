@@ -1,6 +1,10 @@
 package com.spbstu.edu.advertisement.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -11,22 +15,22 @@ import java.util.Date;
 @Setter
 public class AdDto {
     private Long id;
-
+    
     private String name;
-
+    
     private String description;
-
+    
     private String price;
-
+    
     private Date creationDate;
-
+    
     private UserDto saler;
-
+    
     private MetroDto metro;
-
+    
     private SubCategoryDto subCategory;
-
+    
     private Boolean isActive;
-
+    
     private Boolean complete;
 }
