@@ -1,4 +1,4 @@
-/.idea/
+.idea/
 
 # dependencies
 /ui/node_modules
@@ -21,3 +21,5 @@
 /ui/npm-debug.log*
 /ui/yarn-debug.log*
 /ui/yarn-error.log*
+
+target/
