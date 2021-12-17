@@ -1,5 +1,6 @@
 package com.spbstu.edu.advertisement.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.mapper.UserMapper;
@@ -15,6 +16,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -26,7 +30,7 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signIn")
-    public ResponseEntity<UserDto> signIn(@RequestBody UserDto userDto) {
+    public ResponseEntity<Map<Object, Object>> signIn(@RequestBody UserDto userDto) throws JsonProcessingException {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         userDto.getPhoneNumber(),
@@ -35,10 +39,12 @@ public class AuthController {
         );
 
         User user = (User) authentication.getPrincipal();
-
+        Map<Object, Object> model = new HashMap<>();
+        model.put("id", user.getId());
+        model.put("phoneNumber", user.getPhoneNumber());
+        model.put("token", tokenService.createToken(user.getPhoneNumber(), user.getPassword()));
         return ResponseEntity.ok()
-                .header(HttpHeaders.AUTHORIZATION, tokenService.createToken(user.getPhoneNumber(), user.getPassword()))
-                .body(userMapper.toUserDto(user));
+                .body(model);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
