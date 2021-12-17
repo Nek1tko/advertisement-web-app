@@ -5,8 +5,11 @@ import ReactPhoneInput from 'react-phone-input-mui';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
 import { Box } from "@material-ui/core";
+import AuthService from "../services/auth.service";
 
 const Login = props => {
+    const { history } = props;
+
     // create state variables for each input
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
@@ -15,7 +18,6 @@ const Login = props => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        console.log(phone, password);
         if (phone.length !== 18) {
             setErrorOpen(true);
             setErrorMessage('Номер телефона введен неверно');
@@ -31,6 +33,16 @@ const Login = props => {
             setErrorMessage('Длина пароля должна быть не менее 4-х символов');
             return;
         }
+
+        AuthService.signIn(phone, password)
+            .then(res => {
+                history.push('/');
+            })
+            .catch(reasone => {
+                setErrorOpen(true);
+                setErrorMessage('Такого пользователя не существует или пароль не верный');
+                setPassword('');
+            });
     };
 
     return (
@@ -91,6 +103,7 @@ const Login = props => {
                 variant="text"
                 disableRipple
                 fullWidth
+                onClick={e => { history.push('/sign-up'); }}
                 style={{ textTransform: 'none' }}
             >
                 Регистрация

@@ -1,30 +1,38 @@
-import axios from "axios";
+import axios from 'axios';
+import store from '../store';
+import { userSignIn, userSignOut } from '../actions/authActionCreators';
 
-const API_URL = "http://localhost:8080/api/auth/";
+const API_URL = "http://localhost:8080/auth/";
 
 class AuthService {
-    login(username, password) {
+    signIn(phoneNumber, password) {
         return axios
-            .post(API_URL + "signin", { username, password })
-            .then((response) => {
-                if (response.data.accessToken) {
-                    localStorage.setItem("user", JSON.stringify(response.data));
+            .post(API_URL + "signIn", { phoneNumber, password })
+            .then(response => {
+                if (response.data.token) {
+                    store.dispatch(userSignIn(response.data.phoneNumber, response.data.id, response.data.token));
                 }
-
-                return response.data;
-            });
+                return response;
+            })
     }
 
-    logout() {
-        localStorage.removeItem("user");
+    signOut() {
+        store.dispatch(userSignOut());
     }
 
-    register(username, email, password) {
-        return axios.post(API_URL + "signup", {
-            username,
-            email,
-            password,
-        });
+    register(name, surname, phoneNumber, password) {
+        return axios
+            .post(API_URL + "signUp", {
+                name,
+                surname,
+                phoneNumber,
+                password,
+            })
+            .then(resposne => resposne);
+    }
+
+    getUser() {
+        return store.getState().user;
     }
 }
 
