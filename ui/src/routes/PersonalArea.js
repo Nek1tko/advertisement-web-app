@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Box, Button, Typography } from "@material-ui/core";
+<<<<<<< HEAD
 import AuthService from '../services/auth.service';
 import { Redirect } from "react-router-dom";
 import TextField from '@mui/material/TextField';
@@ -10,10 +11,13 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Collapse } from "@material-ui/core";
 import { Alert } from "@mui/material";
+=======
+>>>>>>> 14987e9fb03f735672b05ea7e2ac190680e229fb
 
 const PersonalArea = props => {
     const [name, setName] = useState('Test name');
     const [surname, setSurname] = useState('Test surname');
+<<<<<<< HEAD
     const [open, setOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -45,6 +49,9 @@ const PersonalArea = props => {
         setName(editedName);
         setSurname(editedSurname);
     };
+=======
+    const [phone, setPhone] = useState('+7 (888) 888-88-88');
+>>>>>>> 14987e9fb03f735672b05ea7e2ac190680e229fb
 
     return (
         <Box
@@ -62,7 +69,11 @@ const PersonalArea = props => {
             </Typography>
 
             <Typography variant="h5" align="center" style={{ color: "#666666", marginTop: 30 }}>
+<<<<<<< HEAD
                 {phoneNumber}
+=======
+                {phone}
+>>>>>>> 14987e9fb03f735672b05ea7e2ac190680e229fb
             </Typography>
 
             <Button
@@ -71,6 +82,7 @@ const PersonalArea = props => {
                 fullWidth
                 mt={20}
                 style={{ textTransform: 'none', marginTop: 30 }}
+<<<<<<< HEAD
                 onClick={handleClickOpen}
             >
                 Редактировать
@@ -135,6 +147,11 @@ const PersonalArea = props => {
                     <Button onClick={handleSaveClose}>Сохранить</Button>
                 </DialogActions>
             </Dialog>
+=======
+            >
+                Редактировать
+            </Button>
+>>>>>>> 14987e9fb03f735672b05ea7e2ac190680e229fb
         </Box>
     );
 };
