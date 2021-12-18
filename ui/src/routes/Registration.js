@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@mui/material/Box';
 import {Alert} from "@mui/material";
 import ReactPhoneInput from "react-phone-input-mui";
+import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -25,6 +26,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Registration = props => {
+    const { history } = props;
+
     const classes = useStyles();
     // create state variables for each input
     const [firstName, setFirstName] = useState('');
@@ -64,6 +67,16 @@ const Registration = props => {
             return;
         }
         setAlertOpen(false);
+        AuthService.register(firstName, lastName, phone, password)
+            .then(() => {
+                history.push('/registration-confirmed');
+            })
+            .catch(() => {
+                setAlertOpen(true);
+                setErrorMessage('Ошибка при регистрации!');
+                setPassword('');
+                setPasswordConfirmation('');
+            });
     };
 
     const handlePasswordTyping = (e) => {
