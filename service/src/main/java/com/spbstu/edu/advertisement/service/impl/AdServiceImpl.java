@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,7 @@ public class AdServiceImpl implements AdService {
     
     @Override
     public AdDto addAd(AdDto adDto) {
+        adDto.setCreationDate(LocalDate.now(ZoneId.of("Europe/Moscow")));
         Ad ad = adRepository.save(adMapper.toAd(adDto));
         return adMapper.toAdDto(ad);
     }
