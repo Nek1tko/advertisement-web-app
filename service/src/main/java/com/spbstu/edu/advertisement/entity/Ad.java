@@ -15,10 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -42,8 +39,8 @@ public class Ad {
     @Column(columnDefinition = "text")
     private String description;
     
-    @Column(columnDefinition = "money")
-    private String price;
+    @Column(columnDefinition = "decimal")
+    private Double price;
     
     @ManyToOne
     @JoinColumn(name = "metro_id")
@@ -55,14 +52,13 @@ public class Ad {
     
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User saler;
     
-    @Temporal(TemporalType.DATE)
-    @Column(name = "creation_date")
-    private Date creationDate;
+    @Column(name = "creation_date", columnDefinition = "DATE")
+    private LocalDate creationDate;
     
     @Column(name = "is_active", columnDefinition = "boolean")
-    private boolean isActive;
+    private Boolean isActive;
     
     @ManyToMany(mappedBy = "favouriteAds")
     @ToString.Exclude

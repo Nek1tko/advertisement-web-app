@@ -1,12 +1,13 @@
 package com.spbstu.edu.advertisement.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Builder
 @NoArgsConstructor
@@ -20,9 +21,10 @@ public class AdDto {
     
     private String description;
     
-    private String price;
+    private Double price;
     
-    private Date creationDate;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private LocalDate creationDate;
     
     private UserDto saler;
     
@@ -31,6 +33,4 @@ public class AdDto {
     private SubCategoryDto subCategory;
     
     private Boolean isActive;
-    
-    private Boolean complete;
 }
