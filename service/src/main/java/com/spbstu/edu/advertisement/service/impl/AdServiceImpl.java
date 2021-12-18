@@ -55,8 +55,10 @@ public class AdServiceImpl implements AdService {
     
     @Override
     public AdDto updateAd(AdDto adDto) {
-        Ad ad = adRepository.save(adMapper.toAd(adDto));
-        return adMapper.toAdDto(ad);
+        AdDto storedAd = getAd(adDto.getId());
+        Ad savedAd = adMapper.updateWithNullAsNoChange(adDto, adMapper.toAd(storedAd));
+        savedAd = adRepository.save(savedAd);
+        return adMapper.toAdDto(savedAd);
     }
     
     @Override

@@ -20,7 +20,7 @@ public class AdDto {
     
     private String description;
     
-    private String price;
+    private Double price;
     
     private Date creationDate;
     
@@ -31,6 +31,4 @@ public class AdDto {
     private SubCategoryDto subCategory;
     
     private Boolean isActive;
-    
-    private Boolean complete;
 }

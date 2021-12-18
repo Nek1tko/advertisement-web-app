@@ -57,7 +57,7 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Ad> favouriteAds;
     
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "saler")
     @ToString.Exclude
     private List<Ad> userAds;
 
