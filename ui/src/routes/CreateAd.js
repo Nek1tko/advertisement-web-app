@@ -1,65 +1,92 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, MenuItem, InputAdornment } from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LocalizedDropzoneArea from '../components/LocalizedDropzoneArea';
 import { Collapse } from '@material-ui/core';
 import { Alert } from "@mui/material";
+import AuthService from '../services/auth.service';
+import { Redirect } from "react-router-dom";
+import axios from 'axios';
+import authHeader from "../services/auth-header";
 
-const CreateAd = props => {
+const API_URL = "http://localhost:8080/";
+
+const CreateAdImpl = props => {
+    const { history } = props;
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
 
-    const [metroList, setMetroList] = useState(['Дыбенко', 'Лесная', 'Зенит']);
+    const [metroList, setMetroList] = useState([]);
     const [metro, setMetro] = useState('');
 
-    const [categoryList, setCategoryList] = useState([
-        {
-            id: 1,
-            name: 'Товары для дома'
-        },
-        {
-            id: 2,
-            name: 'Детские вещи'
-        }
-    ]);
+    const [categoryList, setCategoryList] = useState([]);
     const [category, setCategory] = useState('');
 
-    const [subcategoryList, setSubcategoryList] = useState([
-        {
-            id: 1,
-            name: 'Игрушки'
-        },
-        {
-            id: 2,
-            name: 'Одежда'
-        },
-        {
-            id: 3,
-            name: 'Остальное'
-        },
-    ]);
+    const [subcategoryList, setSubcategoryList] = useState([]);
     const [subcategory, setSubcategory] = useState('');
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const updateSubcategoryList = categoryId => {
-        setSubcategoryList([
-            {
-                id: 3,
-                name: 'Остальное'
-            },
-        ]);
-    };
+    const { _, userId, } = AuthService.getUser();
+
+    useEffect(() => {
+        axios
+            .get(API_URL + "metro", { headers: authHeader() })
+            .then(res => {
+                setMetroList(res.data);
+            })
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get(API_URL + "category", { headers: authHeader() })
+            .then(res => {
+                setCategoryList(res.data);
+            })
+    }, []);
+
+    useEffect(() => {
+        axios
+            .get(API_URL + "category/" + category, { headers: authHeader() })
+            .then(res => {
+                setSubcategoryList(res.data);
+                setSubcategory('');
+            })
+    }, [category]);
 
     const handleSubmit = e => {
         e.preventDefault();
         if (name.length < 3 || name.length > 50) {
             setErrorMessage("Название объявления должно быть длиной от 3 до 50 символов");
             setAlertOpen(true);
+            return;
         }
+
+        axios
+            .post(API_URL + "ad", {
+                name: name,
+                description: description,
+                price: price,
+                saler: {
+                    id: userId
+                },
+                metro: {
+                    id: metro
+                },
+                subCategory: {
+                    id: subcategory
+                },
+                isActive: true
+            }, { headers: authHeader() })
+            .then(res => {
+                history.push('/my-ads');
+            })
+
+        history.push('/my-ads');
     };
 
     return (
@@ -130,8 +157,8 @@ const CreateAd = props => {
             >
                 {metroList.map(metro => {
                     return (
-                        <MenuItem value={metro}>
-                            {metro}
+                        <MenuItem key={metro.id} value={metro.id}>
+                            {metro.name}
                         </MenuItem>);
                 })}
             </TextField>
@@ -145,7 +172,6 @@ const CreateAd = props => {
                     const value = e.target.value;
                     setCategory(value);
                     setSubcategory('');
-                    updateSubcategoryList(value.id);
                 }}
             >
                 {categoryList.map(category => {
@@ -200,6 +226,14 @@ const CreateAd = props => {
             </Button>
         </Box >
     )
+}
+
+const CreateAd = props => {
+    if (!AuthService.getUser()) {
+        return <Redirect to="/login" />
+    }
+
+    return <CreateAdImpl history={props.history} />
 };
 
 export default CreateAd;
