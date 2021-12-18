@@ -1,7 +1,7 @@
-package com.spbstu.edu.advertisement.security.config;
+package com.spbstu.edu.advertisement.config;
 
-import com.spbstu.edu.advertisement.security.filter.JwtTokenFilter;
 import com.spbstu.edu.advertisement.repository.UserRepository;
+import com.spbstu.edu.advertisement.security.JwtTokenFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,38 +26,38 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenFilter jwtTokenFilter;
     private final UserRepository userRepository;
-
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http = http.cors().and().csrf().disable();
-
+        
         http = http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and();
-
+        
         http.authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .anyRequest().authenticated();
-
+        
         http.addFilterBefore(
                 jwtTokenFilter,
                 UsernamePasswordAuthenticationFilter.class
         );
     }
-
-
+    
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userRepository::findByPhoneNumber);
     }
-
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new MessageDigestPasswordEncoder("SHA-256");
     }
-
-
+    
+    
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
+    
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

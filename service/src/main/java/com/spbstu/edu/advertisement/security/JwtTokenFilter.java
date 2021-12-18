@@ -1,4 +1,4 @@
-package com.spbstu.edu.advertisement.security.filter;
+package com.spbstu.edu.advertisement.security;
 
 import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.repository.UserRepository;
