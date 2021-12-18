@@ -9,7 +9,6 @@ import AuthService from "../services/auth.service";
 
 const Login = props => {
     const { history } = props;
-
     // create state variables for each input
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
