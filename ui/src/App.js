@@ -7,6 +7,8 @@ import Home from "./routes/Home";
 import Login from "./routes/Login";
 import Registration from "./routes/Registration";
 import PersonalArea from "./routes/PersonalArea";
+import SellerAd from "./routes/SellerAd";
+import CustomerAd from "./routes/CustomerAd";
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                 <Route exact path="/personal-area" render={props => <PersonalArea {...props} />} />
                 <Route exact path="/my-ads" render={props => <UserAds {...props} />} />
                 <Route exact path="/create-ad" render={props => <CreateAd {...props} />} />
+                <Route exact path="/seller-ad" render={props => <SellerAd {...props} />} />
+                <Route exact path="/customer-ad" render={props => <CustomerAd {...props} />} />
             </Switch>
         </div>
     );
