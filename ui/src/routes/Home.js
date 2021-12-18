@@ -1,7 +1,12 @@
 import React from "react";
+import {FilterModal} from "../components/FilterModal";
 
 const Home = props => {
-    return <div>Home page</div>;
+    return (
+        <div>
+            <FilterModal />
+        </div>
+    );
 };
 
 export default Home;
