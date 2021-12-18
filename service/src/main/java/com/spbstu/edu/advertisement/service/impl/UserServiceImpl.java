@@ -2,6 +2,7 @@ package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
+import com.spbstu.edu.advertisement.exception.InvalidAuthenticationException;
 import com.spbstu.edu.advertisement.exception.UserNotFoundException;
 import com.spbstu.edu.advertisement.exception.UsernameReservedException;
 import com.spbstu.edu.advertisement.mapper.UserMapper;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UserDto addUser(UserDto userDto) {
-        if (userRepository.findByPhoneNumber(userDto.getPhoneNumber()) != null) {
+        if (getUserByPhoneNumber(userDto.getPhoneNumber()) != null) {
             throw new UsernameReservedException();
         }
         
@@ -41,9 +42,31 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UserDto updateUser(UserDto userDto) {
-        setEncodedPassword(userDto);
-        User user = userRepository.save(userMapper.toUser(userDto));
-        return userMapper.toUserDto(user);
+        UserDto storedUser = getUser(userDto.getId());
+        if (userDto.getNewPassword() != null) {
+            if (passwordEncoder.matches(userDto.getPassword(), storedUser.getPassword())) {
+                userDto.setPassword(userDto.getNewPassword());
+                setEncodedPassword(userDto);
+            } else {
+                throw new InvalidAuthenticationException();
+            }
+        } else if (userDto.getPassword() != null) {
+            userDto.setPassword(null);
+        }
+        if (userDto.getPhoneNumber() != null) {
+            UserDto userByPhoneNumber = getUserByPhoneNumber(userDto.getPhoneNumber());
+            if (userByPhoneNumber != null && !userByPhoneNumber.getId().equals(userDto.getId())) {
+                throw new UsernameReservedException();
+            }
+        }
+        User savedUser = userMapper.updateWithNullAsNoChange(userDto, userMapper.toUser(storedUser));
+        savedUser = userRepository.save(savedUser);
+        return userMapper.toUserDto(savedUser);
+    }
+    
+    @Override
+    public UserDto getUserByPhoneNumber(String phoneNumber) {
+        return userMapper.toUserDto(userRepository.findByPhoneNumber(phoneNumber));
     }
     
     @Override
