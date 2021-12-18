@@ -22,5 +22,8 @@ public class UserDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String newPassword;
+    
     private String phoneNumber;
 }

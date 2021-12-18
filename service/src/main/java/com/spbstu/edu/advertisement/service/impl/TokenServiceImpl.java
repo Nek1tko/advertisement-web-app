@@ -3,7 +3,7 @@ package com.spbstu.edu.advertisement.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.exception.InvalidPasswordException;
+import com.spbstu.edu.advertisement.exception.InvalidAuthenticationException;
 import com.spbstu.edu.advertisement.exception.UserNotFoundException;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import com.spbstu.edu.advertisement.service.TokenService;
@@ -50,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
                     .signWith(SignatureAlgorithm.HS512, KEY)
                     .compact();
         } else {
-            throw new InvalidPasswordException();
+            throw new InvalidAuthenticationException();
         }
     }
     

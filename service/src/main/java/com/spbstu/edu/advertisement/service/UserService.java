@@ -10,5 +10,7 @@ public interface UserService {
     
     UserDto updateUser(UserDto userDto);
     
+    UserDto getUserByPhoneNumber(String phoneNumber);
+    
     void deleteUser(long userId);
 }
