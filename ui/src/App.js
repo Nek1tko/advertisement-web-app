@@ -6,15 +6,17 @@ import UserAds from "./routes/UserAds";
 import Home from "./routes/Home";
 import Login from "./routes/Login";
 import Registration from "./routes/Registration";
+import PersonalArea from "./routes/PersonalArea";
 
 function App() {
     return (
         <div className="container">
             <Header />
             <Switch>
-                <Route exact from="/" render={props => <Home {...props} />} />
-                <Route exact from="/login" render={props => <Login {...props} />} />
-                <Route exact from="/sign-up" render={props => <Registration {...props} />} />
+                <Route exact path="/login" render={props => <Login {...props} />} />
+                <Route exact path="/sign-up" render={props => <Registration {...props} />} />
+                <Route exact path="/" render={props => <Home {...props} />} />
+                <Route exact path="/personal-area" render={props => <PersonalArea {...props} />} />
                 <Route exact path="/my-ads" render={props => <UserAds {...props} />} />
                 <Route exact path="/create-ad" render={props => <CreateAd {...props} />} />
             </Switch>

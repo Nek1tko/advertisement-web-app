@@ -90,7 +90,7 @@ const Login = props => {
             />
 
             <Button
-                disable type="submit"
+                type="submit"
                 variant="contained"
                 color="primary"
                 onClick={handleSubmit}

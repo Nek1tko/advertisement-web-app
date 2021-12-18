@@ -22,8 +22,9 @@ const Header = props => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = pageURL => {
         setAnchorElUser(null);
+        history.push(pageURL);
     };
 
     const homeItem = {
@@ -41,7 +42,16 @@ const Header = props => {
         }
     ];
 
-    const settings = ['Профиль', 'Выйти'];
+    const settingsItems = [
+        {
+            settingsTitle: "Профиль",
+            pageURL: "/personal-area"
+        },
+        {
+            settingsTitle: "Выйти",
+            pageURL: "/login"
+        }
+    ];
 
     return (
         <AppBar style={{ background: '#669999' }} position="static">
@@ -92,11 +102,14 @@ const Header = props => {
                         open={Boolean(anchorElUser)}
                         onClose={handleCloseUserMenu}
                     >
-                        {settings.map((setting) => (
-                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                <Typography>{setting}</Typography>
-                            </MenuItem>
-                        ))}
+                        {settingsItems.map((settingsItem) => {
+                            const { settingsTitle, pageURL } = settingsItem;
+                            return (
+                                <MenuItem key={settingsTitle} onClick={() => handleCloseUserMenu(pageURL)}>
+                                    <Typography>{settingsTitle}</Typography>
+                                </MenuItem>
+                            );
+                        })}
                     </Menu>
                 </Box>
             </Toolbar>
