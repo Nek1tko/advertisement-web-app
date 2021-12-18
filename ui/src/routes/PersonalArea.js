@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Button, Typography } from "@material-ui/core";
 import AuthService from '../services/auth.service';
 import { Redirect } from "react-router-dom";
@@ -10,10 +10,14 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Collapse } from "@material-ui/core";
 import { Alert } from "@mui/material";
+import axios from 'axios';
+import authHeader from "../services/auth-header";
 
-const PersonalArea = props => {
-    const [name, setName] = useState('Test name');
-    const [surname, setSurname] = useState('Test surname');
+const API_URL = "http://localhost:8080/user";
+
+const PersonalAreaImpl = props => {
+    const [name, setName] = useState('');
+    const [surname, setSurname] = useState('');
     const [open, setOpen] = useState(false);
     const [errorOpen, setErrorOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -21,12 +25,18 @@ const PersonalArea = props => {
     const [editedName, setEditedName] = useState(name);
     const [editedSurname, setEditedSurname] = useState(surname);
 
-
-    if (!AuthService.getUser()) {
-        return <Redirect to="/login" />
-    }
-
     const { phoneNumber, userId, } = AuthService.getUser();
+
+    useEffect(() => {
+        axios
+            .get(API_URL + '/' + userId, { headers: authHeader() })
+            .then(res => {
+                setName(res.data.name);
+                setSurname(res.data.surname);
+                setEditedName(res.data.name);
+                setEditedSurname(res.data.surname);
+            })
+    }, [userId, setName, setSurname]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -42,8 +52,21 @@ const PersonalArea = props => {
     const handleSaveClose = () => {
         setOpen(false);
         setErrorOpen(false);
-        setName(editedName);
-        setSurname(editedSurname);
+
+        axios
+            .put(API_URL, {
+                id: userId,
+                phoneNumber: phoneNumber,
+                name: editedName,
+                surname: editedSurname
+            },
+                {
+                    headers: authHeader()
+                })
+            .then(res => {
+                setName(res.data.name);
+                setSurname(res.data.surname);
+            });
     };
 
     return (
@@ -137,6 +160,14 @@ const PersonalArea = props => {
             </Dialog>
         </Box>
     );
+}
+
+const PersonalArea = props => {
+    if (!AuthService.getUser()) {
+        return <Redirect to="/login" />
+    }
+
+    return <PersonalAreaImpl />
 };
 
 export default PersonalArea;
