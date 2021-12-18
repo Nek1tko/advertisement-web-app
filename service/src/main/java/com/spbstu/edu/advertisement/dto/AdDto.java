@@ -26,6 +26,7 @@ public class AdDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private LocalDate creationDate;
     
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UserDto saler;
     
     private MetroDto metro;

@@ -52,7 +52,7 @@ public class ImageServiceImpl implements ImageService {
             String resultFilename = UUID.randomUUID() + "." + file.getOriginalFilename();
             file.transferTo(new File(uploadPath + "/" + resultFilename));
             return ImageDto.builder()
-                    .fileName(resultFilename)
+                    .path(resultFilename)
                     .build();
         } else {
             throw new InvalidFileException();
@@ -61,8 +61,8 @@ public class ImageServiceImpl implements ImageService {
     
     @Override
     public ImageDto addImage(ImageDto image) {
-        File file = new File(uploadPath + "/" + image.getFileName());
-        if (getImages(image.getAdId()).size() == MAX_IMAGE_COUNT) {
+        File file = new File(uploadPath + "/" + image.getPath());
+        if (getImages(image.getAd().getId()).size() == MAX_IMAGE_COUNT) {
             file.delete();
             throw new MaxImageCountException();
         }
@@ -74,7 +74,7 @@ public class ImageServiceImpl implements ImageService {
     public void deleteImage(long imageId) {
         try {
             ImageDto image = getImage(imageId);
-            File file = new File(uploadPath + "/" + image.getFileName());
+            File file = new File(uploadPath + "/" + image.getPath());
             file.delete();
             imageRepository.deleteById(imageId);
         } catch (EmptyResultDataAccessException exception) {
