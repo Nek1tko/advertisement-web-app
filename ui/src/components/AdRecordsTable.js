@@ -1,20 +1,6 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import { DataGrid } from '@mui/x-data-grid';
-import eren from '../img/eren.jpg'
-
-let id = 0;
-
-// function createData(image, name, location, price) {
-//     id += 1
-//     return { id, image, name, location, price };
-// }
-
-// const rows = [
-//     createData(eren, 'Танк', 'Улица Дыбенко', 10000000),
-//     createData(eren, 'Стирательная резинка', 'Проспект Большевиков', 10),
-//     createData(eren, 'Кот', 'Сенная', 0),
-// ];
 
 const columns = [
     {
