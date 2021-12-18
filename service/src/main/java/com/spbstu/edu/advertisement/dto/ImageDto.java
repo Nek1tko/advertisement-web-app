@@ -18,6 +18,5 @@ public class ImageDto {
     
     private String path;
     
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Ad ad;
+    private AdDto ad;
 }
