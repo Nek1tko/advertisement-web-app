@@ -38,7 +38,7 @@ const Header = props => {
         history.push(pageURL);
     };
 
-    const handleSingOut = () => {
+    const handleSignOut = () => {
         setAnchorElUser(null);
         AuthService.signOut();
         history.push('/login');
@@ -68,7 +68,7 @@ const Header = props => {
         {
             settingsTitle: "Выйти",
             pageURL: "/login",
-            handler: handleSingOut
+            handler: handleSignOut
         }
     ];
 
