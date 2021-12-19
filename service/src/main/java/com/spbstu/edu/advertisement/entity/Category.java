@@ -20,6 +20,7 @@ import java.util.List;
 @ToString
 @RequiredArgsConstructor
 public class Category {
+    public static final String SUB_CATEGORY_ID = "sub";
     @Id
     @SequenceGenerator(
             name = "category_sequence",
