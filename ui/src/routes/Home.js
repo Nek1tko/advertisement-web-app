@@ -1,8 +1,8 @@
 import React from "react";
-import {FilterModal} from "../components/FilterModal";
+import { FilterModal } from "../components/FilterModal";
 import AdRecordsTable from "../components/AdRecordsTable";
 import Box from "@mui/material/Box";
-import {TextField} from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from "@material-ui/core/Button";
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -15,11 +15,11 @@ const Home = props => {
 
     return (
         <div>
-            <Box sx={{display: "flex"}}>
-                <Box sx={{width: 1 / 3, flex: 1}}>
-                    <FilterModal/>
+            <Box sx={{ display: "flex" }}>
+                <Box sx={{ width: 1 / 3, flex: 1 }}>
+                    <FilterModal />
                 </Box>
-                <Box sx={{width: 1 / 3, flex: 1, marginTop: 3}}>
+                <Box sx={{ width: 1 / 3, flex: 1, marginTop: 3 }}>
                     <TextField
                         type="search"
                         size="small"
@@ -32,20 +32,18 @@ const Home = props => {
                         fullWidth
                     />
                 </Box>
-                <Box sx={{width: 1 / 3, flex: 1, marginTop: 3}}>
+                <Box sx={{ width: 1 / 3, flex: 1, marginTop: 3 }}>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         onClick={handleClickSearch}
                         endIcon={<SearchIcon />}
-                        style={{
-                            backgroundColor: "#a1b8f1",
-                        }}
+                        color="primary"
                     >
                         Поиск
                     </Button>
                 </Box>
             </Box>
-            <AdRecordsTable/>
+            <AdRecordsTable />
         </div>
     );
 };

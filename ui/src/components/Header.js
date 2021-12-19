@@ -73,7 +73,7 @@ const Header = props => {
     ];
 
     return (
-        <AppBar style={{ background: '#669999' }} position="static">
+        <AppBar style={{ background: 'primary' }} position="static">
             <Toolbar>
                 <Button
                     style={{ color: '#FFFFFF' }}
@@ -98,8 +98,6 @@ const Header = props => {
                         );
                     })}
                 </Box>
-
-
 
                 <Box sx={{ flexGrow: 0 }}>
                     <Collapse in={isOpen}>
