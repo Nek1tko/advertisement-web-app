@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AdService {
     List<AdDto> getAds(PageableContext pageableContext);
+
+    Long countAds(PageableContext pageableContext);
     
     AdDto getAd(long adId);
     
