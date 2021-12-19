@@ -14,7 +14,6 @@ import com.spbstu.edu.advertisement.repository.ImageRepository;
 import com.spbstu.edu.advertisement.service.AdService;
 import com.spbstu.edu.advertisement.service.ImageService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,14 +33,15 @@ public class ImageServiceImpl implements ImageService {
     
     private final static int MAX_IMAGE_COUNT = 3;
     
+    public final static String UPLOAD_PATH = "D:/Projects/addvertisement-web-app/service/src/main/resources/images";
+    
+    public final static String DEFAULT_IMAGE_PATH = "c85f34f3-b21f-4525-82bf-a5dbdc178acc.подключение к квв.png";
+    
     private final ImageRepository imageRepository;
     
     private final AdService adService;
     
     private final ImageMapper imageMapper;
-    
-    @Value("${upload.path}")
-    private String uploadPath;
     
     @Override
     public ImageDto getImage(long imageId) {
@@ -52,13 +52,13 @@ public class ImageServiceImpl implements ImageService {
     public ImageDto uploadImage(String imageJson, MultipartFile file) throws IOException {
         ImageDto image = new ObjectMapper().readValue(imageJson, ImageDto.class);
         validateParams(image, file);
-        File uploadDir = new File(uploadPath);
+        File uploadDir = new File(UPLOAD_PATH);
         if (!uploadDir.exists()) {
             uploadDir.mkdir();
         }
         String resultFilename = UUID.randomUUID() + "." + file.getOriginalFilename();
         
-        file.transferTo(new File(uploadPath + "/" + resultFilename));
+        file.transferTo(new File(UPLOAD_PATH + "/" + resultFilename));
         image.setPath(resultFilename);
         Image savedImage = imageRepository.save(imageMapper.toImage(image));
         return imageMapper.toImageDto(savedImage);
@@ -82,7 +82,7 @@ public class ImageServiceImpl implements ImageService {
     public void deleteImage(long imageId) {
         try {
             ImageDto image = getImage(imageId);
-            File file = new File(uploadPath + "/" + image.getPath());
+            File file = new File(UPLOAD_PATH + "/" + image.getPath());
             file.delete();
             imageRepository.deleteById(imageId);
         } catch (EmptyResultDataAccessException exception) {
