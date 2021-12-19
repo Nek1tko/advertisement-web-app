@@ -1,1 +1,5 @@
 target/
+src/main/resources/images
+gen
+.run
+.jpb
