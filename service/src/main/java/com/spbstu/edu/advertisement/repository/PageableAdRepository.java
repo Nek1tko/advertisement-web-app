@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PageableAdRepository {
     List<Ad> findAdsByFilters(PageableContext pageableContext);
+
+    Long countAdsByFilter(PageableContext pageableContext);
 }

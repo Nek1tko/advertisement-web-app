@@ -29,6 +29,8 @@ public class AdServiceImpl implements AdService {
     private final AdMapper adMapper;
     
     private final UserService userService;
+
+
     
     @Override
     public List<AdDto> getAds(PageableContext pageableContext) {
@@ -38,7 +40,13 @@ public class AdServiceImpl implements AdService {
                 .map(adMapper::toAdDto)
                 .collect(Collectors.toList());
     }
-    
+
+    @Override
+    public Long countAds(PageableContext pageableContext) {
+        return pageableAdRepository
+                .countAdsByFilter(pageableContext);
+    }
+
     @Override
     public AdDto getAd(long adId) {
         return adMapper.toAdDto(getAdEntity(adId));
