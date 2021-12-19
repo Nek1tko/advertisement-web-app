@@ -155,8 +155,8 @@ const SellerAd = props => {
                     label="Описание"
                     variant="filled"
                     multiline
-                    maxRows={14}
-                    minRows={14}
+                    maxRows={13}
+                    minRows={13}
                     onChange={e => {
                         setDescription(e.target.value);
                     }}

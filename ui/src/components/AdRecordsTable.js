@@ -43,7 +43,7 @@ export default function AdRecordsTable(props) {
             location: ad.metro.name,
             price: ad.price,
             is_active: ad.isActive,
-            saler: ad.saler.id,
+            saler: ad.saler,
             metro: ad.metro,
             subcategory: ad.subCategory
         };
@@ -76,10 +76,15 @@ export default function AdRecordsTable(props) {
                 disableSelectionOnClick={true}
                 disable
                 onRowClick={(params) => {
-                    if (userId === params.row.saler) {
-                        const ad = params.row;
+                    const ad = params.row;
+                    if (userId === ad.saler.id) {
                         history.push({
                             pathname: '/seller-ad',
+                            ad
+                        });
+                    } else {
+                        history.push({
+                            pathname: '/customer-ad',
                             ad
                         });
                     }
