@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Repository
 public class PageableAdRepositoryImpl implements PageableAdRepository {
-    private static final Integer COUNT = 1;
+    private static final Integer COUNT = 10;
     private static final String ID_PATH = "id";
 
     private final EntityManager entityManager;
