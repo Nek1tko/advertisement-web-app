@@ -17,11 +17,13 @@ const HomeImpl = props => {
         console.log("search");
     }
 
+    const [page, setPage] = React.useState("no");
+
     return (
         <div>
             <Box sx={{ display: "flex" }}>
                 <Box sx={{ width: 1 / 3, flex: 1 }}>
-                    <FilterModal />
+                    <FilterModal page={page} />
                 </Box>
                 <Box sx={{ width: 1 / 3, flex: 1, marginTop: 3 }}>
                     <TextField
@@ -47,7 +49,7 @@ const HomeImpl = props => {
                     </Button>
                 </Box>
             </Box>
-            <AdRecordsTable />
+            <AdRecordsTable setPage={setPage} />
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Box } from "@material-ui/core";
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -48,6 +48,10 @@ export default function AdRecordsTable(props) {
             subcategory: ad.subCategory
         };
     }) : [];
+
+    useEffect(() => {
+        props.setPage("yes");
+    }, []);
 
     return (
         <Box
