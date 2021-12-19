@@ -30,6 +30,8 @@ const columns = [
 ];
 
 export default function AdRecordsTable(props) {
+    const { history } = props;
+    const userId = props.userId;
     const ads = props.ads;
 
     const rows = ads ? ads.map(ad => {
@@ -37,9 +39,13 @@ export default function AdRecordsTable(props) {
             id: ad.id,
             image: null,
             name: ad.name,
+            description: ad.description,
             location: ad.metro.name,
             price: ad.price,
-            is_active: ad.isActive
+            is_active: ad.isActive,
+            saler: ad.saler.id,
+            metro: ad.metro,
+            subcategory: ad.subCategory
         };
     }) : [];
 
@@ -67,8 +73,17 @@ export default function AdRecordsTable(props) {
                 pagination
                 {...rows}
                 disableColumnMenu
-                disableSelectionOnClick
+                disableSelectionOnClick={true}
                 disable
+                onRowClick={(params) => {
+                    if (userId === params.row.saler) {
+                        const ad = params.row;
+                        history.push({
+                            pathname: '/seller-ad',
+                            ad
+                        });
+                    }
+                }}
             />
         </ Box>
     );

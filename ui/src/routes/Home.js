@@ -5,8 +5,12 @@ import Box from "@mui/material/Box";
 import { TextField } from "@mui/material";
 import Button from "@material-ui/core/Button";
 import SearchIcon from '@mui/icons-material/Search';
+import axios from 'axios';
+import authHeader from "../services/auth-header";
+import AuthService from '../services/auth.service';
+import { Redirect } from "react-router-dom";
 
-const Home = props => {
+const HomeImpl = props => {
     const [searchValue, setSearchValue] = React.useState("");
 
     const handleClickSearch = () => {
@@ -46,6 +50,14 @@ const Home = props => {
             <AdRecordsTable />
         </div>
     );
+}
+
+const Home = props => {
+    if (!AuthService.getUser()) {
+        return <Redirect to="/login" />
+    }
+
+    return <HomeImpl />
 };
 
 export default Home;
