@@ -15,12 +15,16 @@ const AdRecordsTableWrapper = props => {
         axios
             .get(API_URL + userId, { headers: authHeader() })
             .then(res => {
-                //console.log(res);
+                console.log(res);
                 setAds(res.data);
             })
     }, [userId, setAds]);
 
-    return <AdRecordsTable ads={ads} />;
+    return <AdRecordsTable
+        ads={ads}
+        userId={userId}
+        history={props.history}
+    />;
 }
 
 const UserAds = props => {
@@ -28,7 +32,7 @@ const UserAds = props => {
         return <Redirect to="/login" />
     }
 
-    return <AdRecordsTableWrapper />
+    return <AdRecordsTableWrapper history={props.history} />
 };
 
 export default UserAds;
