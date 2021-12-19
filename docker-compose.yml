@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./ui
+    ports:
+      - "3000:3000"
+
+  backend:
+    build: ./service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/advertisement_db
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres:11
+    container_name: db
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: advertisement_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+volumes:
+  postgres-data: null
