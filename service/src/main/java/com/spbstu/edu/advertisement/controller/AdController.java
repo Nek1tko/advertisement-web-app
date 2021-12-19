@@ -47,8 +47,14 @@ public class AdController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @PostMapping("/page")
     public List<AdDto> getAds(@RequestBody PageableContext pageableContext) {
         return adService.getAds(pageableContext);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/page/count")
+    public Long countAds(@RequestBody PageableContext pageableContext) {
+        return adService.countAds(pageableContext);
     }
 }

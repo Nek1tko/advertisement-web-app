@@ -27,7 +27,9 @@ public class PageableAdRepositoryImpl implements PageableAdRepository {
 
         CriteriaQuery<Ad> criteriaQuery = criteriaBuilder.createQuery(Ad.class);
         Root<Ad> ad = criteriaQuery.from(Ad.class);
-        CriteriaQuery<Ad> select = criteriaQuery.where(getPredicate(pageableContext, criteriaQuery, criteriaBuilder, ad)).select(ad);
+        CriteriaQuery<Ad> select = criteriaQuery
+                .select(ad)
+                .where(getPredicate(pageableContext, criteriaQuery, criteriaBuilder, ad));
 
         TypedQuery<Ad> typedQuery = entityManager.createQuery(select);
 
@@ -35,6 +37,19 @@ public class PageableAdRepositoryImpl implements PageableAdRepository {
         typedQuery.setMaxResults(COUNT);
 
         return typedQuery.getResultList();
+    }
+
+    @Override
+    public Long countAdsByFilter(PageableContext pageableContext) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<Ad> ad = criteriaQuery.from(Ad.class);
+        CriteriaQuery<Long> select = criteriaQuery
+                .select(criteriaBuilder.count(ad))
+                .where(getPredicate(pageableContext, criteriaQuery, criteriaBuilder, ad));
+
+        return entityManager.createQuery(select).getSingleResult();
     }
 
     private Predicate getPredicate(PageableContext pageableContext, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder, Root<Ad> ad) {
