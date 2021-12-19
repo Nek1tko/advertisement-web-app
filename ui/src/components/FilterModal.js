@@ -8,6 +8,7 @@ import AddIcon from "@mui/icons-material/Add";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import uniqid from 'uniqid';
 
 const selectFields = ["Метро", "Категория", "Мин. цена", "Макс. цена"];
 let initialRows = [];
@@ -58,7 +59,7 @@ export const FilterModal = () => {
     const addFilter = React.useCallback(() => {
         setTimeout(() => {
             const defaultRow = {
-                id: rows.at(-1).id + 1,
+                id: uniqid(),
                 filterValue: "New filter",
                 filteringField: selectFields[0],
             };
