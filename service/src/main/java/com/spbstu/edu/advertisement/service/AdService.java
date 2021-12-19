@@ -2,11 +2,12 @@ package com.spbstu.edu.advertisement.service;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.entity.Ad;
+import com.spbstu.edu.advertisement.vo.PageableContext;
 
 import java.util.List;
 
 public interface AdService {
-    List<AdDto> getAds();
+    List<AdDto> getAds(PageableContext pageableContext);
     
     AdDto getAd(long adId);
     
@@ -19,6 +20,6 @@ public interface AdService {
     List<AdDto> getAds(long userId);
     
     List<AdDto> getFavouriteAds(long userId);
-    
+
     Ad getAdEntity(long adId);
 }
