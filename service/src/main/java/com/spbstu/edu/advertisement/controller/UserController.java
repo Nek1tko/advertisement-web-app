@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
     
-    
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public UserDto updateAd(@RequestBody UserDto user) {
+    public UserDto updateUser(@RequestBody UserDto user) {
         return userService.updateUser(user);
     }
     
@@ -31,5 +30,4 @@ public class UserController {
     public UserDto getUserById(@PathVariable Long userId) {
         return userService.getUser(userId);
     }
-    
 }

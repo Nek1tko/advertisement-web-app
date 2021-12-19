@@ -1,6 +1,7 @@
 package com.spbstu.edu.advertisement.dto;
 
-import javassist.bytecode.ByteArray;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spbstu.edu.advertisement.entity.Ad;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,9 +16,7 @@ import lombok.Setter;
 public class ImageDto {
     private Long id;
     
-    private ByteArray file;
+    private String path;
     
-    private String fileName;
-    
-    private Long adId;
+    private AdDto ad;
 }
