@@ -5,8 +5,10 @@ import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.exception.AdNotFoundException;
 import com.spbstu.edu.advertisement.mapper.AdMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
+import com.spbstu.edu.advertisement.repository.PageableAdRepository;
 import com.spbstu.edu.advertisement.service.AdService;
 import com.spbstu.edu.advertisement.service.UserService;
+import com.spbstu.edu.advertisement.vo.PageableContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -21,14 +23,18 @@ import java.util.stream.Collectors;
 public class AdServiceImpl implements AdService {
     
     private final AdRepository adRepository;
-    
+
+    private final PageableAdRepository pageableAdRepository;
+
     private final AdMapper adMapper;
     
     private final UserService userService;
     
     @Override
-    public List<AdDto> getAds() {
-        return adRepository.findAll().stream()
+    public List<AdDto> getAds(PageableContext pageableContext) {
+        return pageableAdRepository
+                .findAdsByFilters(pageableContext)
+                .stream()
                 .map(adMapper::toAdDto)
                 .collect(Collectors.toList());
     }

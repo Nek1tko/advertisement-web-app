@@ -22,6 +22,8 @@ import java.util.List;
 @ToString
 @RequiredArgsConstructor
 public class SubCategory {
+    public static final String CATEGORY_PATH = "category";
+
     @Id
     @SequenceGenerator(
             name = "sub_category_sequence",
