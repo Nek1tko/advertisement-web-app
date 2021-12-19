@@ -21,6 +21,7 @@ const Home = props => {
                 </Box>
                 <Box sx={{width: 1 / 3, flex: 1, marginTop: 3}}>
                     <TextField
+                        type="search"
                         size="small"
                         label="Поиск"
                         variant="outlined"
