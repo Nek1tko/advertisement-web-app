@@ -66,6 +66,11 @@ const Header = props => {
             handler: handleCloseUserMenu
         },
         {
+            settingsTitle: "Избранное",
+            pageURL: "/favorites",
+            handler: handleCloseUserMenu
+        },
+        {
             settingsTitle: "Выйти",
             pageURL: "/login",
             handler: handleSignOut
