@@ -92,9 +92,11 @@ export const FilterModal = () => {
     };
     const handleApply = () => {
         setBufferRows(rows);
+        setOpen(false);
     };
     const handleCancel = () => {
         setRows(bufferRows);
+        setOpen(false);
     };
 
     return (
