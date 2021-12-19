@@ -33,4 +33,6 @@ public class AdDto {
     private SubCategoryDto subCategory;
     
     private Boolean isActive;
+    
+    private String previewImagePath;
 }
