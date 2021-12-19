@@ -10,9 +10,7 @@ public interface ImageService {
     
     ImageDto getImage(long imageId);
     
-    ImageDto uploadImage(MultipartFile file) throws IOException;
-    
-    ImageDto addImage(ImageDto image);
+    ImageDto uploadImage(String imageJson, MultipartFile file) throws IOException;
     
     void deleteImage(long imageId);
     
