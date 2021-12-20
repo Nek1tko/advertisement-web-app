@@ -36,5 +36,6 @@ public class AdDto {
     
     private String previewImagePath;
     
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Boolean isFavourite;
 }
