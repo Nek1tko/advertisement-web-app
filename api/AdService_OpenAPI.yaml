@@ -393,9 +393,6 @@ components:
     Favourite:
       type: object
       properties:
-        user_id:
-          type: integer
-          format: int64
         ad_id:
           type: integer
           format: int64
