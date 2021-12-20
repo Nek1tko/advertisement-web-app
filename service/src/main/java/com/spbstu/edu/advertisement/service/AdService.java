@@ -1,6 +1,7 @@
 package com.spbstu.edu.advertisement.service;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
+import com.spbstu.edu.advertisement.dto.FavouriteDto;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.vo.PageableContext;
 
@@ -24,4 +25,8 @@ public interface AdService {
     List<AdDto> getFavouriteAds(long userId);
 
     Ad getAdEntity(long adId);
+    
+    FavouriteDto addToFavourites(FavouriteDto favourite);
+    
+    List<AdDto> setFavourite(List<AdDto> ads);
 }
