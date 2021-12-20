@@ -58,8 +58,10 @@ public class AdServiceImpl implements AdService {
     @Override
     public AdDto addAd(AdDto adDto) {
         adDto.setCreationDate(LocalDate.now(ZoneId.of("Europe/Moscow")));
-        Ad ad = adRepository.save(adMapper.toAd(adDto));
-        return adMapper.toAdDto(ad);
+        adDto.setIsActive(adDto.getIsActive() == null || adDto.getIsActive());
+        adDto = adMapper.toAdDto(adRepository.save(adMapper.toAd(adDto)));
+        adDto.setIsFavourite(false);
+        return adDto;
     }
     
     @Override

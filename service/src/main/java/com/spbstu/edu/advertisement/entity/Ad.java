@@ -25,9 +25,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Ad {
     public static final String PRICE_PATH = "price";
+    
     public static final String METRO_PATH = "metro";
+    
     public static final String SUB_CATEGORY_PATH = "subCategory";
-
+    
+    public static final String IS_ACTIVE_PATH = "isActive";
+    
+    public static final String TITLE_PATH = "name";
+    
     @Id
     @SequenceGenerator(
             name = "ad_sequence",
