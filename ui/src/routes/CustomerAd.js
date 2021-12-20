@@ -5,6 +5,8 @@ import AwesomeSliderStyles from "react-awesome-slider/src/styles";
 import TextField from "@material-ui/core/TextField";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from '@mui/material/IconButton';
 
 const API_URL = "http://localhost:8080/";
 
@@ -20,6 +22,8 @@ const CustomerAd = props => {
     const [category, setCategory] = useState(ad.subcategory.category);
     const [subcategory, setSubcategory] = useState(ad.subcategory);
     const [imgs, setImgs] = useState([]);
+    const [isFavorites, setIsFavorites] = useState(ad.isFavourite);
+    const [favIconColor, setFavIconColor] = useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
 
     useEffect(() => {
         axios
@@ -29,57 +33,94 @@ const CustomerAd = props => {
             })
     }, []);
 
-    return (<div style={{ display: "flex" }}>
-        <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
-            <Typography variant="h5" align="center" style={{ color: "#666666", marginTop: 30 }}>
-                {adName}
-            </Typography>
+    const handleFavClick = () => {
+        axios
+            .put(API_URL + "ad/favourites",
+                {
+                    adId: ad.id,
+                    isFavourite: !isFavorites
+                },
+                { headers: authHeader() })
+            .then(res => {
+                setFavIconColor(res.data.isFavourite ? "#E75480" : "#BDBDBD");
+                setIsFavorites(res.data.isFavourite);
+            });
+    }
 
-            <Typography align="center" style={{ color: "#666666", marginTop: 10, marginBottom: 10 }}>
-                {metro.name}
-            </Typography>
-
-            <AwesomeSlider
-                animation="foldOutAnimation"
-                cssModule={AwesomeSliderStyles}
+    return (
+        <Box display='flex'
+            flexDirection='column'
+            justify-content='space-between'
+        >
+            <Box
+                display='flex'
+                flexDirection='row'
+                justify-content='space-between'
             >
-                {imgs.map(img => {
-                    return (
-                        <div data-src={img} />
-                    );
-                })}
-            </AwesomeSlider>
-        </Box>
+                <Typography variant="h3" align="left" style={{ marginTop: 30 }}>
+                    {adName}
+                </Typography>
 
-        <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
-            <Typography variant="h5" align="center" style={{ color: "#666666", marginTop: 30 }}>
-                Цена: {price}
-            </Typography>
+                <IconButton
+                    align="right"
+                    style={{ marginTop: 20, marginLeft: 'auto' }} size="large"
+                    onClick={handleFavClick}
+                >
+                    <FavoriteIcon fontSize="inherit" sx={{ color: favIconColor }} />
+                </IconButton>
+            </Box>
 
-            <Typography align="center" style={{ color: "#666666", marginTop: 10, marginBottom: 10 }}>
-                {category.name}: {subcategory.name}
-            </Typography>
-
-            <Typography
-                variant="h6"
-                align="center"
-                style={{ color: "#666666", marginTop: 10, marginBottom: 10 }}
+            <Box
+                display='flex'
+                flexDirection='row'
+                justify-content='space-between'
             >
-                {name}: {phone}
-            </Typography>
+                <Box sx={{ width: 1 / 2, flex: 1 }}>
+                    <Typography align="left" style={{ color: "#666666", marginTop: 10 }}>
+                        {metro.name}
+                    </Typography>
 
-            <TextField
-                label="Описание"
-                variant="filled"
-                multiline
-                maxRows={11}
-                minRows={11}
-                value={description}
-                fullWidth
-                disabled={true}
-            />
+                    <Typography align="left" style={{ color: "#666666" }}>
+                        {category.name} → {subcategory.name}
+                    </Typography>
+
+                    <AwesomeSlider
+                        animation="foldOutAnimation"
+                        cssModule={AwesomeSliderStyles}
+                        style={{ marginTop: 20 }}
+                    >
+                        {imgs.map(img => {
+                            return (
+                                <div data-src={img} />
+                            );
+                        })}
+                    </AwesomeSlider>
+                </Box>
+
+                <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
+                    <Typography variant="h5" align="right">
+                        {price}₽
+                    </Typography>
+
+                    <Typography variant="h5" align="right" style={{ fontWeight: 550 }}>
+                        {name} {phone}
+                    </Typography>
+
+                    <TextField
+                        label="Описание"
+                        variant="filled"
+                        multiline
+                        maxRows={18}
+                        minRows={18}
+                        value={description}
+                        fullWidth
+                        disabled={true}
+                        style={{ marginTop: 15 }}
+                    />
+
+                </Box>
+            </Box>
         </Box>
-    </div>
     );
 };
 

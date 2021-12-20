@@ -5,10 +5,8 @@ import com.spbstu.edu.advertisement.dto.ImageDto;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.entity.Image;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.exception.ImageNotFoundException;
-import com.spbstu.edu.advertisement.exception.InvalidFileException;
-import com.spbstu.edu.advertisement.exception.MaxImageCountException;
-import com.spbstu.edu.advertisement.exception.NotEnoughRightsException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.mapper.ImageMapper;
 import com.spbstu.edu.advertisement.repository.ImageRepository;
 import com.spbstu.edu.advertisement.service.AdService;
@@ -66,15 +64,15 @@ public class ImageServiceImpl implements ImageService {
     
     private void validateParams(ImageDto image, MultipartFile file) {
         if (file == null || file.getOriginalFilename() == null || file.getOriginalFilename().isEmpty()) {
-            throw new InvalidFileException();
+            throw new CustomException(ExceptionId.INVALID_FILE);
         }
         Ad ad = adService.getAdEntity(image.getAd().getId());
         if (ad.getImages().size() == MAX_IMAGE_COUNT) {
-            throw new MaxImageCountException();
+            throw new CustomException(ExceptionId.MAX_IMAGE_COUNT);
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!Objects.equals(ad.getSaler().getId(), user.getId())) {
-            throw new NotEnoughRightsException("You cannot add an image to someone else's ad.");
+            throw new CustomException(ExceptionId.NOT_ENOUGH_RIGHTS, "You cannot add an image to someone else's ad.");
         }
     }
     
@@ -86,7 +84,7 @@ public class ImageServiceImpl implements ImageService {
             file.delete();
             imageRepository.deleteById(imageId);
         } catch (EmptyResultDataAccessException exception) {
-            throw new ImageNotFoundException();
+            throw new CustomException(ExceptionId.IMAGE_NOT_FOUND, exception);
         }
     }
     
@@ -99,6 +97,6 @@ public class ImageServiceImpl implements ImageService {
     
     private Image getImageEntity(long imageId) {
         return imageRepository.findById(imageId)
-                .orElseThrow(ImageNotFoundException::new);
+                .orElseThrow(() -> new CustomException(ExceptionId.IMAGE_NOT_FOUND));
     }
 }

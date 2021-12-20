@@ -12,6 +12,8 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from '@mui/material/IconButton';
 
 const API_URL = "http://localhost:8080/";
 
@@ -37,6 +39,8 @@ const SellerAd = props => {
     const [editedCategory, setEditedCategory] = useState(category);
     const [editedSubcategory, setEditedSubcategory] = useState(subcategory);
     const [imgs, setImgs] = useState([]);
+    const [isFavorites, setIsFavorites] = useState(ad.isFavourite);
+    const [favIconColor, setFavIconColor] = useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
 
     useEffect(() => {
         axios
@@ -83,6 +87,20 @@ const SellerAd = props => {
         setEditedDescription(description);
     };
 
+    const handleFavClick = () => {
+        axios
+            .put(API_URL + "ad/favourites",
+                {
+                    adId: ad.id,
+                    isFavourite: !isFavorites
+                },
+                { headers: authHeader() })
+            .then(res => {
+                setFavIconColor(res.data.isFavourite ? "#E75480" : "#BDBDBD");
+                setIsFavorites(res.data.isFavourite);
+            });
+    }
+
     const handleSaveClose = () => {
         if (!editedSubcategory) {
             setErrorOpen(true);
@@ -118,206 +136,235 @@ const SellerAd = props => {
     };
 
     return (
-        <div style={{ display: "flex" }}>
-            <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
-                <Typography variant="h5" align="center" style={{ color: "#666666", marginTop: 30 }}>
+        <Box display='flex'
+            flexDirection='column'
+            justify-content='space-between'
+        >
+            <Box
+                display='flex'
+                flexDirection='row'
+                justify-content='space-between'
+            >
+                <Typography variant="h3" align="left" style={{ marginTop: 30 }}>
                     {name}
                 </Typography>
 
-                <Typography align="center" style={{ color: "#666666", marginTop: 10, marginBottom: 10 }}>
-                    {metro.name}
-                </Typography>
-
-                <AwesomeSlider
-                    animation="foldOutAnimation"
-                    cssModule={AwesomeSliderStyles}
+                <IconButton
+                    align="right"
+                    style={{ marginTop: 20, marginLeft: 'auto' }} size="large"
+                    onClick={handleFavClick}
                 >
-                    {imgs.map(img => {
-                        return (
-                            <div data-src={img} />
-                        );
-                    })}
-                </AwesomeSlider>
+                    <FavoriteIcon fontSize="inherit" sx={{ color: favIconColor }} />
+                </IconButton>
             </Box>
 
-            <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
-                <Typography variant="h5" align="center" style={{ color: "#666666", marginTop: 30 }}>
-                    Цена: {price}
-                </Typography>
+            <Box
+                display='flex'
+                flexDirection='row'
+                justify-content='space-between'
+            >
+                <Box sx={{ width: 1 / 2, flex: 1 }}>
 
-                <Typography align="center" style={{ color: "#666666", marginTop: 10, marginBottom: 10 }}>
-                    {category.name}: {subcategory.name}
-                </Typography>
+                    <Typography align="left" style={{ color: "#666666", marginTop: 10 }}>
+                        {metro.name}
+                    </Typography>
 
-                <TextField
-                    label="Описание"
-                    variant="filled"
-                    multiline
-                    maxRows={13}
-                    minRows={13}
-                    onChange={e => {
-                        setDescription(e.target.value);
-                    }}
-                    value={description}
-                    fullWidth
-                    disabled={true}
-                />
+                    <Typography align="left" style={{ color: "#666666" }}>
+                        {category.name} → {subcategory.name}
+                    </Typography>
 
-                <Button
-                    fullWidth
-                    variant="outlined"
-                    onClick={handleClickOpen}
-                >
-                    Редактировать
-                </Button>
 
-                <Dialog
-                    open={open}
-                    onClose={handleCancelClose}
-                    fullWidth
-                    maxWidth="md"
-                >
-                    <DialogTitle>Редактирование</DialogTitle>
+                    <AwesomeSlider
+                        animation="foldOutAnimation"
+                        cssModule={AwesomeSliderStyles}
+                        style={{ marginTop: 20 }}
+                    >
+                        {imgs.map(img => {
+                            return (
+                                <div data-src={img} />
+                            );
+                        })}
+                    </AwesomeSlider>
+                </Box>
 
-                    <DialogContent>
-                        <DialogContentText>
-                            Введите новые данные
-                        </DialogContentText>
+                <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
 
-                        <Collapse in={errorOpen}>
-                            <Alert
-                                severity="error"
-                                sx={{ mb: 2 }}
+                    <Typography variant="h5" align="right">
+                        {price}₽
+                    </Typography>
+
+                    <TextField
+                        label="Описание"
+                        variant="filled"
+                        multiline
+                        maxRows={18}
+                        minRows={18}
+                        onChange={e => {
+                            setDescription(e.target.value);
+                        }}
+                        value={description}
+                        fullWidth
+                        disabled={true}
+                        style={{ marginTop: 45 }}
+                    />
+
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color='primary'
+                        onClick={handleClickOpen}
+                    >
+                        Редактировать
+                    </Button>
+
+                    <Dialog
+                        open={open}
+                        onClose={handleCancelClose}
+                        fullWidth
+                        maxWidth="md"
+                    >
+                        <DialogTitle>Редактирование</DialogTitle>
+
+                        <DialogContent>
+                            <DialogContentText>
+                                Введите новые данные
+                            </DialogContentText>
+
+                            <Collapse in={errorOpen}>
+                                <Alert
+                                    severity="error"
+                                    sx={{ mb: 2 }}
+                                >
+                                    {errorMessage}
+                                </Alert>
+                            </Collapse>
+
+                            <TextField
+                                label="Название"
+                                variant="filled"
+                                value={editedName}
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    if (value.length < 3 || value.length > 50) {
+                                        setErrorOpen(true);
+                                        setErrorMessage("Название объявления должно быть длиной от 3 до 50 символов");
+                                    }
+                                    else {
+                                        setEditedName(value);
+                                        setErrorOpen(false);
+                                    }
+                                }}
+                                fullWidth
+                            />
+
+                            <TextField
+                                select
+                                variant="filled"
+                                label="Метро"
+                                value={editedMetro}
+                                onChange={e => {
+                                    setEditedMetro(e.target.value);
+                                }}
+                                fullWidth
                             >
-                                {errorMessage}
-                            </Alert>
-                        </Collapse>
+                                {metroList.map(metro => (
+                                    <MenuItem key={metro.id} value={metro}>
+                                        {metro.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
 
-                        <TextField
-                            label="Название"
-                            variant="filled"
-                            value={editedName}
-                            onChange={e => {
-                                const value = e.target.value;
-                                if (value.length < 3 || value.length > 50) {
-                                    setErrorOpen(true);
-                                    setErrorMessage("Название объявления должно быть длиной от 3 до 50 символов");
-                                }
-                                else {
-                                    setEditedName(value);
-                                    setErrorOpen(false);
-                                }
-                            }}
-                            fullWidth
-                        />
+                            <TextField
+                                label="Цена"
+                                variant="filled"
+                                type="number"
+                                fullWidth
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                                }}
+                                onChange={e => {
+                                    if (e.target.value >= 0) {
+                                        setEditedPrice(e.target.value);
+                                    }
+                                }}
+                                value={editedPrice}
+                            />
 
-                        <TextField
-                            select
-                            variant="filled"
-                            label="Метро"
-                            value={editedMetro}
-                            onChange={e => {
-                                setEditedMetro(e.target.value);
-                            }}
-                            fullWidth
-                        >
-                            {metroList.map(metro => (
-                                <MenuItem key={metro.id} value={metro}>
-                                    {metro.name}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                            <TextField
+                                select
+                                variant="filled"
+                                label="Категория"
+                                value={editedCategory}
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    setEditedCategory(value);
+                                }}
+                                fullWidth
+                            >
+                                {categoryList.map(category => {
+                                    return (
+                                        <MenuItem
+                                            key={category.id}
+                                            value={category}
+                                        >
+                                            {category.name}
+                                        </MenuItem>);
+                                })}
+                            </TextField>
 
-                        <TextField
-                            label="Цена"
-                            variant="filled"
-                            type="number"
-                            fullWidth
-                            InputProps={{
-                                endAdornment: <InputAdornment position="end">₽</InputAdornment>,
-                            }}
-                            onChange={e => {
-                                if (e.target.value >= 0) {
-                                    setEditedPrice(e.target.value);
-                                }
-                            }}
-                            value={editedPrice}
-                        />
+                            <TextField
+                                disabled={!category}
+                                select
+                                variant="filled"
+                                label="Подкатегория"
+                                value={editedSubcategory}
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    setEditedSubcategory(value);
+                                }}
+                                fullWidth
+                            >
+                                {subcategoryList.map(subcategory => {
+                                    return (
+                                        <MenuItem
+                                            key={subcategory.id}
+                                            value={subcategory}
+                                        >
+                                            {subcategory.name}
+                                        </MenuItem>);
+                                })}
+                            </TextField>
 
-                        <TextField
-                            select
-                            variant="filled"
-                            label="Категория"
-                            value={editedCategory}
-                            onChange={e => {
-                                const value = e.target.value;
-                                setEditedCategory(value);
-                            }}
-                            fullWidth
-                        >
-                            {categoryList.map(category => {
-                                return (
-                                    <MenuItem
-                                        key={category.id}
-                                        value={category}
-                                    >
-                                        {category.name}
-                                    </MenuItem>);
-                            })}
-                        </TextField>
+                            <TextField
+                                label="Описание"
+                                variant="filled"
+                                value={editedDescription}
+                                multiline
+                                maxRows={9}
+                                minRows={9}
+                                onChange={e => {
+                                    const value = e.target.value;
+                                    if (value.length < 1 || value.length > 250) {
+                                        setErrorOpen(true);
+                                        setErrorMessage("Длина описания не должна быть меньше 1 и больше 250");
+                                    } else {
+                                        setEditedDescription(value);
+                                        setErrorOpen(false);
+                                    }
+                                }}
+                                fullWidth
+                            />
+                        </DialogContent>
 
-                        <TextField
-                            disabled={!category}
-                            select
-                            variant="filled"
-                            label="Подкатегория"
-                            value={editedSubcategory}
-                            onChange={e => {
-                                const value = e.target.value;
-                                setEditedSubcategory(value);
-                            }}
-                            fullWidth
-                        >
-                            {subcategoryList.map(subcategory => {
-                                return (
-                                    <MenuItem
-                                        key={subcategory.id}
-                                        value={subcategory}
-                                    >
-                                        {subcategory.name}
-                                    </MenuItem>);
-                            })}
-                        </TextField>
-
-                        <TextField
-                            label="Описание"
-                            variant="filled"
-                            value={editedDescription}
-                            multiline
-                            maxRows={9}
-                            minRows={9}
-                            onChange={e => {
-                                const value = e.target.value;
-                                if (value.length < 1 || value.length > 250) {
-                                    setErrorOpen(true);
-                                    setErrorMessage("Длина описания не должна быть меньше 1 и больше 250");
-                                } else {
-                                    setEditedDescription(value);
-                                    setErrorOpen(false);
-                                }
-                            }}
-                            fullWidth
-                        />
-                    </DialogContent>
-
-                    <DialogActions>
-                        <Button onClick={handleCancelClose}>Отмена</Button>
-                        <Button onClick={handleSaveClose}>Сохранить</Button>
-                    </DialogActions>
-                </Dialog>
+                        <DialogActions>
+                            <Button onClick={handleCancelClose}>Отмена</Button>
+                            <Button onClick={handleSaveClose}>Сохранить</Button>
+                        </DialogActions>
+                    </Dialog>
+                </Box>
             </Box>
-        </div >
-    )
+        </Box >
+    );
 };
 
 export default SellerAd;
