@@ -24,6 +24,7 @@ const CustomerAd = props => {
     const [imgs, setImgs] = useState([]);
     const [isFavorites, setIsFavorites] = useState(ad.isFavourite);
     const [favIconColor, setFavIconColor] = useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
+    const [isActive, setIsActive] = useState(ad.is_active);
 
     useEffect(() => {
         axios
@@ -60,6 +61,12 @@ const CustomerAd = props => {
                 <Typography variant="h3" align="left" style={{ marginTop: 30 }}>
                     {adName}
                 </Typography>
+
+                {!isActive &&
+                    <Typography variant="h4" align="left" style={{ marginTop: 40, marginLeft: 20, color: "#777777" }}>
+                        снято с продажи
+                    </Typography>
+                }
 
                 <IconButton
                     align="right"
@@ -102,7 +109,10 @@ const CustomerAd = props => {
                         {price}₽
                     </Typography>
 
-                    <Typography variant="h5" align="right" style={{ fontWeight: 550 }}>
+                    <Typography
+                        variant="h5"
+                        align="right"
+                        style={isActive ? { fontWeight: 550 } : { color: '#777777' }}>
                         {name} {phone}
                     </Typography>
 
