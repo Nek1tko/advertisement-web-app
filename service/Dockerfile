@@ -12,5 +12,8 @@ FROM openjdk:11-jre-slim
 WORKDIR /service
 COPY --from=builder /service/target/*.jar app.jar
 
+RUN mkdir /images
+COPY ./src/main/resources/images /images
+
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
