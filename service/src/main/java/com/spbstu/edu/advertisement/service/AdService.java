@@ -26,7 +26,9 @@ public interface AdService {
 
     Ad getAdEntity(long adId);
     
-    FavouriteDto addFavourite(FavouriteDto favourite);
+    FavouriteDto addToFavourites(FavouriteDto favourite);
     
     AdDto setFavourite(AdDto ad);
+    
+    List<AdDto> setFavourite(List<AdDto> ads);
 }

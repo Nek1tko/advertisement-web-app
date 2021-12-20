@@ -37,12 +37,11 @@ public class AdServiceImpl implements AdService {
     
     @Override
     public List<AdDto> getAds(PageableContext pageableContext) {
-        return pageableAdRepository
+        return setFavourite(pageableAdRepository
                 .findAdsByFilters(pageableContext)
                 .stream()
                 .map(adMapper::toAdDto)
-                .map(this::setFavourite)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
     
     @Override
@@ -82,10 +81,9 @@ public class AdServiceImpl implements AdService {
     
     @Override
     public List<AdDto> getAds(long userId) {
-        return userService.getUserEntity(userId).getUserAds().stream()
+        return setFavourite(userService.getUserEntity(userId).getUserAds().stream()
                 .map(adMapper::toAdDto)
-                .map(this::setFavourite)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
     
     @Override
@@ -103,7 +101,7 @@ public class AdServiceImpl implements AdService {
     }
     
     @Override
-    public FavouriteDto addFavourite(FavouriteDto favourite) {
+    public FavouriteDto addToFavourites(FavouriteDto favourite) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     
         if (!Objects.equals(favourite.getUserId(), user.getId())) {
@@ -135,5 +133,15 @@ public class AdServiceImpl implements AdService {
         ad.setIsFavourite(user.getFavouriteAds().stream()
                 .anyMatch(favouriteAd -> favouriteAd.getId().equals(ad.getId())));
         return ad;
+    }
+    
+    @Override
+    public List<AdDto> setFavourite(List<AdDto> ads) {
+        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserEntity(currentUser.getId());
+        ads.forEach(ad -> ad.setIsFavourite(
+                user.getFavouriteAds().stream()
+                        .anyMatch(favouriteAd -> favouriteAd.getId().equals(ad.getId()))));
+        return ads;
     }
 }
