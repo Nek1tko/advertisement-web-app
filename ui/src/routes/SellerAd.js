@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
-import { Alert, Box, Typography } from "@mui/material";
+import { Alert, Box, Typography, FormControlLabel, Checkbox } from "@mui/material";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -41,6 +41,8 @@ const SellerAd = props => {
     const [imgs, setImgs] = useState([]);
     const [isFavorites, setIsFavorites] = useState(ad.isFavourite);
     const [favIconColor, setFavIconColor] = useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
+    const [isActive, setIsActive] = useState(ad.is_active);
+    const [editedIsActive, setEditedIsActive] = useState(ad.is_active);
 
     useEffect(() => {
         axios
@@ -118,7 +120,8 @@ const SellerAd = props => {
                 price: editedPrice,
                 description: editedDescription,
                 metro: editedMetro,
-                subCategory: editedSubcategory
+                subCategory: editedSubcategory,
+                isActive: editedIsActive
             },
                 {
                     headers: authHeader()
@@ -131,6 +134,7 @@ const SellerAd = props => {
                 setMetro(res.data.metro);
                 setSubcategory(res.data.subCategory);
                 setCategory(res.data.subCategory.category);
+                setIsActive(res.data.isActive);
             });
 
     };
@@ -148,6 +152,12 @@ const SellerAd = props => {
                 <Typography variant="h3" align="left" style={{ marginTop: 30 }}>
                     {name}
                 </Typography>
+
+                {!isActive &&
+                    <Typography variant="h4" align="left" style={{ marginTop: 40, marginLeft: 20, color: "#777777" }}>
+                        снято с продажи
+                    </Typography>
+                }
 
                 <IconButton
                     align="right"
@@ -238,6 +248,18 @@ const SellerAd = props => {
                                     {errorMessage}
                                 </Alert>
                             </Collapse>
+
+                            <FormControlLabel
+                                label="Снято с продажи"
+                                control={
+                                    <Checkbox
+                                        checked={!editedIsActive}
+                                        onChange={e => {
+                                            setEditedIsActive(!e.target.checked);
+                                        }}
+                                    />
+                                }
+                            />
 
                             <TextField
                                 label="Название"
