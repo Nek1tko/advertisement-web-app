@@ -62,7 +62,7 @@ const Registration = props => {
         }
         const regexp = new RegExp("^(?=.*[0-9])(?=.*[!#%{}\\[\\]])[a-zA-Z0-9!#%{}\\[\\]]{4,16}$");
         if (!regexp.test(password)) {
-            setErrorMessage("Пароль должен содержать хотя бы одну цифру или спец символ!");
+            setErrorMessage("Пароль должен содержать хотя бы одну цифру и спец символ!");
             setAlertOpen(true);
             return;
         }
