@@ -255,7 +255,7 @@ export const FilterModal = (props) => {
                             return (
                                 <MenuItem
                                     key={adType.id}
-                                    value={adType.id}
+                                    value={adType.name}
                                 >
                                     {adType.name}
                                 </MenuItem>);
