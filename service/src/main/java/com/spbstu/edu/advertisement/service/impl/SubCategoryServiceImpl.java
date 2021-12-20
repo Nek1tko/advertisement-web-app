@@ -1,7 +1,8 @@
 package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.SubCategoryDto;
-import com.spbstu.edu.advertisement.exception.SubCategoryNotFoundException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.mapper.SubCategoryMapper;
 import com.spbstu.edu.advertisement.repository.SubCategoryRepository;
 import com.spbstu.edu.advertisement.service.SubCategoryService;
@@ -20,6 +21,6 @@ public class SubCategoryServiceImpl implements SubCategoryService {
     public SubCategoryDto getSubCategory(long subCategoryId) {
         return subCategoryMapper.toSubCategoryDto(
                 subCategoryRepository.findById(subCategoryId)
-                        .orElseThrow(SubCategoryNotFoundException::new));
+                        .orElseThrow(() -> new CustomException(ExceptionId.SUB_CATEGORY_NOT_FOUND)));
     }
 }

@@ -2,9 +2,8 @@ package com.spbstu.edu.advertisement.service.impl;
 
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.exception.InvalidAuthenticationException;
-import com.spbstu.edu.advertisement.exception.UserNotFoundException;
-import com.spbstu.edu.advertisement.exception.UsernameReservedException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import com.spbstu.edu.advertisement.service.UserService;
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto addUser(UserDto userDto) {
         if (getUserByPhoneNumber(userDto.getPhoneNumber()) != null) {
-            throw new UsernameReservedException();
+            throw new CustomException(ExceptionId.USERNAME_RESERVED);
         }
         
         setEncodedPassword(userDto);
@@ -48,7 +47,7 @@ public class UserServiceImpl implements UserService {
                 userDto.setPassword(userDto.getNewPassword());
                 setEncodedPassword(userDto);
             } else {
-                throw new InvalidAuthenticationException();
+                throw new CustomException(ExceptionId.INVALID_AUTHENTICATION);
             }
         } else if (userDto.getPassword() != null) {
             userDto.setPassword(null);
@@ -56,7 +55,7 @@ public class UserServiceImpl implements UserService {
         if (userDto.getPhoneNumber() != null) {
             UserDto userByPhoneNumber = getUserByPhoneNumber(userDto.getPhoneNumber());
             if (userByPhoneNumber != null && !userByPhoneNumber.getId().equals(userDto.getId())) {
-                throw new UsernameReservedException();
+                throw new CustomException(ExceptionId.USERNAME_RESERVED);
             }
         }
         User savedUser = userMapper.updateWithNullAsNoChange(userDto, userMapper.toUser(storedUser));
@@ -79,14 +78,14 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.deleteById(userId);
         } catch (EmptyResultDataAccessException exception) {
-            throw new UserNotFoundException();
+            throw new CustomException(ExceptionId.USER_NOT_FOUND);
         }
     }
     
     @Override
     public User getUserEntity(long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
+                .orElseThrow(() -> new CustomException(ExceptionId.USER_NOT_FOUND));
     }
     
     private void setEncodedPassword(UserDto userDto) {

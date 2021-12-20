@@ -3,8 +3,8 @@ package com.spbstu.edu.advertisement.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.exception.InvalidAuthenticationException;
-import com.spbstu.edu.advertisement.exception.UserNotFoundException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.repository.UserRepository;
 import com.spbstu.edu.advertisement.service.TokenService;
 import com.spbstu.edu.advertisement.vo.SubjectData;
@@ -30,7 +30,7 @@ public class TokenServiceImpl implements TokenService {
     public String createToken(String phoneNumber, String password) throws JsonProcessingException {
         User user = userRepository.findByPhoneNumber(phoneNumber);
         if (user == null) {
-            throw new UserNotFoundException();
+            throw new CustomException(ExceptionId.USER_NOT_FOUND);
         }
         if (user.getPassword().equals(password)) {
             SubjectData subjectData = SubjectData
@@ -50,7 +50,7 @@ public class TokenServiceImpl implements TokenService {
                     .signWith(SignatureAlgorithm.HS512, KEY)
                     .compact();
         } else {
-            throw new InvalidAuthenticationException();
+            throw new CustomException(ExceptionId.INVALID_AUTHENTICATION);
         }
     }
     

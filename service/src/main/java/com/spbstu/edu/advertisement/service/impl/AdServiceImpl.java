@@ -4,8 +4,8 @@ import com.spbstu.edu.advertisement.dto.AdDto;
 import com.spbstu.edu.advertisement.dto.FavouriteDto;
 import com.spbstu.edu.advertisement.entity.Ad;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.exception.AdNotFoundException;
-import com.spbstu.edu.advertisement.exception.NotEnoughRightsException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.mapper.AdMapper;
 import com.spbstu.edu.advertisement.repository.AdRepository;
 import com.spbstu.edu.advertisement.repository.PageableAdRepository;
@@ -67,7 +67,7 @@ public class AdServiceImpl implements AdService {
         try {
             adRepository.deleteById(adId);
         } catch (EmptyResultDataAccessException exception) {
-            throw new AdNotFoundException();
+            throw new CustomException(ExceptionId.AD_NOT_NOT_FOUND, exception);
         }
     }
     
@@ -97,7 +97,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public Ad getAdEntity(long adId) {
         return adRepository.findById(adId)
-                .orElseThrow(AdNotFoundException::new);
+                .orElseThrow(() -> new CustomException(ExceptionId.AD_NOT_NOT_FOUND));
     }
     
     @Override
