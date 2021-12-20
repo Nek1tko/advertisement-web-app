@@ -1,87 +1,69 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Button from "@mui/material/Button";
-import {DataGrid, GridActionsCellItem} from "@mui/x-data-grid";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import uniqid from 'uniqid';
+import {Collapse, InputAdornment, MenuItem, TextField} from "@material-ui/core";
+import axios from "axios";
+import authHeader from "../services/auth-header";
+import {Alert} from "@mui/material";
 
-const selectFields = ["Метро", "Категория", "Мин. цена", "Макс. цена"];
-let initialRows = [];
+const API_URL = "http://localhost:8080/";
+const API_URL_SEARCH = "http://localhost:8080/ad/page";
 
-export const FilterModal = () => {
-    let columns = [
+export const FilterModal = (props) => {
+    const [metro, setMetro] = useState('');
+    const [metroList, setMetroList] = useState([]);
+
+    const [category, setCategory] = useState('');
+    const [categoryList, setCategoryList] = useState([]);
+
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+
+    const typeList = [
         {
-            field: "filterValue",
-            headerName: "Значение фильтра",
-            width: 220,
-            editable: true,
+            id: 0,
+            name: "Активно",
         },
         {
-            field: "filteringField",
-            headerName: "Поле",
-            width: 220,
-            type: "singleSelect",
-            valueOptions: selectFields,
-            editable: true,
+            id: 1,
+            name: "Неактивно",
         },
         {
-            field: "actions",
-            headerName: "Удаление",
-            type: "actions",
-            width: 100,
-            getActions: (params) => [
-                <GridActionsCellItem
-                    icon={<DeleteIcon/>}
-                    label="Delete"
-                    onClick={deleteFilter(params.id)}
-                />,
-            ],
-        },
+            id: 2,
+            name: "Все",
+        }
     ];
+    const [isActive, setActive] = useState('');
 
-    const [bufferRows, setBufferRows] = React.useState(initialRows);
+    const [alertOpen, setAlertOpen] = useState(false);
 
-    const [rows, setRows] = React.useState(initialRows);
-    const deleteFilter = React.useCallback(
-        (id) => () => {
-            setTimeout(() => {
-                setRows((prevRows) => prevRows.filter((row) => row.id !== id));
-            });
-        },
-        []
-    );
+    useEffect(() => {
+        axios
+            .get(API_URL + "metro", {headers: authHeader()})
+            .then(res => {
+                setMetroList(res.data);
+            })
+    }, []);
 
-    const addFilter = React.useCallback(() => {
-        setTimeout(() => {
-            const defaultRow = {
-                id: uniqid(),
-                filterValue: "New filter",
-                filteringField: selectFields[0],
-            };
-            setRows([...rows, defaultRow]);
-        });
-    }, [rows]);
+    useEffect(() => {
+        axios
+            .get(API_URL + "category", {headers: authHeader()})
+            .then(res => {
+                setCategoryList(res.data);
+            })
+    }, []);
 
-    const handleEdit = React.useCallback(
-        (e) => {
-            setTimeout(() => {
-                const array = rows.map((r) => {
-                    if (r.id === e.id) {
-                        return {...r, [e.field]: e.value};
-                    } else {
-                        return {...r};
-                    }
-                });
-                setRows(array);
-            });
-        },
-        [rows]
-    );
+    useEffect(() => {
+        axios
+            .get(API_URL + "metro", {headers: authHeader()})
+            .then(res => {
+                setMetroList(res.data);
+            })
+    }, []);
 
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
@@ -89,15 +71,68 @@ export const FilterModal = () => {
     };
     const handleClose = () => {
         setOpen(false);
+        setAlertOpen(false);
     };
     const handleApply = () => {
-        setBufferRows(rows);
-        setOpen(false);
+        if (validatePrice()) {
+            setOpen(false);
+            setAlertOpen(false);
+            const jsonFilter = parseRowsToJSON();
+            props.setJsonFilter(jsonFilter);
+            // postRequest(jsonFilter);
+        } else {
+            setAlertOpen(true);
+        }
     };
     const handleCancel = () => {
-        setRows(bufferRows);
         setOpen(false);
+        setAlertOpen(false);
     };
+
+    const validatePrice = () => {
+        let isCorrect = true;
+        if (minPrice !== "" && maxPrice !== "") {
+            if (minPrice > maxPrice) {
+                isCorrect = false;
+            }
+        }
+        return isCorrect;
+    }
+
+    const parseRowsToJSON = () => {
+        let jsonModel = {};
+        jsonModel["page"] = props.page;
+        if (minPrice !== "") {
+            jsonModel["minPrice"] = minPrice;
+        }
+        if (maxPrice !== "") {
+            jsonModel["maxPrice"] = maxPrice;
+        }
+        if (metro !== '') {
+            jsonModel["metroId"] = metro;
+        }
+        if (category !== '') {
+            jsonModel["categoryId"] = category;
+        }
+        if (isActive !== '') {
+            if (isActive === "Активно") {
+                jsonModel["isActive"] = true;
+            } if (isActive === "Неактивно") {
+                jsonModel["isActive"] = false;
+            }
+        }
+        console.log(jsonModel);
+        props.setJsonFilter(jsonModel);
+        return jsonModel;
+    }
+
+    const postRequest = (jsonFilter) => {
+        axios
+            .post(API_URL_SEARCH, {...jsonFilter}, {headers: authHeader()})
+            .then(res => {
+                props.setAds(res.data);
+            })
+    }
 
     return (
         <div>
@@ -118,36 +153,116 @@ export const FilterModal = () => {
                 open={open}
                 onClose={handleClose}
                 onBackdropClick={handleCancel}
-                minWidth="xs"
+                minwidth="xs"
                 fullWidth
             >
                 <DialogTitle>
                     Фильтры
                 </DialogTitle>
                 <DialogContent dividers>
-                    <DataGrid
-                        onCellEditCommit={handleEdit}
-                        rows={rows}
-                        columns={columns}
-                        pageSize={6}
-                        autoHeight
-                        autoWidth
-                        hideFooterSelectedRowCount
-                        disableColumnFilter
-                        disableColumnMenu
-                        disableDensitySelector
-                        hideFooterPagination
+                    <Collapse in={alertOpen}>
+                        <Alert
+                            severity="error"
+                            sx={{mb: 2}}
+                        >
+                            Мин. цена не может быть больше макс. цены!
+                        </Alert>
+                    </Collapse>
+                    <TextField
+                        fullWidth
+                        select
+                        variant="filled"
+                        label="Метро"
+                        value={metro}
+                        onChange={e => {
+                            setMetro(e.target.value);
+                        }}
+                    >
+                        {metroList.map(metro => {
+                            return (
+                                <MenuItem key={metro.id} value={metro.id}>
+                                    {metro.name}
+                                </MenuItem>);
+                        })}
+                    </TextField>
+
+                    <TextField
+                        fullWidth
+                        select
+                        variant="filled"
+                        label="Категория"
+                        value={category}
+                        onChange={e => {
+                            const value = e.target.value;
+                            setCategory(value);
+                        }}
+                    >
+                        {categoryList.map(category => {
+                            return (
+                                <MenuItem
+                                    key={category.id}
+                                    value={category.id}
+                                >
+                                    {category.name}
+                                </MenuItem>);
+                        })}
+                    </TextField>
+
+                    <TextField
+                        label="Минимальная цена"
+                        variant="filled"
+                        type="number"
+                        fullWidth
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                        }}
+                        onChange={e => {
+                            if (e.target.value >= 0) {
+                                setMinPrice(e.target.value);
+                            }
+                        }}
+                        value={minPrice}
                     />
+
+                    <TextField
+                        label="Максимальная цена"
+                        variant="filled"
+                        type="number"
+                        fullWidth
+                        InputProps={{
+                            endAdornment: <InputAdornment position="end">₽</InputAdornment>,
+                        }}
+                        onChange={e => {
+                            if (e.target.value >= 0) {
+                                setMaxPrice(e.target.value);
+                            }
+                        }}
+                        value={maxPrice}
+                    />
+
+                    <TextField
+                        fullWidth
+                        select
+                        variant="filled"
+                        label="Тип объявления"
+                        value={isActive}
+                        onChange={e => {
+                            const value = e.target.value;
+                            setActive(value);
+                        }}
+                    >
+                        {typeList.map(adType => {
+                            return (
+                                <MenuItem
+                                    key={adType.id}
+                                    value={adType.id}
+                                >
+                                    {adType.name}
+                                </MenuItem>);
+                        })}
+                    </TextField>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        autoFocus
-                        onClick={addFilter}
-                        startIcon={<AddIcon/>}
-                        style={{marginRight: "auto"}}
-                    >
-                        Добавить фильтр
-                    </Button>
                     <Button autoFocus onClick={handleCancel}>
                         Отменить
                     </Button>
