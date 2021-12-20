@@ -34,6 +34,8 @@ public class Ad {
     
     public static final String TITLE_PATH = "name";
     
+    public static final String ID_PATH = "id";
+    
     @Id
     @SequenceGenerator(
             name = "ad_sequence",

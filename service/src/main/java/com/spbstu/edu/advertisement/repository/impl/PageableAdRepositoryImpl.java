@@ -33,7 +33,8 @@ public class PageableAdRepositoryImpl implements PageableAdRepository {
         Root<Ad> ad = criteriaQuery.from(Ad.class);
         CriteriaQuery<Ad> select = criteriaQuery
                 .select(ad)
-                .where(getPredicate(pageableContext, criteriaQuery, criteriaBuilder, ad));
+                .where(getPredicate(pageableContext, criteriaQuery, criteriaBuilder, ad))
+                .orderBy(criteriaBuilder.desc(ad.get(Ad.ID_PATH)));
 
         TypedQuery<Ad> typedQuery = entityManager.createQuery(select);
 
