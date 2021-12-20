@@ -1,7 +1,13 @@
 # Advertisement Web App
 
-## How to run UI
+## How to run
 ```
-npm run build
-npm start
+docker compose up -d
 ```
+
+Connect to CLI of the DB container and run
+```
+psql -U postgres -d advertisement_db
+```
+
+then execute the prefill SQL script
