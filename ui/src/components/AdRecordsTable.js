@@ -48,7 +48,8 @@ export default function AdRecordsTable(props) {
             saler: ad.saler,
             metro: ad.metro,
             subcategory: ad.subCategory,
-            isFavourite: ad.isFavourite
+            isFavourite: ad.isFavourite,
+            creationDate: ad.creationDate
         };
     }) : [];
 
