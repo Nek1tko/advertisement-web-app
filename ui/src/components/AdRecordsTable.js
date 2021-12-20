@@ -45,7 +45,8 @@ export default function AdRecordsTable(props) {
             is_active: ad.isActive,
             saler: ad.saler,
             metro: ad.metro,
-            subcategory: ad.subCategory
+            subcategory: ad.subCategory,
+            isFavourite: ad.isFavourite
         };
     }) : [];
 
