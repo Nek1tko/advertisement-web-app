@@ -2,6 +2,8 @@ import React from "react";
 import { Box } from "@material-ui/core";
 import { DataGrid } from '@mui/x-data-grid';
 
+const API_URL = "http://localhost:8080/";
+
 const columns = [
     {
         field: 'image',
@@ -9,7 +11,7 @@ const columns = [
         minWidth: 100,
         renderCell: (params) => <img
             alt="Ad preview"
-            src={params.value}
+            src={API_URL + "img/" + params.value}
             style={{ height: '100%', width: '100%', objectFit: 'contain' }}
         />,
         sortable: false
@@ -37,7 +39,7 @@ export default function AdRecordsTable(props) {
     const rows = ads ? ads.map(ad => {
         return {
             id: ad.id,
-            image: null,
+            image: ad.previewImagePath,
             name: ad.name,
             description: ad.description,
             location: ad.metro.name,
