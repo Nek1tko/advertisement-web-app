@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AwesomeSlider from 'react-awesome-slider';
 import AwesomeSliderStyles from 'react-awesome-slider/src/styles';
-import eren from '../img/eren.jpg'
-import mikasa from '../img/mikasa.jpg'
-import levi from '../img/levi.png'
 import { Alert, Box, Typography } from "@mui/material";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -15,7 +12,6 @@ import DialogActions from "@mui/material/DialogActions";
 import Dialog from "@mui/material/Dialog";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
-
 
 const API_URL = "http://localhost:8080/";
 
@@ -40,6 +36,15 @@ const SellerAd = props => {
     const [subcategory, setSubcategory] = useState(ad.subcategory);
     const [editedCategory, setEditedCategory] = useState(category);
     const [editedSubcategory, setEditedSubcategory] = useState(subcategory);
+    const [imgs, setImgs] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(API_URL + "image/" + ad.id, { headers: authHeader() })
+            .then(res => {
+                setImgs(res.data.map(img => { return API_URL + "img/" + img.path }));
+            })
+    }, []);
 
     useEffect(() => {
         axios
@@ -47,8 +52,6 @@ const SellerAd = props => {
             .then(res => {
                 setMetroList(res.data);
                 setEditedMetro(res.data[editedMetro.id - 1]);
-                // console.log(metroList);
-                // console.log(editedMetro);
             })
     }, []);
 
@@ -129,16 +132,11 @@ const SellerAd = props => {
                     animation="foldOutAnimation"
                     cssModule={AwesomeSliderStyles}
                 >
-                    <div>
-                        <img alt="Ad preview" src={eren} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-                    </div>
-                    <div>
-                        <img alt="Ad preview" src={mikasa}
-                            style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-                    </div>
-                    <div>
-                        <img alt="Ad preview" src={levi} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-                    </div>
+                    {imgs.map(img => {
+                        return (
+                            <div data-src={img} />
+                        );
+                    })}
                 </AwesomeSlider>
             </Box>
 
@@ -318,7 +316,7 @@ const SellerAd = props => {
                     </DialogActions>
                 </Dialog>
             </Box>
-        </div>
+        </div >
     )
 };
 

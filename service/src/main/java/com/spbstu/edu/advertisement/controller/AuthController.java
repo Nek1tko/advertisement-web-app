@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
 import com.spbstu.edu.advertisement.exception.InvalidAuthenticationException;
-import com.spbstu.edu.advertisement.mapper.UserMapper;
 import com.spbstu.edu.advertisement.service.TokenService;
 import com.spbstu.edu.advertisement.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
     private final UserService userService;
+    
     private final AuthenticationManager authenticationManager;
+    
     private final TokenService tokenService;
-    private final UserMapper userMapper;
     
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signIn")

@@ -12,7 +12,7 @@ tags:
     description: Everything about metro stations
   - name: Image
     description: Operations with images
-  - name: Favourites
+  - name: Favourite
     description: Operations with user favourites
   - name: User
     description: Everything about users
@@ -110,7 +110,7 @@ paths:
       tags:
         - Ad
         - User
-        - Favourites
+        - Favourite
       summary: Get favourites ads by user ID
       operationId: getFavouritesAdsByUserId
       parameters:
@@ -129,38 +129,24 @@ paths:
         404:
           $ref: '#/components/responses/404.NotFound'
 
-  '/ad/favourites/{userId}/{adId}/{isFavourite}':
+  '/ad/favourites':
     put:
       tags:
         - Ad
         - User
-        - Favourites
+        - Favourite
       summary: Add the ad to favourites by user ID
       operationId: addAdToFavouritesByUserId
-      parameters:
-        - name: userId
-          in: path
-          description: ID of user to add favourite ad
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: adId
-          in: path
-          description: ID of ad to add to favourites
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: isFavourite
-          in: path
-          description: is ad in favourites of user
-          required: true
-          schema:
-            type: boolean
+      requestBody:
+        description: Ad form to update ad with adId
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Favourite'
+        required: true
       responses:
         200:
-          $ref: '#/components/responses/200.OK.Single.Ad'
+          $ref: '#/components/responses/200.OK.Single.Favourite'
         400:
           $ref: '#/components/responses/400.BadRequest'
         404:
@@ -386,9 +372,8 @@ components:
           $ref: '#/components/schemas/SubCategory'
         is_active:
           type: boolean
-        complete:
+        is_favourite:
           type: boolean
-          default: false
     Metro:
       type: object
       properties:
@@ -405,6 +390,14 @@ components:
           format: int64
         name:
           type: string
+    Favourite:
+      type: object
+      properties:
+        ad_id:
+          type: integer
+          format: int64
+        is_favourite:
+          type: boolean
     SubCategory:
       type: object
       properties:

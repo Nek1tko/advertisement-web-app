@@ -33,4 +33,9 @@ public class AdDto {
     private SubCategoryDto subCategory;
     
     private Boolean isActive;
+    
+    private String previewImagePath;
+    
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean isFavourite;
 }

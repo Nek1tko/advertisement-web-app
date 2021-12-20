@@ -1,6 +1,7 @@
 package com.spbstu.edu.advertisement.controller;
 
 import com.spbstu.edu.advertisement.dto.AdDto;
+import com.spbstu.edu.advertisement.dto.FavouriteDto;
 import com.spbstu.edu.advertisement.service.AdService;
 import com.spbstu.edu.advertisement.vo.PageableContext;
 import lombok.RequiredArgsConstructor;
@@ -56,5 +57,11 @@ public class AdController {
     @PostMapping("/page/count")
     public Long countAds(@RequestBody PageableContext pageableContext) {
         return adService.countAds(pageableContext);
+    }
+    
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/favourites")
+    public FavouriteDto addToFavourites(@RequestBody FavouriteDto favourite) {
+        return adService.addToFavourites(favourite);
     }
 }
