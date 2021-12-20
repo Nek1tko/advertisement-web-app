@@ -28,6 +28,7 @@ export default function LocalizedDropzoneArea(props) {
             filesLimit={props.filesLimit}
             maxFileSize={props.maxFileSize} // 3 mb
             acceptedFiles={props.acceptedFiles}
+            onChange={props.onChange}
             dropzoneText="Перетащите сюда картинку или нажмите"
             getFileLimitExceedMessage={getFileLimitExceedMessage}
             getFileAddedMessage={getFileAddedMessage}
