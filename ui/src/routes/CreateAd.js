@@ -147,7 +147,7 @@ const CreateAdImpl = props => {
                     endAdornment: <InputAdornment position="end">₽</InputAdornment>,
                 }}
                 onChange={e => {
-                    if (e.target.value >= 0) {
+                    if (e.target.value >= 0 && e.target.value <= 99999999) {
                         setPrice(e.target.value);
                     }
                 }}

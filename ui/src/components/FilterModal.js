@@ -215,7 +215,7 @@ export const FilterModal = (props) => {
                             endAdornment: <InputAdornment position="end">₽</InputAdornment>,
                         }}
                         onChange={e => {
-                            if (e.target.value >= 0) {
+                            if (e.target.value >= 0 && e.target.value <= 99999999) {
                                 setMinPrice(e.target.value);
                             }
                         }}
@@ -231,7 +231,7 @@ export const FilterModal = (props) => {
                             endAdornment: <InputAdornment position="end">₽</InputAdornment>,
                         }}
                         onChange={e => {
-                            if (e.target.value >= 0) {
+                            if (e.target.value >= 0 && e.target.value <= 99999999) {
                                 setMaxPrice(e.target.value);
                             }
                         }}
