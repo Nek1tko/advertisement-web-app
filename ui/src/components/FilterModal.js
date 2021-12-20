@@ -11,6 +11,7 @@ import authHeader from "../services/auth-header";
 import {Alert} from "@mui/material";
 
 const API_URL = "http://localhost:8080/";
+const API_URL_SEARCH = "http://localhost:8080/ad/page";
 
 export const FilterModal = (props) => {
     const [metro, setMetro] = useState('');
@@ -21,6 +22,23 @@ export const FilterModal = (props) => {
 
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
+
+    const typeList = [
+        {
+            id: 0,
+            name: "Активно",
+        },
+        {
+            id: 1,
+            name: "Неактивно",
+        },
+        {
+            id: 2,
+            name: "Все",
+        }
+    ];
+    const [isActive, setActive] = useState('');
+
     const [alertOpen, setAlertOpen] = useState(false);
 
     useEffect(() => {
@@ -59,7 +77,9 @@ export const FilterModal = (props) => {
         if (validatePrice()) {
             setOpen(false);
             setAlertOpen(false);
-            parseRowsToJSON();
+            const jsonFilter = parseRowsToJSON();
+            props.setJsonFilter(jsonFilter);
+            // postRequest(jsonFilter);
         } else {
             setAlertOpen(true);
         }
@@ -94,8 +114,24 @@ export const FilterModal = (props) => {
         if (category !== '') {
             jsonModel["categoryId"] = category;
         }
+        if (isActive !== '') {
+            if (isActive === "Активно") {
+                jsonModel["isActive"] = true;
+            } if (isActive === "Неактивно") {
+                jsonModel["isActive"] = false;
+            }
+        }
         console.log(jsonModel);
+        props.setJsonFilter(jsonModel);
         return jsonModel;
+    }
+
+    const postRequest = (jsonFilter) => {
+        axios
+            .post(API_URL_SEARCH, {...jsonFilter}, {headers: authHeader()})
+            .then(res => {
+                props.setAds(res.data);
+            })
     }
 
     return (
@@ -203,6 +239,28 @@ export const FilterModal = (props) => {
                         }}
                         value={maxPrice}
                     />
+
+                    <TextField
+                        fullWidth
+                        select
+                        variant="filled"
+                        label="Тип объявления"
+                        value={isActive}
+                        onChange={e => {
+                            const value = e.target.value;
+                            setActive(value);
+                        }}
+                    >
+                        {typeList.map(adType => {
+                            return (
+                                <MenuItem
+                                    key={adType.id}
+                                    value={adType.id}
+                                >
+                                    {adType.name}
+                                </MenuItem>);
+                        })}
+                    </TextField>
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleCancel}>

@@ -1,6 +1,8 @@
 import React from "react";
-import { Box } from "@material-ui/core";
-import { DataGrid } from '@mui/x-data-grid';
+import {Box} from "@material-ui/core";
+import {DataGrid} from '@mui/x-data-grid';
+import axios from "axios";
+import authHeader from "../services/auth-header";
 
 const API_URL = "http://localhost:8080/";
 
@@ -16,8 +18,8 @@ const columns = [
         />,
         sortable: false
     },
-    { field: 'name', headerName: 'Название', minWidth: 400, sortable: false, flex: 1 },
-    { field: 'location', headerName: 'Метро', minWidth: 200, sortable: false },
+    {field: 'name', headerName: 'Название', minWidth: 400, sortable: false, flex: 1},
+    {field: 'location', headerName: 'Метро', minWidth: 200, sortable: false},
     {
         field: 'price',
         headerName: 'Цена',
@@ -32,9 +34,11 @@ const columns = [
 ];
 
 export default function AdRecordsTable(props) {
-    const { history } = props;
+    const {history} = props;
     const userId = props.userId;
     const ads = props.ads;
+    const rowCount = props.rowCount;
+    const API_URL = props.API_URL;
 
     const rows = ads ? ads.map(ad => {
         return {
@@ -51,6 +55,18 @@ export default function AdRecordsTable(props) {
             isFavourite: ad.isFavourite
         };
     }) : [];
+    console.log(rows);
+
+    const onPageChange = (page) => {
+        page = page + 1;
+        props.setPage(page);
+        axios
+            .post(API_URL, {page: page}, {headers: authHeader()})
+            .then(res => {
+                console.log(res);
+                props.setAds(res.data);
+            })
+    };
 
     return (
         <Box
@@ -68,15 +84,18 @@ export default function AdRecordsTable(props) {
                 rowHeight={100}
                 autoHeight
                 pageSize={10}
-                columns={columns}
                 rows={rows}
+                columns={columns}
+                rowCount={rowCount}
                 getRowClassName={params => {
                     return params.row.is_active ? 'active' : 'disabled';
                 }}
                 pagination
                 {...rows}
+                paginationMode="server"
                 disableColumnMenu
                 disableSelectionOnClick={true}
+                onPageChange={(page) => onPageChange(page)}
                 disable
                 onRowClick={(params) => {
                     const ad = params.row;
