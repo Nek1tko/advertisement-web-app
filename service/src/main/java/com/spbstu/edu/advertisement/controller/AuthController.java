@@ -3,7 +3,8 @@ package com.spbstu.edu.advertisement.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spbstu.edu.advertisement.dto.UserDto;
 import com.spbstu.edu.advertisement.entity.User;
-import com.spbstu.edu.advertisement.exception.InvalidAuthenticationException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.service.TokenService;
 import com.spbstu.edu.advertisement.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,7 @@ public class AuthController {
                     )
             );
         } catch (Exception exception) {
-            throw new InvalidAuthenticationException();
+            throw new CustomException(ExceptionId.INVALID_AUTHENTICATION, exception);
         }
         
         User user = (User) authentication.getPrincipal();

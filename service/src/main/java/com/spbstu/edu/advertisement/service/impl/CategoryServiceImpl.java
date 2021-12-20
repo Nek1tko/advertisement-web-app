@@ -3,7 +3,8 @@ package com.spbstu.edu.advertisement.service.impl;
 import com.spbstu.edu.advertisement.dto.CategoryDto;
 import com.spbstu.edu.advertisement.dto.SubCategoryDto;
 import com.spbstu.edu.advertisement.entity.Category;
-import com.spbstu.edu.advertisement.exception.CategoryNotFoundException;
+import com.spbstu.edu.advertisement.exception.CustomException;
+import com.spbstu.edu.advertisement.exception.ExceptionId;
 import com.spbstu.edu.advertisement.mapper.CategoryMapper;
 import com.spbstu.edu.advertisement.mapper.SubCategoryMapper;
 import com.spbstu.edu.advertisement.repository.CategoryRepository;
@@ -45,6 +46,6 @@ public class CategoryServiceImpl implements CategoryService {
     
     private Category getCategoryEntity(long categoryId) {
         return categoryRepository.findById(categoryId)
-                .orElseThrow(CategoryNotFoundException::new);
+                .orElseThrow(() -> new CustomException(ExceptionId.CATEGORY_NOT_FOUND));
     }
 }
