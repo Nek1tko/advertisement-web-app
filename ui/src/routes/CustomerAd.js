@@ -25,6 +25,7 @@ const CustomerAd = props => {
     const [isFavorites, setIsFavorites] = useState(ad.isFavourite);
     const [favIconColor, setFavIconColor] = useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
     const [isActive, setIsActive] = useState(ad.is_active);
+    const [creationDate, setcreationDate] = useState(ad.creationDate);
 
     useEffect(() => {
         axios
@@ -83,7 +84,11 @@ const CustomerAd = props => {
                 justify-content='space-between'
             >
                 <Box sx={{ width: 1 / 2, flex: 1 }}>
-                    <Typography align="left" style={{ color: "#666666", marginTop: 10 }}>
+                    <Typography align="left" style={{ marginTop: 10, fontWeight: 550 }}>
+                        {creationDate}
+                    </Typography>
+
+                    <Typography align="left" style={{ color: "#666666", marginTop: 5 }}>
                         {metro.name}
                     </Typography>
 
@@ -125,7 +130,7 @@ const CustomerAd = props => {
                         value={description}
                         fullWidth
                         disabled={true}
-                        style={{ marginTop: 15 }}
+                        style={{ marginTop: 40 }}
                     />
 
                 </Box>
