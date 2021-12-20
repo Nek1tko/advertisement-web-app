@@ -17,6 +17,6 @@ export default class RegistrationConfirmed extends Component {
     render() {
         return this.state.redirect
             ? <Redirect to="/login"/>
-            : <div>Registration was successful!</div>
+            : <div>Регистрация прошла успешно!</div>
     }
 }
