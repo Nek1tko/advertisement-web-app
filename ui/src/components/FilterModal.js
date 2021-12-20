@@ -11,7 +11,6 @@ import authHeader from "../services/auth-header";
 import {Alert} from "@mui/material";
 
 const API_URL = "http://localhost:8080/";
-const API_URL_SEARCH = "http://localhost:8080/ad/page";
 
 export const FilterModal = (props) => {
     const [metro, setMetro] = useState('');
@@ -79,7 +78,6 @@ export const FilterModal = (props) => {
             setAlertOpen(false);
             const jsonFilter = parseRowsToJSON();
             props.setJsonFilter(jsonFilter);
-            // postRequest(jsonFilter);
         } else {
             setAlertOpen(true);
         }
@@ -88,6 +86,14 @@ export const FilterModal = (props) => {
         setOpen(false);
         setAlertOpen(false);
     };
+
+    const handleClearFilters = () => {
+        setMetro('');
+        setCategory('');
+        setMinPrice('');
+        setMaxPrice('');
+        setActive('');
+    }
 
     const validatePrice = () => {
         let isCorrect = true;
@@ -124,14 +130,6 @@ export const FilterModal = (props) => {
         console.log(jsonModel);
         props.setJsonFilter(jsonModel);
         return jsonModel;
-    }
-
-    const postRequest = (jsonFilter) => {
-        axios
-            .post(API_URL_SEARCH, {...jsonFilter}, {headers: authHeader()})
-            .then(res => {
-                props.setAds(res.data);
-            })
     }
 
     return (
@@ -263,6 +261,13 @@ export const FilterModal = (props) => {
                     </TextField>
                 </DialogContent>
                 <DialogActions>
+                    <Button
+                        autoFocus
+                        onClick={handleClearFilters}
+                        style={{marginRight: "auto"}}
+                    >
+                        Сбросить фильтры
+                    </Button>
                     <Button autoFocus onClick={handleCancel}>
                         Отменить
                     </Button>
