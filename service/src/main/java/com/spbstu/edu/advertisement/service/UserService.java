@@ -11,6 +11,8 @@ public interface UserService {
     
     UserDto updateUser(UserDto userDto);
     
+    User updateUser(User user);
+    
     UserDto getUserByPhoneNumber(String phoneNumber);
     
     User getUserEntity(long userId);

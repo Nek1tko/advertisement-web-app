@@ -35,4 +35,6 @@ public class AdDto {
     private Boolean isActive;
     
     private String previewImagePath;
+    
+    private Boolean isFavourite;
 }
