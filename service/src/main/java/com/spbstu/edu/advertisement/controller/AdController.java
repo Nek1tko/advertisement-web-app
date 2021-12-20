@@ -62,6 +62,6 @@ public class AdController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/favourites")
     public FavouriteDto addToFavourites(@RequestBody FavouriteDto favourite) {
-        return adService.addFavourite(favourite);
+        return adService.addToFavourites(favourite);
     }
 }
