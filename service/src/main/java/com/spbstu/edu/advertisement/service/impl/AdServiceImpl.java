@@ -52,7 +52,7 @@ public class AdServiceImpl implements AdService {
     
     @Override
     public AdDto getAd(long adId) {
-        return setFavourite(adMapper.toAdDto(getAdEntity(adId)));
+        return setFavourite(List.of(adMapper.toAdDto(getAdEntity(adId)))).get(0);
     }
     
     @Override
@@ -76,7 +76,7 @@ public class AdServiceImpl implements AdService {
         AdDto storedAd = getAd(adDto.getId());
         Ad savedAd = adMapper.updateWithNullAsNoChange(adDto, adMapper.toAd(storedAd));
         savedAd = adRepository.save(savedAd);
-        return setFavourite(adMapper.toAdDto(savedAd));
+        return setFavourite(List.of(adMapper.toAdDto(savedAd))).get(0);
     }
     
     @Override
@@ -103,12 +103,7 @@ public class AdServiceImpl implements AdService {
     @Override
     public FavouriteDto addToFavourites(FavouriteDto favourite) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    
-        if (!Objects.equals(favourite.getUserId(), user.getId())) {
-            throw new NotEnoughRightsException("You cannot add the ad to someone else's favourite list.");
-        }
-        
-        user = userService.getUserEntity(favourite.getUserId());
+        user = userService.getUserEntity(user.getId());
         
         boolean isAlreadyFavourite = user.getFavouriteAds().stream()
                 .anyMatch(ad -> ad.getId().equals(favourite.getAdId()));
@@ -124,15 +119,6 @@ public class AdServiceImpl implements AdService {
         }
         userService.updateUser(user);
         return favourite;
-    }
-    
-    @Override
-    public AdDto setFavourite(AdDto ad) {
-        User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.getUserEntity(currentUser.getId());
-        ad.setIsFavourite(user.getFavouriteAds().stream()
-                .anyMatch(favouriteAd -> favouriteAd.getId().equals(ad.getId())));
-        return ad;
     }
     
     @Override

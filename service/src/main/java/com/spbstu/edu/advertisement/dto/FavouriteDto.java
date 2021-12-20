@@ -13,8 +13,6 @@ import lombok.Setter;
 @Setter
 public class FavouriteDto {
     private Long adId;
-    
-    private Long userId;
-    
+
     private Boolean isFavourite;
 }

@@ -28,7 +28,5 @@ public interface AdService {
     
     FavouriteDto addToFavourites(FavouriteDto favourite);
     
-    AdDto setFavourite(AdDto ad);
-    
     List<AdDto> setFavourite(List<AdDto> ads);
 }
