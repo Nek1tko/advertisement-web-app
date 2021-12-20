@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Subquery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +87,15 @@ public class PageableAdRepositoryImpl implements PageableAdRepository {
         if (pageableContext.getMetroId() != null) {
             predicates.add(criteriaBuilder.equal(ad.get(Ad.METRO_PATH).get(ID_PATH), pageableContext.getMetroId()));
         }
-
+    
+        if (pageableContext.getIsActive() != null) {
+            predicates.add(criteriaBuilder.equal(ad.get(Ad.IS_ACTIVE_PATH), pageableContext.getIsActive()));
+        }
+    
+        if (pageableContext.getTitle() != null) {
+            predicates.add(criteriaBuilder.like(ad.get(Ad.TITLE_PATH), "%" + pageableContext.getTitle() + "%"));
+        }
+    
         return criteriaBuilder.and(predicates.toArray(new Predicate[predicates.size()]));
     }
 }

@@ -17,4 +17,8 @@ public class PageableContext {
     private Long metroId;
 
     private Long categoryId;
+
+    private Boolean isActive;
+    
+    private String title;
 }
