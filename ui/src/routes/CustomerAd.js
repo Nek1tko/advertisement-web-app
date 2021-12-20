@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "react-awesome-slider/src/styles";
-import eren from "../img/eren.jpg";
-import mikasa from "../img/mikasa.jpg";
-import levi from "../img/levi.png";
 import TextField from "@material-ui/core/TextField";
+import axios from 'axios';
+import authHeader from "../services/auth-header";
+
+const API_URL = "http://localhost:8080/";
 
 const CustomerAd = props => {
     const ad = (props.location && props.location.ad) || {};
@@ -18,6 +19,15 @@ const CustomerAd = props => {
     const [metro, setMetro] = useState(ad.metro);
     const [category, setCategory] = useState(ad.subcategory.category);
     const [subcategory, setSubcategory] = useState(ad.subcategory);
+    const [imgs, setImgs] = useState([]);
+
+    useEffect(() => {
+        axios
+            .get(API_URL + "image/" + ad.id, { headers: authHeader() })
+            .then(res => {
+                setImgs(res.data.map(img => { return API_URL + "img/" + img.path }));
+            })
+    }, []);
 
     return (<div style={{ display: "flex" }}>
         <Box sx={{ width: 1 / 2, height: 1 / 2, flex: 1 }}>
@@ -33,16 +43,11 @@ const CustomerAd = props => {
                 animation="foldOutAnimation"
                 cssModule={AwesomeSliderStyles}
             >
-                <div>
-                    <img alt="Ad preview" src={eren} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-                </div>
-                <div>
-                    <img alt="Ad preview" src={mikasa}
-                        style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-                </div>
-                <div>
-                    <img alt="Ad preview" src={levi} style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
-                </div>
+                {imgs.map(img => {
+                    return (
+                        <div data-src={img} />
+                    );
+                })}
             </AwesomeSlider>
         </Box>
 
