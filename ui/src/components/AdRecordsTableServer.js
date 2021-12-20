@@ -1,6 +1,6 @@
 import React from "react";
-import {Box} from "@material-ui/core";
-import {DataGrid} from '@mui/x-data-grid';
+import { Box } from "@material-ui/core";
+import { DataGrid } from '@mui/x-data-grid';
 import axios from "axios";
 import authHeader from "../services/auth-header";
 
@@ -18,8 +18,8 @@ const columns = [
         />,
         sortable: false
     },
-    {field: 'name', headerName: 'Название', minWidth: 400, sortable: false, flex: 1},
-    {field: 'location', headerName: 'Метро', minWidth: 200, sortable: false},
+    { field: 'name', headerName: 'Название', minWidth: 400, sortable: false, flex: 1 },
+    { field: 'location', headerName: 'Метро', minWidth: 200, sortable: false },
     {
         field: 'price',
         headerName: 'Цена',
@@ -34,7 +34,7 @@ const columns = [
 ];
 
 export default function AdRecordsTable(props) {
-    const {history} = props;
+    const { history } = props;
     const userId = props.userId;
     const ads = props.ads;
     const rowCount = props.rowCount;
@@ -52,7 +52,8 @@ export default function AdRecordsTable(props) {
             saler: ad.saler,
             metro: ad.metro,
             subcategory: ad.subCategory,
-            isFavourite: ad.isFavourite
+            isFavourite: ad.isFavourite,
+            creationDate: ad.creationDate
         };
     }) : [];
     console.log(rows);
@@ -61,7 +62,7 @@ export default function AdRecordsTable(props) {
         page = page + 1;
         props.setPage(page);
         axios
-            .post(API_URL, {page: page}, {headers: authHeader()})
+            .post(API_URL, { page: page }, { headers: authHeader() })
             .then(res => {
                 console.log(res);
                 props.setAds(res.data);
