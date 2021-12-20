@@ -10,6 +10,8 @@ import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
+const FormData = require('form-data');
+
 const API_URL = "http://localhost:8080/";
 
 const CreateAdImpl = props => {
@@ -30,6 +32,8 @@ const CreateAdImpl = props => {
 
     const [alertOpen, setAlertOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+
+    const [imgs, setImgs] = useState(null);
 
     const { _, userId, } = AuthService.getUser();
 
@@ -83,10 +87,28 @@ const CreateAdImpl = props => {
                 isActive: true
             }, { headers: authHeader() })
             .then(res => {
+                for (var img of imgs) {
+                    const data = new FormData();
+                    data.append('file', img);
+                    data.append('imageJson', JSON.stringify({ ad: { id: res.data.id } }));
+
+                    for (var key of data.entries()) {
+                        console.log(key[0] + ', ' + key[1]);
+                    }
+
+                    var config = {
+                        method: 'post',
+                        url: API_URL + "image/upload",
+                        headers: {
+                            ...authHeader()
+                        },
+                        data: data
+                    };
+
+                    axios(config);
+                }
                 history.push('/my-ads');
             })
-
-        history.push('/my-ads');
     };
 
     return (
@@ -211,6 +233,7 @@ const CreateAdImpl = props => {
                 filesLimit={3}
                 maxFileSize={3145728} // 3 mb
                 acceptedFiles={[".jpeg", ".jpg"]}
+                onChange={files => { setImgs(files); }}
             />
 
             <Button
@@ -220,7 +243,7 @@ const CreateAdImpl = props => {
                 onClick={handleSubmit}
                 fullWidth
                 style={{ marginTop: 20 }}
-                disabled={!name || !description || !price || !metro || !category || !subcategory}
+                disabled={!name || !description || !price || !metro || !category || !subcategory || imgs.length === 0}
             >
                 Создать
             </Button>
