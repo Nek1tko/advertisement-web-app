@@ -1,7 +1,7 @@
 import { DropzoneArea } from 'material-ui-dropzone';
 
 const getFileLimitExceedMessage = (filesLimit) => {
-    return "Достигнуто максимальное количетсов файлов: " + filesLimit;
+    return "Достигнуто максимальное количество файлов: " + filesLimit;
 };
 
 const getFileAddedMessage = (fileName) => {
