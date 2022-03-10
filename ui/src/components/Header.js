@@ -10,7 +10,6 @@ import { withRouter } from "react-router-dom";
 import { Avatar, Box, Tooltip } from "@material-ui/core";
 import AuthService from '../services/auth.service';
 import Collapse from '@mui/material/Collapse';
-import { useSelector } from 'react-redux';
 import store from '../store';
 
 const Header = props => {
@@ -23,7 +22,7 @@ const Header = props => {
         store.subscribe(() => {
             setIsOpen(AuthService.getUser() !== null);
         })
-    }, store)
+    }, [store])
 
     const handleButtonClick = pageURL => {
         history.push(pageURL);
@@ -81,6 +80,7 @@ const Header = props => {
         <AppBar style={{ background: 'primary' }} position="static">
             <Toolbar>
                 <Button
+                    id="homeButton"
                     style={{ color: '#FFFFFF' }}
                     onClick={() => handleButtonClick(homeItem.pageURL)} >
                     <Typography variant="h4" sx={{ flexGrow: 1 }}>
@@ -94,6 +94,7 @@ const Header = props => {
                         return (
                             <Box sx={{ px: 2 }}>
                                 <Button
+                                    id={menuTitle}
                                     style={{ color: '#FFFFFF', textTransform: 'none', fontSize: '18px' }}
                                     onClick={() => handleButtonClick(pageURL)}
                                 >
@@ -105,9 +106,16 @@ const Header = props => {
                 </Box>
 
                 <Box sx={{ flexGrow: 0 }}>
-                    <Collapse in={isOpen}>
+                    <Collapse
+                        id="settingsCollapse"
+                        in={isOpen}
+                    >
                         <Tooltip title="Открыть настройки">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <IconButton
+                                id="settingsIconButton"
+                                onClick={handleOpenUserMenu}
+                                sx={{ p: 0 }}
+                            >
                                 <Avatar />
                             </IconButton>
                         </Tooltip>
@@ -130,7 +138,7 @@ const Header = props => {
                             {settingsItems.map((settingsItem) => {
                                 const { settingsTitle, pageURL, handler } = settingsItem;
                                 return (
-                                    <MenuItem key={settingsTitle} onClick={() => handler(pageURL)}>
+                                    <MenuItem id={settingsTitle} key={settingsTitle} onClick={() => handler(pageURL)}>
                                         <Typography>{settingsTitle}</Typography>
                                     </MenuItem>
                                 );

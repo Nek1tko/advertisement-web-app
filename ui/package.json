@@ -38,7 +38,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "coverage": "jest --coverage",
+    "test:o": "jest -o",
+    "test:coverage": "jest --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -63,6 +64,8 @@
     "jest": "^26.6.0"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/src/setupTests.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ]
   }
 }
