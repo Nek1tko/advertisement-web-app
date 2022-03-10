@@ -7,7 +7,7 @@ jest.mock('axios');
 
 describe('AuthServiceTests', () => {
     beforeEach(() => {
-
+        store.dispatch(authActionCreators.userSignOut());
     });
 
     afterEach(() => {
@@ -20,24 +20,31 @@ describe('AuthServiceTests', () => {
             id: 0,
             token: "token",
         };
-
         axios.post.mockResolvedValue({ data: mSignInData });
-
-        const mStoreDispatch = jest.spyOn(store, 'dispatch');
-        const mUserSignIn = jest.spyOn(authActionCreators, "userSignIn");
 
         const mPassword = "password";
         AuthService.signIn(mSignInData.phoneNumber, mPassword)
             .then(() => {
-                expect(mStoreDispatch).toHaveBeenCalledTimes(1);
-                expect(mUserSignIn).toHaveBeenCalledTimes(1);
                 expect(axios.post).toHaveBeenCalledTimes(1);
-
                 expect(store.getState().user).toEqual({
                     phoneNumber: mSignInData.phoneNumber,
                     userId: mSignInData.id,
                     token: mSignInData.token
                 });
+            });
+    });
+
+    test('AuthServiceSignInNegativeTest', () => {
+        const mSignInNegativeData = {
+            message: "error"
+        };
+        axios.post.mockResolvedValue({ data: mSignInNegativeData });
+
+        const mPassword = "password", mPhoneNumber = "phone";
+        AuthService.signIn(mPhoneNumber, mPassword)
+            .then(() => {
+                expect(axios.post).toHaveBeenCalledTimes(1);
+                expect(store.getState().user).toEqual(null);
             });
     });
 
@@ -48,29 +55,23 @@ describe('AuthServiceTests', () => {
             token: "token"
         }
 
-        const mStoreDispatch = jest.spyOn(store, 'dispatch');
-        const mUserSignOut = jest.spyOn(authActionCreators, "userSignOut");
-
         store.dispatch(authActionCreators.userSignIn(mUser.phoneNumber, mUser.userId, mUser.token));
         expect(store.getState().user).toEqual(mUser);
 
         AuthService.signOut();
 
-        expect(mStoreDispatch).toHaveBeenCalledTimes(2);
-        expect(mUserSignOut).toHaveBeenCalledTimes(1);
-
         expect(store.getState().user).toEqual(null);
     });
 
     test('AuthServiceRegisterTest', () => {
+        axios.post.mockResolvedValue();
+
         const mUser = {
             name: "name",
             surname: "surname",
             phoneNumber: "phone",
             password: "password"
         }
-
-        axios.post.mockResolvedValue();
 
         AuthService.register(mUser.name, mUser.surname, mUser.phoneNumber, mUser.password);
 
