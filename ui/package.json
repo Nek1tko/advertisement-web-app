@@ -40,6 +40,7 @@
     "test": "jest",
     "test:o": "jest -o",
     "test:coverage": "jest --coverage",
+    "test:coverage-all": "jest --coverage --collectCoverageFrom=src/**/*.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
