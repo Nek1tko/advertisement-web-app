@@ -56,14 +56,6 @@ export const FilterModal = (props) => {
             })
     }, []);
 
-    useEffect(() => {
-        axios
-            .get(API_URL + "metro", {headers: authHeader()})
-            .then(res => {
-                setMetroList(res.data);
-            })
-    }, []);
-
     const [open, setOpen] = React.useState(false);
     const handleClickOpen = () => {
         setOpen(true);
@@ -135,6 +127,7 @@ export const FilterModal = (props) => {
     return (
         <div>
             <Button
+                id="filtersButton"
                 onClick={handleClickOpen}
                 variant="contained"
                 startIcon={<FilterListIcon/>}
@@ -148,6 +141,7 @@ export const FilterModal = (props) => {
                 Фильтры
             </Button>
             <Dialog
+                id="dialogModal"
                 open={open}
                 onClose={handleClose}
                 onBackdropClick={handleCancel}
@@ -167,6 +161,7 @@ export const FilterModal = (props) => {
                         </Alert>
                     </Collapse>
                     <TextField
+                        id="metroTextField"
                         fullWidth
                         select
                         variant="filled"
@@ -178,13 +173,14 @@ export const FilterModal = (props) => {
                     >
                         {metroList.map(metro => {
                             return (
-                                <MenuItem key={metro.id} value={metro.id}>
+                                <MenuItem id={metro.id} key={metro.id} value={metro.id}>
                                     {metro.name}
                                 </MenuItem>);
                         })}
                     </TextField>
 
                     <TextField
+                        id="categoryTextField"
                         fullWidth
                         select
                         variant="filled"
@@ -207,6 +203,7 @@ export const FilterModal = (props) => {
                     </TextField>
 
                     <TextField
+                        id="minPriceTextField"
                         label="Минимальная цена"
                         variant="filled"
                         type="number"
@@ -223,6 +220,7 @@ export const FilterModal = (props) => {
                     />
 
                     <TextField
+                        id="maxPriceTextField"
                         label="Максимальная цена"
                         variant="filled"
                         type="number"
@@ -239,6 +237,7 @@ export const FilterModal = (props) => {
                     />
 
                     <TextField
+                        id="adTypeTextField"
                         fullWidth
                         select
                         variant="filled"
@@ -262,6 +261,7 @@ export const FilterModal = (props) => {
                 </DialogContent>
                 <DialogActions>
                     <Button
+                        id="clearButton"
                         autoFocus
                         onClick={handleClearFilters}
                         style={{marginRight: "auto"}}
@@ -271,7 +271,7 @@ export const FilterModal = (props) => {
                     <Button autoFocus onClick={handleCancel}>
                         Отменить
                     </Button>
-                    <Button autoFocus onClick={handleApply}>
+                    <Button id="applyButton" autoFocus onClick={handleApply}>
                         Применить
                     </Button>
                 </DialogActions>
