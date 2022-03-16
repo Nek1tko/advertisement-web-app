@@ -40,10 +40,9 @@
     "build": "react-scripts build",
     "test": "jest",
     "test:o": "jest -o",
-    "test:coverage": "jest --coverage",
     "test:coverage-all": "jest --coverage --collectCoverageFrom=src/**/*.js",
     "eject": "react-scripts eject",
-    "test:custom": "jest --transformIgnorePatterns \"node_modules/(?!@amcharts)/\""
+    "test:custom": "jest -o --transformIgnorePatterns \"node_modules/(?!@amcharts)/\""
   },
   "eslintConfig": {
     "extends": [
