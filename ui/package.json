@@ -13,8 +13,11 @@
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "axios": "^0.24.0",
+    "enzyme": "^3.11.0",
     "form-data": "^4.0.0",
+    "history": "^5.3.0",
     "material-ui-dropzone": "^3.5.0",
     "react": "17.0.2",
     "react-awesome-slider": "^4.1.0",
@@ -30,9 +33,7 @@
     "redux-thunk": "^2.4.1",
     "sass": "^1.45.0",
     "uniqid": "^5.4.0",
-    "web-vitals": "^1.1.2",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
-    "enzyme": "^3.11.0"
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,6 +41,7 @@
     "test": "jest",
     "test:o": "jest -o",
     "test:coverage": "jest --coverage",
+    "test:o:coverage": "jest -o --coverage",
     "test:coverage-all": "jest --coverage --collectCoverageFrom=src/**/*.js",
     "eject": "react-scripts eject"
   },
