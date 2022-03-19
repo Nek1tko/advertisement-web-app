@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {FilterModal} from "../components/FilterModal";
 import AdRecordsTableServer from "../components/AdRecordsTableServer";
 import Box from "@mui/material/Box";
@@ -15,7 +15,7 @@ const API_URL_COUNT = "http://localhost:8080/ad/page/count";
 
 const HomeImpl = props => {
     const [searchValue, setSearchValue] = React.useState("");
-    const [ads, setAds] = useState([]);
+    const [ads, setAds] = React.useState([]);
     const [rowCount, setRowCount] = React.useState(0);
     const [page, setPage] = React.useState(1);
     const {_, userId,} = AuthService.getUser();
@@ -73,6 +73,7 @@ const HomeImpl = props => {
                 </Box>
                 <Box sx={{width: 1 / 3, flex: 1, marginTop: 3}}>
                     <TextField
+                        id="searchTextField"
                         type="search"
                         size="small"
                         label="Поиск"
@@ -86,6 +87,7 @@ const HomeImpl = props => {
                 </Box>
                 <Box sx={{width: 1 / 3, flex: 1, marginTop: 3}}>
                     <Button
+                        id="searchButton"
                         variant="contained"
                         onClick={handleClickSearch}
                         endIcon={<SearchIcon/>}
