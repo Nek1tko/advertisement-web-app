@@ -20,29 +20,29 @@ const API_URL = "http://localhost:8080/";
 const SellerAd = props => {
     const ad = (props.location && props.location.ad) || {};
 
-    const [description, setDescription] = useState(ad.description);
-    const [open, setOpen] = useState(false);
-    const [errorOpen, setErrorOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-    const [editedDescription, setEditedDescription] = useState(description);
-    const [price, setPrice] = useState(ad.price);
-    const [name, setName] = useState(ad.name);
-    const [editedName, setEditedName] = useState(name);
-    const [editedPrice, setEditedPrice] = useState(price);
-    const [metroList, setMetroList] = useState([]);
-    const [metro, setMetro] = useState(ad.metro);
-    const [editedMetro, setEditedMetro] = useState(ad.metro);
-    const [categoryList, setCategoryList] = useState([]);
-    const [category, setCategory] = useState(ad.subcategory.category);
-    const [subcategoryList, setSubcategoryList] = useState([]);
-    const [subcategory, setSubcategory] = useState(ad.subcategory);
-    const [editedCategory, setEditedCategory] = useState(category);
-    const [editedSubcategory, setEditedSubcategory] = useState(subcategory);
+    const [description, setDescription] = React.useState(ad.description);
+    const [open, setOpen] = React.useState(false);
+    const [errorOpen, setErrorOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
+    const [editedDescription, setEditedDescription] = React.useState(description);
+    const [price, setPrice] = React.useState(ad.price);
+    const [name, setName] = React.useState(ad.name);
+    const [editedName, setEditedName] = React.useState(name);
+    const [editedPrice, setEditedPrice] = React.useState(price);
+    const [metroList, setMetroList] = React.useState([]);
+    const [metro, setMetro] = React.useState(ad.metro);
+    const [editedMetro, setEditedMetro] = React.useState(ad.metro);
+    const [categoryList, setCategoryList] = React.useState([]);
+    const [category, setCategory] = React.useState(ad.subcategory.category);
+    const [subcategoryList, setSubcategoryList] = React.useState([]);
+    const [subcategory, setSubcategory] = React.useState(ad.subcategory);
+    const [editedCategory, setEditedCategory] = React.useState(category);
+    const [editedSubcategory, setEditedSubcategory] = React.useState(subcategory);
     const [imgs, setImgs] = useState([]);
-    const [isFavorites, setIsFavorites] = useState(ad.isFavourite);
-    const [favIconColor, setFavIconColor] = useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
-    const [isActive, setIsActive] = useState(ad.is_active);
-    const [editedIsActive, setEditedIsActive] = useState(ad.is_active);
+    const [isFavorites, setIsFavorites] = React.useState(ad.isFavourite);
+    const [favIconColor, setFavIconColor] = React.useState(ad.isFavourite ? "#E75480" : "#BDBDBD");
+    const [isActive, setIsActive] = React.useState(ad.is_active);
+    const [editedIsActive, setEditedIsActive] = React.useState(ad.is_active);
 
     useEffect(() => {
         axios
@@ -127,7 +127,6 @@ const SellerAd = props => {
                     headers: authHeader()
                 })
             .then(res => {
-                console.log(res);
                 setDescription(res.data.description);
                 setName(res.data.name);
                 setPrice(res.data.price);
@@ -160,6 +159,7 @@ const SellerAd = props => {
                 }
 
                 <IconButton
+                    id="favoriteIconButton"
                     align="right"
                     style={{ marginTop: 20, marginLeft: 'auto' }} size="large"
                     onClick={handleFavClick}
@@ -204,6 +204,7 @@ const SellerAd = props => {
                     </Typography>
 
                     <TextField
+                        id="descriptionTextField"
                         label="Описание"
                         variant="filled"
                         multiline
@@ -219,6 +220,7 @@ const SellerAd = props => {
                     />
 
                     <Button
+                        id="editButton"
                         fullWidth
                         variant="contained"
                         color='primary'
@@ -228,6 +230,7 @@ const SellerAd = props => {
                     </Button>
 
                     <Dialog
+                        id="editDialog"
                         open={open}
                         onClose={handleCancelClose}
                         fullWidth
@@ -250,6 +253,7 @@ const SellerAd = props => {
                             </Collapse>
 
                             <FormControlLabel
+                                id="isActiveFormControlLabel"
                                 label="Снято с продажи"
                                 control={
                                     <Checkbox
@@ -262,6 +266,7 @@ const SellerAd = props => {
                             />
 
                             <TextField
+                                id="nameTextField"
                                 label="Название"
                                 variant="filled"
                                 value={editedName}
@@ -280,6 +285,7 @@ const SellerAd = props => {
                             />
 
                             <TextField
+                                id="metroTextField"
                                 select
                                 variant="filled"
                                 label="Метро"
@@ -297,6 +303,7 @@ const SellerAd = props => {
                             </TextField>
 
                             <TextField
+                                id="priceTextField"
                                 label="Цена"
                                 variant="filled"
                                 type="number"
@@ -313,6 +320,7 @@ const SellerAd = props => {
                             />
 
                             <TextField
+                                id="categoryTextField"
                                 select
                                 variant="filled"
                                 label="Категория"
@@ -335,6 +343,7 @@ const SellerAd = props => {
                             </TextField>
 
                             <TextField
+                                id="subcategoryTextField"
                                 disabled={!category}
                                 select
                                 variant="filled"
@@ -358,6 +367,7 @@ const SellerAd = props => {
                             </TextField>
 
                             <TextField
+                                id="editedDescriptionTextField"
                                 label="Описание"
                                 variant="filled"
                                 value={editedDescription}
@@ -379,8 +389,8 @@ const SellerAd = props => {
                         </DialogContent>
 
                         <DialogActions>
-                            <Button onClick={handleCancelClose}>Отмена</Button>
-                            <Button onClick={handleSaveClose}>Сохранить</Button>
+                            <Button id="cancelButton" onClick={handleCancelClose}>Отмена</Button>
+                            <Button id="saveButton" onClick={handleSaveClose}>Сохранить</Button>
                         </DialogActions>
                     </Dialog>
                 </Box>

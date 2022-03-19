@@ -38,10 +38,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "test:o": "jest -o",
-    "test:coverage": "jest --coverage",
-    "test:coverage-all": "jest --coverage --collectCoverageFrom=src/**/*.js",
+    "test": "jest --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
+    "test:coverage-all": "jest --silent --collectCoverageFrom=src/**/*.js --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
     "eject": "react-scripts eject",
     "test:custom": "jest -o --transformIgnorePatterns \"node_modules/(?!@amcharts)/\""
   },
