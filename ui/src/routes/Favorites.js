@@ -8,14 +8,13 @@ import authHeader from "../services/auth-header";
 const API_URL = "http://localhost:8080/ad/favourites/";
 
 const FavoritesImpl = props => {
-    const [ads, setAds] = useState([]);
+    const [ads, setAds] = React.useState([]);
     const { _, userId, } = AuthService.getUser();
 
     useEffect(() => {
         axios
             .get(API_URL + userId, { headers: authHeader() })
             .then(res => {
-                console.log(res);
                 setAds(res.data);
             })
     }, [userId, setAds]);
