@@ -40,7 +40,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
-    "test:coverage-all": "jest --silent --collectCoverageFrom=src/**/*.js --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
+    "test:coverage-all": "jest --silent --collectCoverageFrom=src/*/*.js --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
     "eject": "react-scripts eject",
     "test:o": "jest -o --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
     "test:o:coverage": "jest -o --coverage --transformIgnorePatterns \"node_modules/(?!@amcharts)/\""
