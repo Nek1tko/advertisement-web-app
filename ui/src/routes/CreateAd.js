@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Box, MenuItem, InputAdornment } from "@material-ui/core";
+import React, {useEffect, useState} from "react";
+import {Box, Collapse, InputAdornment, MenuItem} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import LocalizedDropzoneArea from '../components/LocalizedDropzoneArea';
-import { Collapse } from '@material-ui/core';
-import { Alert } from "@mui/material";
+import {Alert} from "@mui/material";
 import AuthService from '../services/auth.service';
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
@@ -92,10 +91,6 @@ const CreateAdImpl = props => {
                     data.append('file', img);
                     data.append('imageJson', JSON.stringify({ ad: { id: res.data.id } }));
 
-                    for (var key of data.entries()) {
-                        console.log(key[0] + ', ' + key[1]);
-                    }
-
                     var config = {
                         method: 'post',
                         url: API_URL + "image/upload",
@@ -128,6 +123,7 @@ const CreateAdImpl = props => {
             </Collapse>
 
             <TextField
+                id="adNameTextField"
                 label="Название"
                 variant="filled"
                 fullWidth
@@ -139,6 +135,7 @@ const CreateAdImpl = props => {
             />
 
             <TextField
+                id="priceTextField"
                 label="Цена"
                 variant="filled"
                 type="number"
@@ -155,6 +152,7 @@ const CreateAdImpl = props => {
             />
 
             <TextField
+                id="descriptionTextField"
                 label="Описание"
                 variant="filled"
                 multiline
@@ -169,6 +167,7 @@ const CreateAdImpl = props => {
             />
 
             <TextField
+                id="metroTextField"
                 select
                 variant="filled"
                 label="Метро"
@@ -186,6 +185,7 @@ const CreateAdImpl = props => {
             </TextField>
 
             <TextField
+                id="categoryTextField"
                 select
                 variant="filled"
                 label="Категория"
@@ -208,6 +208,7 @@ const CreateAdImpl = props => {
             </TextField>
 
             <TextField
+                id="subcategoryTextField"
                 disabled={!category}
                 select
                 variant="filled"
@@ -230,6 +231,7 @@ const CreateAdImpl = props => {
             </TextField>
 
             <LocalizedDropzoneArea
+                id="localizedDropzoneArea"
                 filesLimit={3}
                 maxFileSize={3145728} // 3 mb
                 acceptedFiles={[".jpeg", ".jpg"]}
@@ -237,10 +239,11 @@ const CreateAdImpl = props => {
             />
 
             <Button
+                id="submitButton"
                 type="submit"
                 variant="contained"
                 color="primary"
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e)}
                 fullWidth
                 style={{ marginTop: 20 }}
                 disabled={!name || !description || !price || !metro || !category || !subcategory || imgs.length === 0}
