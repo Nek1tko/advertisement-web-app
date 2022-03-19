@@ -64,7 +64,6 @@ export default function AdRecordsTable(props) {
         axios
             .post(API_URL, { page: page }, { headers: authHeader() })
             .then(res => {
-                console.log(res);
                 props.setAds(res.data);
             })
     };
@@ -82,6 +81,7 @@ export default function AdRecordsTable(props) {
             }}
         >
             <DataGrid
+                id="adDataGrid"
                 rowHeight={100}
                 autoHeight
                 pageSize={10}
