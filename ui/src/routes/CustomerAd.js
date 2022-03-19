@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Box, Typography} from "@mui/material";
 import AwesomeSlider from "react-awesome-slider";
 import AwesomeSliderStyles from "react-awesome-slider/src/styles";
 import TextField from "@material-ui/core/TextField";
@@ -70,6 +70,7 @@ const CustomerAd = props => {
                 }
 
                 <IconButton
+                    id="favButton"
                     align="right"
                     style={{ marginTop: 20, marginLeft: 'auto' }} size="large"
                     onClick={handleFavClick}
