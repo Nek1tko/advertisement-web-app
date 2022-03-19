@@ -17,6 +17,7 @@
     "axios": "^0.24.0",
     "enzyme": "^3.11.0",
     "form-data": "^4.0.0",
+    "identity-obj-proxy": "^3.0.0",
     "history": "^5.3.0",
     "material-ui-dropzone": "^3.5.0",
     "react": "17.0.2",
@@ -38,12 +39,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "test:o": "jest -o",
-    "test:coverage": "jest --coverage",
-    "test:o:coverage": "jest -o --coverage",
-    "test:coverage-all": "jest --coverage --collectCoverageFrom=src/**/*.js",
-    "eject": "react-scripts eject"
+    "test": "jest --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
+    "test:coverage-all": "jest --silent --collectCoverageFrom=src/**/*.js --transformIgnorePatterns \"node_modules/(?!@amcharts)/\"",
+    "eject": "react-scripts eject",
+    "test:custom": "jest -o --transformIgnorePatterns \"node_modules/(?!@amcharts)/\""
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +63,10 @@
     ]
   },
   "devDependencies": {
-    "jest": "^26.6.0"
+    "@babel/plugin-transform-modules-commonjs": "^7.17.7",
+    "@babel/preset-env": "^7.16.11",
+    "babel-jest": "^27.5.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "jest": "^26.6.3"
   }
 }
