@@ -66,6 +66,7 @@ export default function AdRecordsTable(props) {
             }}
         >
             <DataGrid
+                id="adDataGrid"
                 rowHeight={100}
                 autoHeight
                 pageSize={10}
