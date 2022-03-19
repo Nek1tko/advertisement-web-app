@@ -1,35 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { Box, Button, Typography } from "@material-ui/core";
+import React, {useEffect} from "react";
+import {Box, Button, Collapse, Typography} from "@material-ui/core";
 import AuthService from '../services/auth.service';
-import { Redirect } from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { Collapse } from "@material-ui/core";
-import { Alert } from "@mui/material";
+import {Alert} from "@mui/material";
 import axios from 'axios';
 import authHeader from "../services/auth-header";
 
 const API_URL = "http://localhost:8080/user";
 
 const PersonalAreaImpl = props => {
-    const [name, setName] = useState('');
-    const [surname, setSurname] = useState('');
-    const [open, setOpen] = useState(false);
-    const [errorOpen, setErrorOpen] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
+    const [name, setName] = React.useState('');
+    const [surname, setSurname] = React.useState('');
+    const [open, setOpen] = React.useState(false);
+    const [errorOpen, setErrorOpen] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState('');
 
-    const [editedName, setEditedName] = useState(name);
-    const [editedSurname, setEditedSurname] = useState(surname);
+    const [editedName, setEditedName] = React.useState(name);
+    const [editedSurname, setEditedSurname] = React.useState(surname);
 
-    const { phoneNumber, userId, } = AuthService.getUser();
+    const {phoneNumber, userId,} = AuthService.getUser();
 
     useEffect(() => {
         axios
-            .get(API_URL + '/' + userId, { headers: authHeader() })
+            .get(API_URL + '/' + userId, {headers: authHeader()})
             .then(res => {
                 setName(res.data.name);
                 setSurname(res.data.surname);
@@ -89,6 +88,7 @@ const PersonalAreaImpl = props => {
             </Typography>
 
             <Button
+                id="openButton"
                 variant="contained"
                 color="primary"
                 fullWidth
@@ -117,6 +117,7 @@ const PersonalAreaImpl = props => {
                     </Collapse>
 
                     <TextField
+                        id="nameTextField"
                         label="Имя"
                         variant="filled"
                         value={editedName}
@@ -135,6 +136,7 @@ const PersonalAreaImpl = props => {
                     />
 
                     <TextField
+                        id="surnameTextField"
                         label="Фамилия"
                         variant="filled"
                         value={editedSurname}
@@ -154,8 +156,8 @@ const PersonalAreaImpl = props => {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={handleCancelClose}>Отмена</Button>
-                    <Button onClick={handleSaveClose}>Сохранить</Button>
+                    <Button id="closeButton" onClick={handleCancelClose}>Отмена</Button>
+                    <Button id="saveButton" onClick={handleSaveClose}>Сохранить</Button>
                 </DialogActions>
             </Dialog>
         </Box>
