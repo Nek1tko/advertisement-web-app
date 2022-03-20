@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ import java.util.Date;
 @Slf4j
 public class TokenServiceImpl implements TokenService {
     private static final Long TOKEN_LIFETIME = 7200000L; // 2 hours
-    private static final String KEY = "1231312";
+    private static final String KEY = Base64.getEncoder().encodeToString("1231312".getBytes(StandardCharsets.UTF_8));
     
     private final UserRepository userRepository;
     
