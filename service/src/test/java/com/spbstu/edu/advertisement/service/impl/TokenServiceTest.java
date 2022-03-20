@@ -46,7 +46,7 @@ public class TokenServiceTest {
 
     private final String phoneNumber = "+78005553535";
     private final String encodedPassword = messageDigest.encode("123");
-    private final String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJ1c2VySWRcIjoxMjMsXCJwaG9uZU51bWJlclwiOlwiKzc4MDA1NTUzNTM1XCIsXCJjcmVhdGlvbkRhdGVUaW1lXCI6MTY0NzQ2OTM2ODIwOH0iLCJpYXQiOjE2NDc0NjkzNjgsImV4cCI6MTY0NzQ3NjU2OH0.WKg2zVvHL9aYxxAbQff4VEmu_U9gAhI-C8xqfLyehdX25DTKH2RZFV1-Ez_xK_3lNww1EZEWlvfwPbRh31JlIw";
+    private final String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ7XCJ1c2VySWRcIjoxMjMsXCJwaG9uZU51bWJlclwiOlwiKzc4MDA1NTUzNTM1XCIsXCJjcmVhdGlvbkRhdGVUaW1lXCI6MTY0NzgxMjA2MjAxMn0iLCJpYXQiOjE2NDc4MTIwNjIsImV4cCI6OTIyMzM3MjAzNjg1NDc3NX0.ERqwQit4iWxgT7MgaCuWN4jdIGvDyGhX8sXthFBoyIXR4hHN2TD2P-ElneWwYSxaQ-CH6t_dj135MiKZX3MjoA";
     private final String key = Base64.getEncoder().encodeToString("333333".getBytes(StandardCharsets.UTF_8));
 
     private User user;
