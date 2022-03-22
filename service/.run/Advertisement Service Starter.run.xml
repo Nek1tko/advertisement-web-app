@@ -1,7 +1,24 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Advertisement Service Starter" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.spbstu.edu.advertisement.AdvertisementWebApplication" />
-    <module name="service" />
+    <module name="advertisement-parent" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.spbstu.edu.advertisement.vo.*" />
+        <option name="ENABLED" value="true" />
+        <option name="INCLUDE" value="false" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.spbstu.edu.advertisement.mapper.*" />
+        <option name="ENABLED" value="true" />
+        <option name="INCLUDE" value="false" />
+      </pattern>
+      <pattern>
+        <option name="PATTERN" value="com.spbstu.edu.advertisement.config.*" />
+        <option name="ENABLED" value="true" />
+        <option name="INCLUDE" value="false" />
+      </pattern>
+    </extension>
     <method v="2">
       <option name="Make" enabled="true" />
     </method>
