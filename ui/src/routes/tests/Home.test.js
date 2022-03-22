@@ -1,11 +1,15 @@
+/**
+ * @group unit
+ */
+
 import AuthService from "../../services/auth.service";
 import axios from "axios";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 import React from "react";
-import {mount} from "enzyme";
-import {Router} from "react-router-dom";
+import { mount } from "enzyme";
+import { Router } from "react-router-dom";
 import Home from "../Home";
-import {act} from "react-dom/test-utils";
+import { act } from "react-dom/test-utils";
 import authHeader from "../../services/auth-header";
 
 jest.mock("axios");
@@ -29,7 +33,7 @@ describe('HomeTests', () => {
                 push: jest.fn()
             }
         };
-        AuthService.getUser.mockReturnValue({user: "mockUser"});
+        AuthService.getUser.mockReturnValue({ user: "mockUser" });
         axios.post.mockResolvedValue({
             data: [
                 {
@@ -54,12 +58,12 @@ describe('HomeTests', () => {
                 },
             ]
         });
-        authHeader.mockReturnValue({header: "mockHeader"});
+        authHeader.mockReturnValue({ header: "mockHeader" });
         useStateSpy = jest.spyOn(React, 'useState');
         useStateSpy.mockImplementation((state) => [state, setState]);
         act(async () => wrapper = await mount(
             <Router history={props.history}>
-                <Home {...props}/>
+                <Home {...props} />
             </Router>));
     });
 
@@ -70,7 +74,7 @@ describe('HomeTests', () => {
     test('HomeRenderTest', async () => {
         await act(async () => {
             await mount(<Router history={props.history}>
-                <Home {...props}/>
+                <Home {...props} />
             </Router>);
         });
     });
@@ -97,7 +101,7 @@ describe('HomeTests', () => {
         AuthService.getUser.mockReturnValue(null);
         wrapper = mount(
             <Router history={props.history}>
-                <Home {...props}/>
+                <Home {...props} />
             </Router>);
     });
 });

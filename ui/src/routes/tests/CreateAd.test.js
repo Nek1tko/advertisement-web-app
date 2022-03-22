@@ -1,9 +1,13 @@
+/**
+ * @group unit
+ */
+
 import axios from "axios";
-import {mount} from "enzyme";
+import { mount } from "enzyme";
 import CreateAd from "../CreateAd";
-import {act} from "react-dom/test-utils";
-import {Router} from "react-router-dom";
-import {createBrowserHistory} from 'history';
+import { act } from "react-dom/test-utils";
+import { Router } from "react-router-dom";
+import { createBrowserHistory } from 'history';
 import React from "react";
 import AuthService from "../../services/auth.service";
 import authHeader from "../../services/auth-header";
@@ -62,7 +66,7 @@ const eventMetro = {
 
 const imgs = [
     {
-        name: JSON.stringify({file: 'mockImg'})
+        name: JSON.stringify({ file: 'mockImg' })
     }
 ];
 
@@ -80,8 +84,8 @@ describe('CreateAdTests', () => {
         };
 
         FormData = jest.fn();
-        AuthService.getUser.mockReturnValue({user: "mockUser"});
-        authHeader.mockReturnValue({header: "mockHeader"});
+        AuthService.getUser.mockReturnValue({ user: "mockUser" });
+        authHeader.mockReturnValue({ header: "mockHeader" });
         axios.get.mockResolvedValue({
             data: [
                 {
@@ -114,7 +118,7 @@ describe('CreateAdTests', () => {
     test('CreateAdRenderTest', () => {
         act(() => {
             mount(<Router history={props.history}>
-                <CreateAd {...props}/>
+                <CreateAd {...props} />
             </Router>);
         });
     });

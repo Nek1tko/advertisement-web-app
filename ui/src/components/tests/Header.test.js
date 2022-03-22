@@ -1,3 +1,7 @@
+/**
+ * @group unit
+ */
+
 import { mount, shallow } from 'enzyme';
 import Header from '../Header';
 import { BrowserRouter, Router } from 'react-router-dom';

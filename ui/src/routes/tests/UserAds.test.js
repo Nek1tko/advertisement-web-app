@@ -1,12 +1,16 @@
-import {createBrowserHistory} from "history";
+/**
+ * @group unit
+ */
+
+import { createBrowserHistory } from "history";
 import AuthService from "../../services/auth.service";
 import authHeader from "../../services/auth-header";
 import axios from "axios";
 import React from "react";
-import {mount} from "enzyme";
-import {Router} from "react-router-dom";
+import { mount } from "enzyme";
+import { Router } from "react-router-dom";
 import UserAds from "../UserAds";
-import {act} from "react-dom/test-utils";
+import { act } from "react-dom/test-utils";
 
 jest.mock('axios');
 jest.mock("../../services/auth.service");
@@ -50,8 +54,8 @@ describe('UserAdsTests', () => {
                 push: jest.fn()
             }
         };
-        AuthService.getUser.mockReturnValue({userId: "mockUser"});
-        authHeader.mockReturnValue({header: "mockHeader"});
+        AuthService.getUser.mockReturnValue({ userId: "mockUser" });
+        authHeader.mockReturnValue({ header: "mockHeader" });
         axios.get.mockResolvedValue({
             data: [
                 mAd,
@@ -73,7 +77,7 @@ describe('UserAdsTests', () => {
     test('UserAdsRenderTest', () => {
         act(() => {
             mount(<Router history={props.history}>
-                <UserAds {...props}/>
+                <UserAds {...props} />
             </Router>);
         });
     });

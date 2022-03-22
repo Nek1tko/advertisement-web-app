@@ -1,3 +1,7 @@
+/**
+ * @group unit
+ */
+
 import SellerAd from '../SellerAd';
 import { mount, shallow } from 'enzyme';
 import axios from 'axios';

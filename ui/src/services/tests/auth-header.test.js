@@ -1,3 +1,7 @@
+/**
+ * @group unit
+ */
+
 import AuthService from "../auth.service";
 import authHeader from "../auth-header";
 
