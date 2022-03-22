@@ -1,10 +1,14 @@
+/**
+ * @group unit
+ */
+
 import React from "react";
 import AuthService from "../../services/auth.service";
-import {act} from "react-dom/test-utils";
-import {mount, shallow} from "enzyme";
-import {Router} from "react-router-dom";
+import { act } from "react-dom/test-utils";
+import { mount, shallow } from "enzyme";
+import { Router } from "react-router-dom";
 import PersonalArea from "../PersonalArea";
-import {createBrowserHistory} from "history";
+import { createBrowserHistory } from "history";
 import axios from "axios";
 
 jest.mock('axios');
@@ -53,7 +57,7 @@ describe('PersonalAreaTests', () => {
         useStateSpy.mockImplementation((state) => [state, setState]);
         wrapper = mount(
             <Router history={props.history}>
-                <PersonalArea/>
+                <PersonalArea />
             </Router>);
     });
 
@@ -65,7 +69,7 @@ describe('PersonalAreaTests', () => {
     test('PersonalAreaRenderTest', () => {
         act(() => {
             mount(<Router history={props.history}>
-                <PersonalArea/>
+                <PersonalArea />
             </Router>);
         });
     });
@@ -82,7 +86,7 @@ describe('PersonalAreaTests', () => {
     });
 
     test('PersonalAreaCloseButtonTest', async () => {
-        await act(async () => wrapper = await shallow(<PersonalArea/>));
+        await act(async () => wrapper = await shallow(<PersonalArea />));
         jest.clearAllMocks();
 
         const dived = wrapper.dive();
@@ -94,7 +98,7 @@ describe('PersonalAreaTests', () => {
     });
 
     test('PersonalAreaSaveButtonTest', async () => {
-        await act(async () => wrapper = await shallow(<PersonalArea/>));
+        await act(async () => wrapper = await shallow(<PersonalArea />));
         jest.clearAllMocks();
 
         const dived = wrapper.dive();
@@ -106,7 +110,7 @@ describe('PersonalAreaTests', () => {
     });
 
     test('PersonalAreaPositiveChangeNameTextFieldTest', async () => {
-        await act(async () => wrapper = await shallow(<PersonalArea/>));
+        await act(async () => wrapper = await shallow(<PersonalArea />));
         jest.clearAllMocks();
 
         const dived = wrapper.dive();
@@ -120,7 +124,7 @@ describe('PersonalAreaTests', () => {
     });
 
     test('PersonalAreaNegativeChangeNameTextFieldTest', async () => {
-        await act(async () => wrapper = await shallow(<PersonalArea/>));
+        await act(async () => wrapper = await shallow(<PersonalArea />));
         jest.clearAllMocks();
 
         const dived = wrapper.dive();
@@ -133,7 +137,7 @@ describe('PersonalAreaTests', () => {
     });
 
     test('PersonalAreaPositiveChangeSurnameTextFieldTest', async () => {
-        await act(async () => wrapper = await shallow(<PersonalArea/>));
+        await act(async () => wrapper = await shallow(<PersonalArea />));
         jest.clearAllMocks();
 
         const dived = wrapper.dive();
@@ -147,7 +151,7 @@ describe('PersonalAreaTests', () => {
     });
 
     test('PersonalAreaNegativeChangeSurnameTextFieldTest', async () => {
-        await act(async () => wrapper = await shallow(<PersonalArea/>));
+        await act(async () => wrapper = await shallow(<PersonalArea />));
         jest.clearAllMocks();
 
         const dived = wrapper.dive();
@@ -163,7 +167,7 @@ describe('PersonalAreaTests', () => {
         AuthService.getUser.mockReturnValue(null);
         wrapper = mount(
             <Router history={props.history}>
-                <PersonalArea/>
+                <PersonalArea />
             </Router>);
     });
 });

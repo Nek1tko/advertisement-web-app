@@ -1,3 +1,7 @@
+/**
+ * @group unit
+ */
+
 import axios from 'axios';
 import AuthService from "../auth.service";
 import store from '../../store';

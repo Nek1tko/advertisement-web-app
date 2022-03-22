@@ -9,5 +9,6 @@ module.exports = {
     transformIgnorePatterns: [
         "node_modules[/\\\\](?!@amcharts[/\\\\]amcharts4)"
     ],
-    collectCoverage: true
+    collectCoverage: true,
+    runner: "groups"
 }

@@ -1,8 +1,12 @@
+/**
+ * @group unit
+ */
+
 import axios from "axios";
 import React from "react";
-import {mount} from "enzyme";
+import { mount } from "enzyme";
 import CustomerAd from "../CustomerAd";
-import {act} from "react-dom/test-utils";
+import { act } from "react-dom/test-utils";
 import SellerAd from "../SellerAd";
 
 jest.mock('axios');
@@ -65,7 +69,7 @@ describe('CustomerAdTests', () => {
         axios.put.mockResolvedValue(mockedResponse);
         const useStateSpy = jest.spyOn(React, 'useState');
         useStateSpy.mockImplementation((state) => [state, setState]);
-        wrapper = mount(<CustomerAd{...props}/>);
+        wrapper = mount(<CustomerAd{...props} />);
     })
 
     afterEach(() => {
@@ -74,7 +78,7 @@ describe('CustomerAdTests', () => {
 
     test('CustomerAdRenderTest', () => {
         act(() => {
-            mount(<SellerAd {...props}/>);
+            mount(<SellerAd {...props} />);
         });
     });
 

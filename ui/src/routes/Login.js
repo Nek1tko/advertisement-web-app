@@ -61,6 +61,7 @@ const Login = props => {
             </Collapse>
 
             <ReactPhoneInput
+                id="phoneInput"
                 value={phone}
                 defaultCountry={'ru'}
                 onChange={value => {
@@ -77,6 +78,7 @@ const Login = props => {
 
 
             <TextField
+                id="passwordTextField"
                 label="Пароль"
                 variant="filled"
                 type="password"
@@ -89,6 +91,7 @@ const Login = props => {
             />
 
             <Button
+                id="loginButton"
                 type="submit"
                 variant="contained"
                 color="primary"

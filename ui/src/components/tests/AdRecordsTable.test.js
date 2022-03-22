@@ -1,3 +1,7 @@
+/**
+ * @group unit
+ */
+
 import { mount, shallow } from 'enzyme';
 import AdRecordsTable from '../AdRecordsTable';
 import { createBrowserHistory } from 'history';

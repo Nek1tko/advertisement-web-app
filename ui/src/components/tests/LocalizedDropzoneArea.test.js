@@ -1,7 +1,11 @@
+/**
+ * @group unit
+ */
+
 import '../LocalizedDropzoneArea'
 import LocalizedDropzoneArea from "../LocalizedDropzoneArea";
-import {mount, shallow} from 'enzyme';
-import {DropzoneArea} from "material-ui-dropzone";
+import { mount, shallow } from 'enzyme';
+import { DropzoneArea } from "material-ui-dropzone";
 
 const props = {
     filesLimit: 3,

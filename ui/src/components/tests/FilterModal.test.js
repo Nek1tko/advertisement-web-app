@@ -1,9 +1,13 @@
+/**
+ * @group unit
+ */
+
 import '../FilterModal';
-import {FilterModal} from '../FilterModal';
-import {mount, shallow} from 'enzyme';
+import { FilterModal } from '../FilterModal';
+import { mount, shallow } from 'enzyme';
 import axios from 'axios';
 import React from "react";
-import {act} from "react-dom/test-utils";
+import { act } from "react-dom/test-utils";
 
 jest.mock('axios');
 
@@ -55,7 +59,7 @@ const eventMetro = {
     }
 };
 
-const axiosResponseMetro = {data: [{id: 'metroId', name: 'Lesnaya'}]};
+const axiosResponseMetro = { data: [{ id: 'metroId', name: 'Lesnaya' }] };
 
 describe('FilterModalTests', () => {
     let wrapper;
@@ -73,7 +77,7 @@ describe('FilterModalTests', () => {
     });
 
     test('FilterModalRenderTest', () => {
-        mount(<FilterModal{...props}/>);
+        mount(<FilterModal{...props} />);
     });
 
     test('FilterModalSnapshotTest', () => {
