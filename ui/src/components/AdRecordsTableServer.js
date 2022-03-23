@@ -56,7 +56,6 @@ export default function AdRecordsTable(props) {
             creationDate: ad.creationDate
         };
     }) : [];
-    console.log(rows);
 
     const onPageChange = (page) => {
         page = page + 1;
