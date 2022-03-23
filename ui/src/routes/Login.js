@@ -102,6 +102,7 @@ const Login = props => {
             </Button>
 
             <Button
+                id="registrationButton"
                 variant="text"
                 disableRipple
                 fullWidth
