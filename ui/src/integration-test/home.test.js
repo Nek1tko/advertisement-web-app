@@ -2,6 +2,10 @@
  * При переключении страницы на route Home в component AdRecordsTableServer корректно будут
  * отображены полученные из mock-запроса записи
  * 
+ * Через route Home переход на route SellerAd
+ * 
+ * Через route Home переход на route CustomerAd
+ * 
  * @group integration
  */
 
@@ -85,7 +89,7 @@ describe('HomeTests', () => {
     const history = createBrowserHistory();
 
     beforeEach(() => {
-        AuthService.getUser.mockReturnValue({ user: mUser });
+        AuthService.getUser.mockReturnValue(mUser);
         axios.post.mockImplementation((url) => {
             if (url === "http://localhost:8080/ad/page/count") {
                 return Promise.resolve(2);
@@ -131,6 +135,40 @@ describe('HomeTests', () => {
 
         expect(wrapper.text().includes(mAds[0].name)).toBe(true);
         expect(wrapper.text().includes(mAds[0].metro.name)).toBe(true);
+        expect(wrapper.text().includes(mAds[1].name)).toBe(true);
+        expect(wrapper.text().includes(mAds[1].metro.name)).toBe(true);
+    });
+
+    test('HomeSellerTableClickTest', async () => {
+        expect(history.location.pathname).toBe("/");
+
+        const clickEvent = {
+            row: mAds[0]
+        }
+        const dataGrid = wrapper.find('#adDataGrid').first();
+        dataGrid.props().onRowClick(clickEvent);
+
+        await whenStable();
+        wrapper.update();
+
+        expect(history.location.pathname).toBe("/seller-ad");
+        expect(wrapper.text().includes(mAds[0].name)).toBe(true);
+        expect(wrapper.text().includes(mAds[0].metro.name)).toBe(true);
+    });
+
+    test('HomeCustomerTableClickTest', async () => {
+        expect(history.location.pathname).toBe("/");
+
+        const clickEvent = {
+            row: mAds[1]
+        }
+        const dataGrid = wrapper.find('#adDataGrid').first();
+        dataGrid.props().onRowClick(clickEvent);
+
+        await whenStable();
+        wrapper.update();
+
+        expect(history.location.pathname).toBe("/customer-ad");
         expect(wrapper.text().includes(mAds[1].name)).toBe(true);
         expect(wrapper.text().includes(mAds[1].metro.name)).toBe(true);
     });
