@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class User implements UserDetails {
             @JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "ad_id")})
     @ToString.Exclude
-    private List<Ad> favouriteAds;
+    private List<Ad> favouriteAds = new ArrayList<>();
     
     @OneToMany(mappedBy = "saler")
     @ToString.Exclude
