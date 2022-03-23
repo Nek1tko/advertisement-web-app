@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {Collapse, makeStyles} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Collapse, makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@mui/material/Box';
-import {Alert} from "@mui/material";
+import { Alert } from "@mui/material";
 import ReactPhoneInput from "react-phone-input-mui";
 import AuthService from "../services/auth.service";
 
@@ -104,12 +104,13 @@ const Registration = props => {
             <Collapse in={alertOpen}>
                 <Alert
                     severity="error"
-                    sx={{mb: 2}}
+                    sx={{ mb: 2 }}
                 >
                     {errorMessage}
                 </Alert>
             </Collapse>
             <TextField
+                id="nameTextField"
                 label="Имя"
                 variant="filled"
                 required
@@ -117,6 +118,7 @@ const Registration = props => {
                 onChange={handleFirstNameTyping}
             />
             <TextField
+                id="lastNameTextField"
                 label="Фамилия"
                 variant="filled"
                 required
@@ -124,6 +126,7 @@ const Registration = props => {
                 onChange={handleLastNameTyping}
             />
             <ReactPhoneInput
+                id="phoneInput"
                 value={phone}
                 defaultCountry={'ru'}
                 onChange={handlePhoneTyping}
@@ -135,6 +138,7 @@ const Registration = props => {
                 }}
             />
             <TextField
+                id="passwordTextField"
                 label="Пароль"
                 variant="filled"
                 type="password"
@@ -143,6 +147,7 @@ const Registration = props => {
                 onChange={handlePasswordTyping}
             />
             <TextField
+                id="passwordConfirmationTextField"
                 label="Подтверждение пароля"
                 variant="filled"
                 type="password"
@@ -155,6 +160,7 @@ const Registration = props => {
                     Отмена
                 </Button>
                 <Button
+                    id="registrationButton"
                     type="submit"
                     variant="contained"
                     color="primary"
