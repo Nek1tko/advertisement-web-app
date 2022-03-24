@@ -1,7 +1,10 @@
 pipeline {
     agent any
     
-    tools {nodejs "nodejs"}
+    tools {
+        nodejs 'nodejs'
+        maven 'Default'
+    }
 
     stages {
         stage('Clone Repository') {
@@ -18,18 +21,22 @@ pipeline {
             }
         }
         
-        stage('Unit Test') {
-            steps {
-                dir("ui") {
-                    sh 'npm run test:unit -- --runInBand --detectOpenHandles -u'
+        stage('Integration Tests') {
+            parallel {
+                stage('Front Tests') {
+                    steps {
+                        dir("ui") {
+                            sh 'npm run test:integration -- --runInBand --detectOpenHandles'
+                        }
+                    }
                 }
-            }
-        }
-        
-        stage('Integration Test') {
-            steps {
-                dir("ui") {
-                    sh 'npm run test:integration -- --runInBand --detectOpenHandles'
+                
+                stage('Back Tests') {
+                    steps {
+                        dir("service") {
+                            sh 'mvn clean test'
+                        }
+                    }
                 }
             }
         }
