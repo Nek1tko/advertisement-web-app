@@ -34,7 +34,7 @@ pipeline {
                 stage('Back Tests') {
                     steps {
                         dir("service") {
-                            sh 'mvn clean test'
+                            sh 'mvn -Dtest="com/spbstu/edu/advertisement/controller/**" clean test'
                         }
                     }
                 }
