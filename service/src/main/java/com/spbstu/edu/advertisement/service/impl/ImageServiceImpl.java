@@ -31,7 +31,7 @@ public class ImageServiceImpl implements ImageService {
     
     private final static int MAX_IMAGE_COUNT = 3;
     
-    public final static String UPLOAD_PATH = "/images";
+    public final static String UPLOAD_PATH = "classpath:images";
     
     public final static String DEFAULT_IMAGE_PATH = "placeholder.jpg";
     
