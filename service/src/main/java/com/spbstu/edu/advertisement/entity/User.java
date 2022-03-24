@@ -56,7 +56,7 @@ public class User implements UserDetails {
             @JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "ad_id")})
     @ToString.Exclude
-    private List<Ad> favouriteAds = new ArrayList<>();
+    private List<Ad> favouriteAds;
     
     @OneToMany(mappedBy = "saler")
     @ToString.Exclude
