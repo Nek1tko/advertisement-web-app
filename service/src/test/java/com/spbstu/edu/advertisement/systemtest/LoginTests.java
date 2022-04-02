@@ -27,7 +27,7 @@ public class LoginTests {
     }
 
     @Test
-    void test() {
+    void failedLoginTest() {
         String phone = "79090433333";
         String password = "Qwerty123";
         Page page = browser.newPage();
