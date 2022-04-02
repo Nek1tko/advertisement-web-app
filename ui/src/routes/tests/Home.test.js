@@ -87,14 +87,14 @@ describe('HomeTests', () => {
         await act(async () => {
             await wrapper.find('#searchButton').first().props().onClick();
         });
-        expect(setState).toHaveBeenCalledTimes(11);
+        expect(setState).toHaveBeenCalledTimes(4);
     });
 
     test('HomeSearchButtonNegativeTest', async () => {
         await act(async () => {
             await wrapper.find('#searchTextField').first().props().onChange(eventSearch);
         });
-        expect(setState).toHaveBeenCalledTimes(10);
+        expect(setState).toHaveBeenCalledTimes(3);
     });
 
     test('HomeNotAuthorizedTest', () => {
