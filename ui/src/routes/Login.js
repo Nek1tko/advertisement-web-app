@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import ReactPhoneInput from 'react-phone-input-2';
+import ReactPhoneInput from 'react-phone-input-mui';
 import Alert from '@mui/material/Alert';
 import Collapse from '@mui/material/Collapse';
-import { Box } from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import AuthService from "../services/auth.service";
 
 const Login = props => {

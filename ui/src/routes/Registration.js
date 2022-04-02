@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Collapse, makeStyles } from '@material-ui/core';
+import React, {useState} from 'react';
+import {Collapse, makeStyles} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Box from '@mui/material/Box';
-import { Alert } from "@mui/material";
-import ReactPhoneInput from "react-phone-input-2";
+import {Alert} from "@mui/material";
+import ReactPhoneInput from "react-phone-input-mui";
 import AuthService from "../services/auth.service";
 
 const useStyles = makeStyles(theme => ({
