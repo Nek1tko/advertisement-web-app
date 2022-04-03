@@ -4,7 +4,7 @@ FROM maven:3.6.0-jdk-11-slim as builder
 COPY . /service
 WORKDIR /service
 
-RUN mvn clean package
+RUN mvn clean package -Dmaven.test.skip
 
 # Packege stage
 FROM openjdk:11-jre-slim
