@@ -20,7 +20,6 @@ services:
     container_name: db
     restart: unless-stopped
     volumes:
-      - ./sql-scripts/ad_app_prefill.sql:/docker-entrypoint-initdb.d/init.sql
       - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: advertisement_db
