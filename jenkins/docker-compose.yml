@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  jenkins:
+    build:
+      context: .
+    container_name: jenkins-server
+    ports:
+      - "8000:8080"
+    environment:
+      DOCKER_HOST: tcp://docker:2376
+      DOCKER_CERT_PATH: /certs/client
+      DOCKER_TLS_VERIFY: 1
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - docker-certs:/certs/client:ro
+    depends_on:
+      - docker
+
+  docker:
+    image: docker:dind
+    container_name: docker-server
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: /certs
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - docker-certs:/certs/client
+      - docker-data:/var/lib/docker
+
+volumes:
+  jenkins-data:
+  docker-certs:
+  docker-data:

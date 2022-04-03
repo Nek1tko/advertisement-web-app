@@ -1,12 +1,21 @@
-INSERT INTO metro (id, name) VALUES(1,  'Девяткино');
-INSERT INTO metro (id, name) VALUES(2,  'Гражданский проспект');
-INSERT INTO metro (id, name) VALUES(3,  'Академическая');
+DELETE
+FROM metro;
+DELETE
+FROM sub_category;
+DELETE
+FROM category;
+
+INSERT INTO metro (id, name)
+VALUES (1, 'Девяткино');
+INSERT INTO metro (id, name)
+VALUES (2, 'Гражданский проспект');
+INSERT INTO metro (id, name)
+VALUES (3, 'Академическая');
 
 INSERT INTO category
-(id, name)
-VALUES
-(1, 'Недвижимость'),
-(2, 'Транспорт'),
+    (id, name)
+VALUES (1, 'Недвижимость'),
+       (2, 'Транспорт'),
 (3, 'Детские товары');
 
 INSERT INTO sub_category

@@ -40,5 +40,13 @@ pipeline {
                 }
             }
         }
+        stage('System Tests') {
+            steps {
+                sh "docker-compose up -d"
+                dir("service") {
+                    sh 'mvn -Dtest="com/spbstu/edu/advertisement/systemtest/**" clean test'
+                }
+            }
+        }
     }
 }
