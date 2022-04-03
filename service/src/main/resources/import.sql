@@ -141,37 +141,62 @@ VALUES (70, 'Шушары');
 INSERT INTO metro (id, name)
 VALUES (71, 'Горный институт');
 
-INSERT INTO category
-    (id, name)
-VALUES (1, 'Недвижимость'),
-       (2, 'Транспорт'),
-       (3, 'Детские товары'),
-       (4, 'Мебель'),
-       (5, 'Одежда'),
-       (6, 'Техника');
+INSERT INTO category (id, name)
+VALUES (1, 'Недвижимость');
+INSERT INTO category(id, name)
+VALUES (2, 'Транспорт');
+INSERT INTO category (id, name)
+VALUES (3, 'Детские товары');
+INSERT INTO category(id, name)
+VALUES (4, 'Мебель');
+INSERT INTO category (id, name)
+VALUES (5, 'Одежда');
+INSERT INTO category(id, name)
+VALUES (6, 'Техника');
 
-INSERT INTO sub_category
-    (id, name, category_id)
-VALUES (1, 'Квартира', 1),
-       (2, 'Гараж', 1),
-       (3, 'Дом', 1),
-       (4, 'Аппаратменты', 1),
-       (5, 'Машина', 2),
-       (6, 'Мотоцикл', 2),
-       (7, 'Самокат', 2),
-       (8, 'Лодка', 2),
-       (9, 'Игрушки', 3),
-       (10, 'Коляски', 3),
-       (11, 'Шкафы', 4),
-       (12, 'Кровати', 4),
-       (13, 'Диван', 4),
-       (14, 'Стол', 4),
-       (15, 'Стул', 4),
-       (16, 'Детская', 5),
-       (17, 'Зимняя', 5),
-       (18, 'Обувь', 5),
-       (19, 'Остальное', 5),
-       (20, 'Телефоны', 6),
-       (21, 'Ноутбуки', 6),
-       (22, 'Бытовая техника', 6),
-       (23, 'Остальное', 6);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (1, 'Квартира', 1);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (2, 'Гараж', 1);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (3, 'Дом', 1);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (4, 'Аппаратменты', 1);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (5, 'Машина', 2);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (6, 'Мотоцикл', 2);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (7, 'Самокат', 2);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (8, 'Лодка', 2);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (9, 'Игрушки', 3);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (10, 'Коляски', 3);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (11, 'Шкафы', 4);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (12, 'Кровати', 4);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (13, 'Диван', 4);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (14, 'Стол', 4);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (15, 'Стул', 4);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (16, 'Детская', 5);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (17, 'Зимняя', 5);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (18, 'Обувь', 5);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (19, 'Остальное', 5);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (20, 'Телефоны', 6);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (21, 'Ноутбуки', 6);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (22, 'Бытовая техника', 6);
+INSERT INTO sub_category (id, name, category_id)
+VALUES (23, 'Остальное', 6);
