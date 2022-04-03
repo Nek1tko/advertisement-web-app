@@ -18,7 +18,7 @@ public class LoginTests {
     static void setUp() {
         playwright = Playwright.create();
         BrowserType chromium = playwright.chromium();
-        browser = chromium.launch(new BrowserType.LaunchOptions().setHeadless(false).setChannel("msedge"));
+        browser = chromium.launch();
     }
 
     @AfterAll
