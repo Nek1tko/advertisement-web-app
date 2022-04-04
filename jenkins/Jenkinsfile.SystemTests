@@ -2,7 +2,6 @@ pipeline {
     agent any
     
     tools {
-        nodejs 'nodejs'
         maven 'Default'
     }
 
@@ -12,10 +11,23 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Nek1tko/addvertisement-web-app'
             }
         }
+        
+        stage('Deploy test environment') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        }
 
         stage('System Tests') {
+            agent { 
+                docker { 
+                    image 'mcr.microsoft.com/playwright/java:focal' 
+                    args '--network=system-tests_default'    
+                } 
+                
+            }
             steps {
-                sh "docker compose up -d"
+                git branch: 'main', url: 'https://github.com/Nek1tko/addvertisement-web-app'
                 dir("service") {
                     sh 'mvn -Dtest="com/spbstu/edu/advertisement/systemtest/**" clean test'
                 }
