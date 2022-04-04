@@ -31,7 +31,7 @@ public class LoginTests {
         String phone = "79090433333";
         String password = "Qwerty123";
         Page page = browser.newPage();
-        page.navigate("http://system-tests_frontend:3000/login");
+        page.navigate("http://system-tests_frontend_1:3000/login");
         page.type("input[name='phone']", phone);
         page.fill("text=Пароль", password);
         page.click("id=loginButton");
