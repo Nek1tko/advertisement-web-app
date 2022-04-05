@@ -22,4 +22,14 @@ public class RegistrationUtils {
         page.fill(SignUpSelectors.PASSWORD_CONFIRMATION_SELECTOR, PASSWORD);
         page.click(SignUpSelectors.REGISTRATION_SELECTOR);
     }
+
+    public static void loginUser(Page page) {
+        registerUser(page);
+        page.navigate(UrlConstants.LOGIN_URL);
+        page.click(SignUpSelectors.PHONE_SELECTOR);
+        page.keyboard().press(KeysConstants.BACKSPACE);
+        page.type(SignUpSelectors.PHONE_SELECTOR, PHONE);
+        page.fill(SignUpSelectors.PASSWORD_SELECTOR, PASSWORD);
+        page.click(SignUpSelectors.LOGIN_SELECTOR);
+    }
 }
