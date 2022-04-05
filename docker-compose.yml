@@ -25,6 +25,8 @@ services:
       POSTGRES_DB: advertisement_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    ports:
+      - "4000:5432"
 
 volumes:
   postgres-data: null
