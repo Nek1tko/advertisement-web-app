@@ -43,7 +43,8 @@ public class LoginTests {
     @Test
     void correctLoginTest() {
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
-        Page page = RegistrationUtils.registerUser(browser);
+        Page page = browser.newPage();
+        RegistrationUtils.registerUser(page);
         page.waitForURL(UrlConstants.LOGIN_URL);
         page.click(SignUpSelectors.PHONE_SELECTOR);
         page.keyboard().press(KeysConstants.BACKSPACE);
@@ -72,10 +73,11 @@ public class LoginTests {
     @Test
     void userAlreadyExistsTest() {
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
-        Page page = RegistrationUtils.registerUser(browser);
+        Page page = browser.newPage();
+        RegistrationUtils.registerUser(page);
         page.waitForURL(UrlConstants.LOGIN_URL);
         page.click(SignUpSelectors.REGISTRATION_SELECTOR);
-        page = RegistrationUtils.registerUser(browser);
+        RegistrationUtils.registerUser(page);
         assertThat(page.locator(SignUpSelectors.ALERT_SELECTOR)).hasText("Ошибка при регистрации!");
     }
 
@@ -86,7 +88,7 @@ public class LoginTests {
         page.navigate(UrlConstants.MAIN_URL);
         page.waitForURL(UrlConstants.LOGIN_URL);
         page.click(SignUpSelectors.REGISTRATION_SELECTOR);
-        page = RegistrationUtils.registerUser(browser);
+        RegistrationUtils.registerUser(page);
         page.waitForURL(UrlConstants.LOGIN_URL);
         page.click(SignUpSelectors.PHONE_SELECTOR);
         page.keyboard().press(KeysConstants.BACKSPACE);
@@ -102,7 +104,7 @@ public class LoginTests {
         Page page = browser.newPage();
         page.navigate(UrlConstants.LOGIN_URL);
         page.click(SignUpSelectors.REGISTRATION_SELECTOR);
-        page = RegistrationUtils.registerUser(browser);
+        RegistrationUtils.registerUser(page);
         assertThat(page.locator(SignUpSelectors.ALERT_SELECTOR))
                 .hasText("Пароль должен содержать хотя бы одну цифру и спец символ!");
     }
