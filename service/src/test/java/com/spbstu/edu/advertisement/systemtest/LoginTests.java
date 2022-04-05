@@ -102,8 +102,6 @@ public class LoginTests {
     void registrationWithEasyPasswordTest() {
         RegistrationUtils.PASSWORD = INCORRECT_PASSWORD;
         Page page = browser.newPage();
-        page.navigate(UrlConstants.LOGIN_URL);
-        page.click(SignUpSelectors.REGISTRATION_SELECTOR);
         RegistrationUtils.registerUser(page);
         assertThat(page.locator(SignUpSelectors.ALERT_SELECTOR))
                 .hasText("Пароль должен содержать хотя бы одну цифру и спец символ!");
