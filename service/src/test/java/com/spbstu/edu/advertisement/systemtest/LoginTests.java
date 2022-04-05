@@ -10,6 +10,7 @@ import com.spbstu.edu.advertisement.systemtest.constants.UrlConstants;
 import com.spbstu.edu.advertisement.systemtest.sql.PostgresUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
@@ -34,9 +35,13 @@ public class LoginTests {
         playwright.close();
     }
 
+    @BeforeEach
+    void cleanDb() {
+        PostgresUtils.cleanUsersInDatabase();
+    }
+
     @Test
     void correctLoginTest() {
-        PostgresUtils.cleanUsersInDatabase();
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         Page page = RegistrationUtils.registerUser(browser);
         page.waitForURL(UrlConstants.LOGIN_URL);
@@ -50,7 +55,6 @@ public class LoginTests {
 
     @Test
     void failedLoginTest() {
-        PostgresUtils.cleanUsersInDatabase();
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         String unknownPhone = "79999999999";
         String unknownPassword = "Qwerty123";
@@ -67,7 +71,6 @@ public class LoginTests {
 
     @Test
     void userAlreadyExistsTest() {
-        PostgresUtils.cleanUsersInDatabase();
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         Page page = RegistrationUtils.registerUser(browser);
         page.waitForURL(UrlConstants.LOGIN_URL);
@@ -78,7 +81,6 @@ public class LoginTests {
 
     @Test
     void userTryToGoToMainPageWithoutLoginTest() {
-        PostgresUtils.cleanUsersInDatabase();
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         Page page = browser.newPage();
         page.navigate(UrlConstants.MAIN_URL);
@@ -96,7 +98,6 @@ public class LoginTests {
 
     @Test
     void registrationWithEasyPasswordTest() {
-        PostgresUtils.cleanUsersInDatabase();
         RegistrationUtils.PASSWORD = INCORRECT_PASSWORD;
         Page page = browser.newPage();
         page.navigate(UrlConstants.LOGIN_URL);
