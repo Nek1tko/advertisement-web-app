@@ -8,6 +8,7 @@ import com.spbstu.edu.advertisement.systemtest.constants.AdRecordsTableSelectors
 import com.spbstu.edu.advertisement.systemtest.constants.CreateAdSelectors;
 import com.spbstu.edu.advertisement.systemtest.constants.HeaderSelectors;
 import com.spbstu.edu.advertisement.systemtest.constants.UrlConstants;
+import com.spbstu.edu.advertisement.systemtest.constants.UserAdsSelectors;
 import com.spbstu.edu.advertisement.systemtest.sql.PostgresUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

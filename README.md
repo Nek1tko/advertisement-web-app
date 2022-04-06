@@ -1,13 +1,6 @@
-# Advertisement Web App
+# Сервис объявлений
 
-## How to run
+## Запуск
 ```
 docker compose up -d
 ```
-
-Connect to CLI of the DB container and run
-```
-psql -U postgres -d advertisement_db
-```
-
-then execute the prefill SQL script
