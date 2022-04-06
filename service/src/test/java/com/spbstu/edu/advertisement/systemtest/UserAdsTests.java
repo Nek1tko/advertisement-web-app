@@ -43,7 +43,7 @@ public class UserAdsTests {
 
     @Test
     void correctUserAdsTest() {
-        AdCreationUtils.createAd(page);
+        AdCreationUtils.createAd(page, null);
         page.click(HeaderSelectors.USER_ADS_SELECTOR);
         page.waitForURL(UrlConstants.USER_ADS_URL);
         assertThat(page.locator(AdRecordsTableSelectors.NAME_SELECTOR)).hasText(AdCreationUtils.NAME);
