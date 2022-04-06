@@ -1,6 +1,6 @@
 package com.spbstu.edu.advertisement.systemtest.constants;
 
-public class UserAdsSelectors {
+public class AdRecordsTableSelectors {
     public static final String PREVIEW_SELECTOR = "[data-field=image][role=cell]";
 
     public static final String NAME_SELECTOR = "[data-field=name][role=cell]";

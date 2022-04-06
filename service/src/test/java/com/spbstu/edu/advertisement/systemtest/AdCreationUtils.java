@@ -4,12 +4,10 @@ import com.microsoft.playwright.Page;
 import com.spbstu.edu.advertisement.systemtest.constants.CreateAdSelectors;
 
 import java.nio.file.Paths;
-import java.util.regex.Pattern;
 
 public class AdCreationUtils {
     public static final String NAME = "Fake name";
     public static final String PRICE = "1001";
-    public static final Pattern PRICE_PATTERN = Pattern.compile(PRICE + "*");
     public static final String DESCRIPTION = "Fake description";
     public static final String METRO = "Лесная";
     public static final String CATEGORY = "Недвижимость";
