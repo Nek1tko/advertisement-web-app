@@ -14,12 +14,24 @@ public class PostgresUtils {
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
     private static final String DELETE_USERS_QUERY = "truncate public.user cascade;";
+    private static final String DELETE_ADS_QUERY = "truncate ad cascade;";
 
     public static void cleanUsersInDatabase() {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
             try (Statement statement = connection.createStatement()) {
                 statement.execute(DELETE_USERS_QUERY);
                 log.info("Users deleted!");
+            }
+        } catch (SQLException exception) {
+            log.error(exception.getMessage());
+        }
+    }
+
+    public static void cleanAdsInDatabase() {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+            try (Statement statement = connection.createStatement()) {
+                statement.execute(DELETE_ADS_QUERY);
+                log.info("Ads deleted!");
             }
         } catch (SQLException exception) {
             log.error(exception.getMessage());

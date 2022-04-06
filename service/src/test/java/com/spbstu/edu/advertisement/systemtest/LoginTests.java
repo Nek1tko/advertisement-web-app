@@ -42,7 +42,6 @@ public class LoginTests {
 
     @Test
     void correctLoginTest() {
-        RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         Page page = browser.newPage();
         RegistrationUtils.registerUser(page);
         page.waitForURL(UrlConstants.LOGIN_URL);
@@ -56,7 +55,6 @@ public class LoginTests {
 
     @Test
     void failedLoginTest() {
-        RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         String unknownPhone = "79999999999";
         String unknownPassword = "Qwerty123";
         Page page = browser.newPage();
@@ -72,7 +70,6 @@ public class LoginTests {
 
     @Test
     void userAlreadyExistsTest() {
-        RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         Page page = browser.newPage();
         RegistrationUtils.registerUser(page);
         page.waitForURL(UrlConstants.LOGIN_URL);
@@ -83,7 +80,6 @@ public class LoginTests {
 
     @Test
     void userTryToGoToMainPageWithoutLoginTest() {
-        RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
         Page page = browser.newPage();
         page.navigate(UrlConstants.MAIN_URL);
         page.waitForURL(UrlConstants.LOGIN_URL);
@@ -105,5 +101,7 @@ public class LoginTests {
         RegistrationUtils.registerUser(page);
         assertThat(page.locator(SignUpSelectors.ALERT_SELECTOR))
                 .hasText("Пароль должен содержать хотя бы одну цифру и спец символ!");
+
+        RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
     }
 }

@@ -8,4 +8,8 @@ public class UrlConstants {
     public static final String SIGN_UP_URL = MAIN_URL + "sign-up";
 
     public static final String LOGIN_URL = MAIN_URL + "login";
+
+    public static final String USER_ADS_URL = MAIN_URL + "my-ads";
+
+    public static final String CREATE_AD_URL = MAIN_URL + "create-ad";
 }
