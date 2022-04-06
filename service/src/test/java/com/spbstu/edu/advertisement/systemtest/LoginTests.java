@@ -101,7 +101,7 @@ public class LoginTests {
         RegistrationUtils.registerUser(page);
         assertThat(page.locator(SignUpSelectors.ALERT_SELECTOR))
                 .hasText("Пароль должен содержать хотя бы одну цифру и спец символ!");
-        
+
         RegistrationUtils.PASSWORD = CORRECT_PASSWORD;
     }
 }

@@ -1,9 +1,8 @@
 package com.spbstu.edu.advertisement.systemtest;
 
 import com.microsoft.playwright.Page;
-import com.spbstu.edu.advertisement.systemtest.constants.KeysConstants;
 import com.spbstu.edu.advertisement.systemtest.constants.CreateAdSelectors;
-import com.spbstu.edu.advertisement.systemtest.constants.UrlConstants;
+
 import java.nio.file.Paths;
 
 public class AdCreationUtils {
