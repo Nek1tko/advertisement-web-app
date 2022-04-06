@@ -45,6 +45,6 @@ public class UserAdsTests {
     @Test
     void correctUserAdsAfterCreationTest() {
         AdCreationUtils.createAd(page);
-        page.navigate(UrlConstants.USER_ADS_URL);
+        page.click("text=Мои объявления");
     }
 }

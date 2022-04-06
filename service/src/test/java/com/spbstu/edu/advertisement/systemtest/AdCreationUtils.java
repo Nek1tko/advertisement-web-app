@@ -4,7 +4,7 @@ import com.microsoft.playwright.Page;
 import com.spbstu.edu.advertisement.systemtest.constants.KeysConstants;
 import com.spbstu.edu.advertisement.systemtest.constants.CreateAdSelectors;
 import com.spbstu.edu.advertisement.systemtest.constants.UrlConstants;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class AdCreationUtils {
     public static final String NAME = "Fake name";
@@ -16,14 +16,17 @@ public class AdCreationUtils {
     public static final String IMG = "src/test/resources/images/placeholder.jpg";
 
     public static void createAd(Page page) {
-        page.navigate(UrlConstants.CREATE_AD_URL);
+        page.click("text=Создать объявление");
         page.fill(CreateAdSelectors.NAME_SELECTOR, NAME);
         page.fill(CreateAdSelectors.PRICE_SELECTOR, PRICE);
         page.fill(CreateAdSelectors.DESCRIPTION_SELECTOR, DESCRIPTION);
-        page.selectOption(CreateAdSelectors.METRO_SELECTOR, METRO);
-        page.selectOption(CreateAdSelectors.CATEGORY_SELECTOR, CATEGORY);
-        page.selectOption(CreateAdSelectors.SUBCATEGORY_SELECTOR, SUBCATEGORY);
-        page.setInputFiles(CreateAdSelectors.IMGS_SELECTOR, Path.of(IMG));
+        page.click(CreateAdSelectors.METRO_SELECTOR);
+        page.click("text=" + METRO);
+        page.click(CreateAdSelectors.CATEGORY_SELECTOR);
+        page.click("text=" + CATEGORY);
+        page.click(CreateAdSelectors.SUBCATEGORY_SELECTOR);
+        page.click("text=" + SUBCATEGORY);
+        page.setInputFiles(CreateAdSelectors.IMGS_SELECTOR, Paths.get(IMG));
         page.click(CreateAdSelectors.CREATE_SELECTOR);
     }
 }
