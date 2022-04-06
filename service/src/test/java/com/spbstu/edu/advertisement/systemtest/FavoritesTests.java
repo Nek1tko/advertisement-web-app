@@ -41,7 +41,7 @@ public class FavoritesTests {
 
     @Test
     void addToFavoritesTest() {
-        AdCreationUtils.createAd(page);
+        AdCreationUtils.createAd(page, null);
         page.click(HeaderSelectors.HOME_SELECTOR);
         page.waitForURL(UrlConstants.MAIN_URL);
         page.click(AdRecordsTableSelectors.NAME_SELECTOR);
@@ -56,7 +56,7 @@ public class FavoritesTests {
 
     @Test
     void removeFromFavoritesTest() {
-        AdCreationUtils.createAd(page);
+        AdCreationUtils.createAd(page, null);
         page.click(HeaderSelectors.HOME_SELECTOR);
         page.waitForURL(UrlConstants.MAIN_URL);
         page.click(AdRecordsTableSelectors.NAME_SELECTOR);
