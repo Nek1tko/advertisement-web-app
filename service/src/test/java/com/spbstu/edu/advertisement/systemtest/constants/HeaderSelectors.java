@@ -1,7 +1,7 @@
 package com.spbstu.edu.advertisement.systemtest.constants;
 
 public class HeaderSelectors {
-    public static final String HOME_SELECTOR = "text=Главная";
+    public static final String HOME_SELECTOR = "#homeButton";
 
     public static final String USER_ADS_SELECTOR = "text=Мои объявления";
 
@@ -10,4 +10,6 @@ public class HeaderSelectors {
     public static final String PROFILE_SELECTOR = "#settingsIconButton";
 
     public static final String FAVORITES_SELECTOR = "#Избранное";
+
+    public static final String PROFILE_DATA_SELECTOR = "#Профиль";
 }
