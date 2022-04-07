@@ -12,4 +12,8 @@ public class UrlConstants {
     public static final String USER_ADS_URL = MAIN_URL + "my-ads";
 
     public static final String CREATE_AD_URL = MAIN_URL + "create-ad";
+
+    public static final String SELLER_AD_URL = MAIN_URL + "seller-ad";
+
+    public static final String PERSONAL_AREA_URL = MAIN_URL + "personal-area";
 }

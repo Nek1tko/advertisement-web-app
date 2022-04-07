@@ -3,7 +3,6 @@ package com.spbstu.edu.advertisement.systemtest;
 import com.microsoft.playwright.Page;
 import com.spbstu.edu.advertisement.systemtest.constants.CreateAdSelectors;
 import com.spbstu.edu.advertisement.systemtest.vo.AdVo;
-import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Paths;
 import java.util.List;
@@ -27,7 +26,7 @@ public class AdCreationUtils {
             .images(List.of(IMG))
             .build();
 
-    public static void createAd(Page page, @Nullable AdVo adVo) {
+    public static void createAd(Page page, AdVo adVo) {
         AdVo ad = adVo == null ? DEFAULT_AD : adVo;
         page.click("text=Создать объявление");
         page.fill(CreateAdSelectors.NAME_SELECTOR, ad.getName());
